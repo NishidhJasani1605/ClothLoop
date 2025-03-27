@@ -11,7 +11,7 @@ if (!$user_id) {
 }
 
 // Prepare SQL statement
-$sql = "SELECT email, phone, user_type FROM users WHERE id = ?";
+$sql = "SELECT email, phone, user_type, bio, profile_picture FROM users WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -23,7 +23,9 @@ if ($result->num_rows === 1) {
         'success' => true,
         'email' => $user['email'],
         'phone' => $user['phone'],
-        'user_type' => $user['user_type']
+        'user_type' => $user['user_type'],
+        'bio' => $user['bio'] ?? '',
+        'profile_picture' => $user['profile_picture'] ?? ''
     ]);
 } else {
     echo json_encode(['success' => false, 'message' => 'User not found']);

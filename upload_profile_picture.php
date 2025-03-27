@@ -6,6 +6,12 @@ if (!isset($_FILES['profile_picture'])) {
     exit;
 }
 
+if (!isset($_POST['user_id']) || empty($_POST['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'User ID is required']);
+    exit;
+}
+
+$user_id = filter_var($_POST['user_id'], FILTER_SANITIZE_NUMBER_INT);
 $file = $_FILES['profile_picture'];
 $fileName = $file['name'];
 $fileTmpName = $file['tmp_name'];
@@ -25,27 +31,38 @@ if (!file_exists($uploadDir)) {
 
 // Generate unique filename
 $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-$newFileName = uniqid('profile_', true) . '.' . $fileExtension;
+$newFileName = 'user_' . $user_id . '_' . uniqid() . '.' . $fileExtension;
 $targetPath = $uploadDir . $newFileName;
 
 // Validate file type
-$allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+$allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 if (!in_array($fileExtension, $allowedTypes)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid file type']);
+    echo json_encode(['success' => false, 'message' => 'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp']);
+    exit;
+}
+
+// Validate file size (max 5MB)
+$maxFileSize = 5 * 1024 * 1024; // 5MB
+if ($file['size'] > $maxFileSize) {
+    echo json_encode(['success' => false, 'message' => 'File size exceeds 5MB limit']);
     exit;
 }
 
 // Move uploaded file
 if (move_uploaded_file($fileTmpName, $targetPath)) {
     // Update database with new profile picture path
-    $sql = "UPDATE users SET profile_picture = ? WHERE user_type = 'seller'";
+    $sql = "UPDATE users SET profile_picture = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $targetPath);
+    $stmt->bind_param("si", $targetPath, $user_id);
     
     if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'path' => $targetPath]);
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Profile picture updated successfully',
+            'path' => $targetPath
+        ]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Database error']);
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $conn->error]);
     }
     
     $stmt->close();

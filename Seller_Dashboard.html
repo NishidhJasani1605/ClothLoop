@@ -11,6 +11,17 @@
   
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  
+  <style>
+    .profile-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -31,7 +42,7 @@
             <span class="notification-badge">3</span>
           </div>
           <div class="user-profile">
-            <img src="Shop_logo.png" alt="User Shop logo" />
+            <img id="user-profile-image" src="shop_logo.png" alt="User Shop logo" class="profile-circle" />
             <div class="user-details">
               <h4 id="username-display">Loading...</h4>
               <p>Seller Account</p>
@@ -276,7 +287,7 @@
   <!-- Add JavaScript at the end of body -->
   <script src="Seller_Dashboard.js"></script>
   <script>
-  // Check if user is logged in
+  // Check if user is logged in and is a seller
   document.addEventListener('DOMContentLoaded', function() {
       const userInfo = JSON.parse(localStorage.getItem('user_info'));
       if (!userInfo) {
@@ -284,8 +295,21 @@
           return;
       }
 
+      // Check if user is a seller
+      if (userInfo.user_type !== 'seller') {
+          alert('Access denied. This dashboard is for sellers only.');
+          window.location.href = 'Buyer_Dashboard.html';
+          return;
+      }
+
       // Display username
       document.getElementById('username-display').textContent = userInfo.username;
+
+      // Set default profile image path
+      const defaultProfileImage = 'shop_logo.png';
+      
+      // Set default image to profile image until user data is loaded
+      document.getElementById('user-profile-image').src = defaultProfileImage;
 
       // Fetch user details
       fetch('get_user_details.php', {
@@ -303,6 +327,14 @@
               // Update user details in the dashboard
               document.getElementById('email').value = data.email || '';
               document.getElementById('phone').value = data.phone || '';
+              
+              // Load profile picture if exists
+              if (data.profile_picture) {
+                  document.getElementById('user-profile-image').src = data.profile_picture;
+              } else {
+                  // Use default shop logo if no custom image is set
+                  document.getElementById('user-profile-image').src = defaultProfileImage;
+              }
           }
       })
       .catch(error => console.error('Error:', error));
@@ -316,7 +348,7 @@
 
   // Show settings function
   function showSettings() {
-      // Your settings display logic here
+      window.location.href = 'settings.html';
   }
   </script>
 </body>

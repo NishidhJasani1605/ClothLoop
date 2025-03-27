@@ -6,6 +6,26 @@
   <title>Settings</title>
   <link rel="stylesheet" href="settings.css"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+    .profile-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    #profile-preview {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      margin-bottom: 15px;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -24,7 +44,7 @@
           <span class="notification-badge">3</span>
         </div>
         <div class="user-profile">
-          <img src="Shop_logo.png" alt="User Shop logo" />
+          <img id="user-profile-image" src="Shop_logo.png" alt="User profile" class="profile-circle" />
           <div class="user-details">
             <h4 id="username-display">Loading...</h4>
             <p>Seller Account</p>
@@ -61,7 +81,11 @@
     </div>
     <div class="form-group">
       <label for="profile-picture">Profile Picture:</label>
-      <input id="profile-picture" type="file"/>
+      <div class="profile-picture-container">
+        <img id="profile-preview" src="uploads/profile_pictures/default.png" alt="Profile Preview" style="display: none;">
+        <input id="profile-picture" type="file" accept="image/jpeg, image/png, image/gif, image/webp"/>
+        <p class="file-hint">Allowed formats: JPG, PNG, GIF, WEBP. Max size: 5MB</p>
+      </div>
     </div>
     <div class="form-group">
       <label for="bio">Bio:</label>
@@ -76,6 +100,12 @@
   </div>
 
   <script>
+    // Catch all unhandled errors
+    window.addEventListener('error', function(event) {
+      console.error('Unhandled error:', event.error);
+      alert('An error occurred: ' + event.error.message);
+    });
+
     // Check if user is logged in
     document.addEventListener('DOMContentLoaded', function() {
       const userInfo = JSON.parse(localStorage.getItem('user_info'));
@@ -87,6 +117,12 @@
       // Display username
       document.getElementById('username-display').textContent = userInfo.username;
 
+      // Set default profile image path
+      const defaultProfileImage = 'uploads/profile_pictures/default.png';
+      
+      // Set default image to profile image until user data is loaded
+      document.getElementById('user-profile-image').src = defaultProfileImage;
+      
       // Fetch user details
       fetch('get_user_details.php', {
         method: 'POST',
@@ -99,13 +135,40 @@
       })
       .then(response => response.json())
       .then(data => {
+        console.log('User details response:', data);
         if (data.success) {
           // Update user details in the settings form
           document.getElementById('email').value = data.email || '';
           document.getElementById('phone').value = data.phone || '';
+          document.getElementById('bio').value = data.bio || '';
+          
+          // Load profile picture if exists
+          if (data.profile_picture) {
+            // Update the preview in the settings form
+            const previewImg = document.getElementById('profile-preview');
+            previewImg.src = data.profile_picture;
+            previewImg.style.display = 'block';
+            
+            // Update the profile picture in the header
+            document.getElementById('user-profile-image').src = data.profile_picture;
+          } else {
+            // Use default profile image if no custom image is set
+            document.getElementById('user-profile-image').src = defaultProfileImage;
+            
+            // Also show the default image in the preview
+            const previewImg = document.getElementById('profile-preview');
+            previewImg.src = defaultProfileImage;
+            previewImg.style.display = 'block';
+          }
+        } else {
+          console.error('Error fetching user details:', data.message);
+          alert('Error fetching user details: ' + data.message);
         }
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        console.error('Error fetching user details:', error);
+        alert('Error fetching user details: ' + error.message);
+      });
     });
 
     // Save settings function
@@ -115,77 +178,151 @@
         window.location.href = 'login.html';
         return;
       }
+      
+      console.log('User info from localStorage:', userInfo);
 
       const email = document.getElementById('email').value;
       const phone = document.getElementById('phone').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
       const bio = document.getElementById('bio').value;
+      const profilePicture = document.getElementById('profile-picture').files[0];
 
-      // Basic validation
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address!');
+        return;
+      }
+
+      // Phone validation
+      const phoneRegex = /^\d{10,15}$/;
+      if (phone && !phoneRegex.test(phone.replace(/[-()\s]/g, ''))) {
+        alert('Please enter a valid phone number!');
+        return;
+      }
+
+      // Password validation
       if (password !== confirmPassword) {
         alert('Passwords do not match!');
         return;
       }
 
+      // Check if password is being changed (not the default masked value)
+      if (password !== '********') {
+        // Password strength validation (min 8 chars, at least one number and one special char)
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          alert('Password must be at least 8 characters and include at least one letter, one number, and one special character!');
+          return;
+        }
+      }
+
       try {
+        // Check if user_id or id is available and use the correct property
+        const userId = userInfo.user_id || userInfo.id;
+        if (!userId) {
+          alert('User ID not found in profile. Please log in again.');
+          logout();
+          return;
+        }
+        
+        const updateData = {
+          user_id: userId,
+          email: email,
+          phone: phone,
+          bio: bio
+        };
+        
+        console.log('Sending data to server:', updateData);
+        
+        // Only include password if it was changed
+        if (password !== '********') {
+          updateData.password = password;
+        }
+        
+        // First, update user info
         const response = await fetch('update_settings.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            user_id: userInfo.user_id,
-            email: email,
-            phone: phone,
-            password: password,
-            bio: bio
-          })
+          body: JSON.stringify(updateData)
         });
 
         const data = await response.json();
+        console.log('Server response:', data);
+        
+        // If profile picture was selected, upload it
+        if (profilePicture) {
+          const formData = new FormData();
+          formData.append('profile_picture', profilePicture);
+          formData.append('user_id', userId);
+          
+          console.log('Uploading profile picture for user ID:', userId);
+          
+          const pictureResponse = await fetch('upload_profile_picture.php', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const pictureData = await pictureResponse.json();
+          console.log('Profile picture upload response:', pictureData);
+          
+          if (!pictureData.success) {
+            alert('Profile picture update failed: ' + (pictureData.message || 'Unknown error'));
+          } else if (pictureData.path) {
+            // Update the profile picture in the header
+            document.getElementById('user-profile-image').src = pictureData.path;
+          }
+        }
+        
         if (data.success) {
           alert('Settings updated successfully!');
+          
+          // Update local storage if email was changed
+          if (email !== userInfo.email) {
+            userInfo.email = email;
+            localStorage.setItem('user_info', JSON.stringify(userInfo));
+          }
         } else {
           alert(data.message || 'Error updating settings');
         }
       } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while saving settings');
+        console.error('Error during save settings:', error);
+        alert('An error occurred while saving settings: ' + error.message);
       }
     }
 
-    // Handle profile picture upload
-    document.getElementById('profile-picture').addEventListener('change', async function(e) {
-      const userInfo = JSON.parse(localStorage.getItem('user_info'));
-      if (!userInfo) {
-        window.location.href = 'login.html';
-        return;
-      }
-
+    // Preview profile picture when selected
+    document.getElementById('profile-picture').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
-
-      const formData = new FormData();
-      formData.append('profile_picture', file);
-      formData.append('user_id', userInfo.user_id);
-
-      try {
-        const response = await fetch('upload_profile_picture.php', {
-          method: 'POST',
-          body: formData
-        });
-
-        const data = await response.json();
-        if (data.success) {
-          alert('Profile picture updated successfully!');
-        } else {
-          alert(data.message || 'Error updating profile picture');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while uploading profile picture');
+      
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Invalid file type. Please upload a JPG, PNG, GIF, or WEBP image.');
+        this.value = ''; // Clear the input
+        return;
       }
+      
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        alert('File size exceeds 5MB limit. Please upload a smaller image.');
+        this.value = ''; // Clear the input
+        return;
+      }
+      
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const previewImg = document.getElementById('profile-preview');
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
     });
 
     // Logout function
