@@ -225,4 +225,70 @@ function handleLogout() {
     window.location.href = 'login.html';
 }
 
+// Function to save settings
+async function saveSettings() {
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const bio = document.getElementById('bio').value;
+    
+    // Basic validation
+    if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+    }
+    
+    try {
+        const response = await fetch('update_settings.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                phone,
+                password,
+                bio
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            alert('Settings updated successfully!');
+        } else {
+            alert('Error updating settings: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while updating settings');
+    }
+}
+
+// Handle profile picture upload
+document.getElementById('profile-picture').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+    
+    try {
+        const response = await fetch('upload_profile_picture.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            alert('Profile picture updated successfully!');
+        } else {
+            alert('Error updating profile picture: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while uploading profile picture');
+    }
+});
+
   

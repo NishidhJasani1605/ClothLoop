@@ -33,14 +33,14 @@
           <div class="user-profile">
             <img src="Shop_logo.png" alt="User Shop logo" />
             <div class="user-details">
-              <h4>John Doe</h4>
+              <h4 id="username-display">Loading...</h4>
               <p>Seller Account</p>
             </div>
             <i class="fas fa-chevron-down"></i>
             <div class="dropdown-menu">
-              <a href="#"><i class="fas fa-user"></i> Profile</a>
-              <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-              <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+              <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+              <a href="settings.html" onclick="showSettings()"><i class="fas fa-cog"></i> Settings</a>
+              <a href="login.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Log Out</a>
             </div>
           </div>
         </div>
@@ -275,5 +275,49 @@
 
   <!-- Add JavaScript at the end of body -->
   <script src="Seller_Dashboard.js"></script>
+  <script>
+  // Check if user is logged in
+  document.addEventListener('DOMContentLoaded', function() {
+      const userInfo = JSON.parse(localStorage.getItem('user_info'));
+      if (!userInfo) {
+          window.location.href = 'login.html';
+          return;
+      }
+
+      // Display username
+      document.getElementById('username-display').textContent = userInfo.username;
+
+      // Fetch user details
+      fetch('get_user_details.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              user_id: userInfo.user_id
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              // Update user details in the dashboard
+              document.getElementById('email').value = data.email || '';
+              document.getElementById('phone').value = data.phone || '';
+          }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+  // Logout function
+  function logout() {
+      localStorage.removeItem('user_info');
+      window.location.href = 'login.html';
+  }
+
+  // Show settings function
+  function showSettings() {
+      // Your settings display logic here
+  }
+  </script>
 </body>
 </html>
