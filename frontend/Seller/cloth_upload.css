@@ -41,6 +41,7 @@ body {
     margin-bottom: 20px;
     cursor: pointer;
     height: 200px; /* Increased height for the upload area */
+    transition: all 0.3s ease;
 }
 .image-preview {
     display: flex;
@@ -69,4 +70,41 @@ button {
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+.location-help {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.location-btn {
+    background-color: #3498db;
+    margin-top: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: auto;
+}
+
+.location-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Style for read-only fields */
+input[readonly] {
+    background-color: #f8f8f8;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* For transition effect when location is used */
+input[type="text"] {
+    transition: background-color 0.5s ease;
+}
+
+/* Drag and drop styling */
+.upload-area.dragover {
+    background-color: #e8f7f3;
+    border-color: #4CAF50;
 }
