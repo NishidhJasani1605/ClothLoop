@@ -24,8 +24,8 @@
         <h1>Login</h1>
         <!-- Error message container will be added here by JS -->
         <form id="login-form">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required><br><br>
+          <label for="username">Email:</label>
+          <input type="email" id="username" name="username" required><br><br>
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required><br><br>
           <div class="button-container">
@@ -82,7 +82,7 @@
             form.prepend(errorDiv);
         }
         
-        console.log('Attempting login for:', username);
+        console.log('Attempting login with email:', username);
         
         // API paths to try (in order)
         const paths = [

@@ -126,7 +126,7 @@ try {
         }
     } else {
         error_log("User not found: {$username}");
-        throw new Exception("User not found. Please check your username or register a new account.");
+        throw new Exception("User not found. Please check your email or register a new account.");
     }
     
     // Close resources
