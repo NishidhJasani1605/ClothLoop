@@ -4,332 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - ClothLoop</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --text-color: #2c3e50;
-            --light-bg: #ecf0f1;
-            --card-bg: #ffffff;
-            --footer-bg: #2c3e50;
-            --footer-text: #ecf0f1;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--light-bg);
-        }
-
-        nav {
-            background-color: var(--primary-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        nav ul li a:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .header {
-            background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), 
-                            url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: white;
-            text-align: center;
-            padding: 6rem 0;
-            position: relative;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .header p {
-            font-size: 1.5rem;
-            margin-top: 1rem;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .about-section {
-            margin: 4rem 0;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .about-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(44, 62, 80, 0.1);
-        }
-
-        .about-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-card h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .team-section {
-            text-align: center;
-            margin: 4rem 0;
-            background-color: var(--card-bg);
-            padding: 3rem 0;
-            border-radius: 15px;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .team-member {
-            background: var(--light-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .team-member:hover {
-            transform: translateY(-5px);
-        }
-
-        .team-member img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            margin-bottom: 1.5rem;
-            object-fit: cover;
-            border: 4px solid var(--secondary-color);
-        }
-
-        .mission-vision {
-            background-color: var(--primary-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            color: white;
-        }
-
-        .mission-vision .about-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: white;
-        }
-
-        .mission-vision h3 {
-            color: var(--accent-color);
-        }
-
-        .footer {
-            background-color: var(--footer-bg);
-            color: var(--footer-text);
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-
-        .footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: var(--accent-color);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .header p {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+    
+    <link rel="stylesheet" href="about_us.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <nav>
-        <a href="../frontend/Buyer/home.html" class="logo">ClothLoop</a>
-        <ul>
-            <li><a href="../frontend/Buyer/home.html">Home</a></li>
-            <li><a href="../Registration/login.html">Login</a></li>
-            <li><a href="../Registration/signup.html">Register</a></li>
-            <li><a href="javascript:history.back()">Back</a></li>
-        </ul>
-    </nav>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <img src="../frontend/Image/logo.webp" alt="ClothLoop logo" />
+                <div class="brand-name">ClothLoop</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../frontend/Buyer/home.html">Home</a></li>
+                    <li><a href="../frontend/categories.html">Categories</a></li>
+                    <li><a href="about_us.html" class="active">About Us</a></li>
+                    <li><a href="../Registration/login.html">Login</a></li>
+                    <li><a href="../Registration/signup.html">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="header">
-        <h1>About ClothLoop</h1>
-        <p>Connecting Fashion with Sustainability</p>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>About ClothLoop</h1>
+            <p>Connecting Fashion with Sustainability</p>
+        </div>
+    </section>
 
-    <div class="container">
-        <div class="about-section">
-            <h2>Who We Are!!</h2>
-            <p>ClothLoop is a revolutionary platform that connects fashion enthusiasts with sustainable clothing options. We believe in creating a circular fashion economy where quality clothes find new homes and reduce environmental impact.</p>
+    <!-- Main Content -->
+    <main class="container">
+        <section class="about-section">
+            <h2>Who We Are</h2>
+            <p class="section-intro">ClothLoop is a revolutionary platform that connects fashion enthusiasts with sustainable clothing options. We believe in creating a circular fashion economy where quality clothes find new homes and reduce environmental impact.</p>
             
-            <div class="about-grid">
-                <div class="about-card">
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
                     <h3>Our Story</h3>
                     <p>Founded in 2024, ClothLoop emerged from a simple idea: making sustainable fashion accessible to everyone while reducing textile waste.</p>
-                    <div class="expanded-content" style="display: none; margin-top: 1rem;">
-                        <p>What started as a small initiative by a group of fashion enthusiasts and environmentalists quickly grew into a thriving community. Our founders recognized the growing problem of fast fashion and its environmental impact.</p>
-                        <h4>Key Milestones:</h4>
-                        <ul>
-                            <li>January 2024: Launch of ClothLoop beta platform</li>
-                            <li>March 2024: Reached 1000+ active users</li>
-                            <li>April 2024: Partnered with sustainable fashion brands</li>
-                            <li>June 2024: Launched mobile app</li>
-                        </ul>
-                        <p>Today, we're proud to have helped save thousands of clothing items from landfills while building a passionate community of sustainable fashion advocates.</p>
-                    </div>
+                    <p>What started as a small initiative by a group of fashion enthusiasts and environmentalists quickly grew into a thriving community. Our founders recognized the growing problem of fast fashion and its environmental impact.</p>
                 </div>
-                <div class="about-card">
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
                     <h3>What We Do</h3>
                     <p>We provide a secure and user-friendly platform for buying and selling pre-loved clothing, ensuring quality and authenticity in every transaction.</p>
-                    <div class="expanded-content" style="display: none; margin-top: 1rem;">
-                        <p>Our platform is designed to make sustainable fashion accessible and convenient. We carefully verify each seller and item to maintain high quality standards.</p>
-                        <h4>Our Services:</h4>
-                        <ul>
-                            <li>Secure buyer-seller matching</li>
-                            <li>Quality verification process</li>
-                            <li>Sustainable packaging options</li>
-                            <li>Buyer protection guarantee</li>
-                        </ul>
-                        <p>Through our platform, we've facilitated thousands of successful transactions, giving pre-loved clothing items a second life.</p>
-                    </div>
+                    <p>Our platform is designed to make sustainable fashion accessible and convenient. We carefully verify each seller and item to maintain high quality standards.</p>
                 </div>
-                <div class="about-card">
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
                     <h3>Why Choose Us</h3>
                     <p>We offer verified sellers, secure payments, and a commitment to sustainability that makes fashion both affordable and environmentally responsible.</p>
-                    <div class="expanded-content" style="display: none; margin-top: 1rem;">
-                        <p>We stand out from traditional marketplaces by prioritizing sustainability and user security while maintaining affordability.</p>
-                        <h4>Our Advantages:</h4>
-                        <ul>
-                            <li>100% verified seller profiles</li>
-                            <li>Secure payment gateway</li>
-                            <li>Eco-friendly initiatives</li>
-                            <li>Competitive pricing</li>
-                        </ul>
-                        <p>Join thousands of satisfied users who have made the switch to sustainable fashion with ClothLoop.</p>
-                    </div>
+                    <p>We stand out from traditional marketplaces by prioritizing sustainability and user security while maintaining affordability.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="mission-vision">
-            <div class="container">
-                <h2>Our Mission & Vision</h2>
-                <div class="about-grid">
-                    <div class="about-card">
-                        <h3>Mission</h3>
-                        <p>To create a sustainable fashion ecosystem that benefits both sellers and buyers while reducing the environmental impact of textile waste.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>Vision</h3>
-                        <p>To become the leading platform for sustainable fashion commerce, making eco-friendly fashion choices accessible to everyone.</p>
-                    </div>
+        <section class="mission-section">
+            <div class="mission-content">
+                <div class="mission-card">
+                    <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                    <p>To create a sustainable fashion ecosystem that benefits both sellers and buyers while reducing the environmental impact of textile waste.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <h3><i class="fas fa-eye"></i> Our Vision</h3>
+                    <p>To become the leading platform for sustainable fashion commerce, making eco-friendly fashion choices accessible to everyone.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="team-section">
-            <h2>Our Team</h2>
+        <section class="team-section">
+            <h2>Meet Our Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Team Member 1">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="John Doe">
+                    </div>
                     <h3>John Doe</h3>
                     <p>Founder & CEO</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
+                
                 <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Team Member 2">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Jane Smith">
+                    </div>
                     <h3>Jane Smith</h3>
                     <p>Head of Operations</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
+                
                 <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Team Member 3">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mike Johnson">
+                    </div>
                     <h3>Mike Johnson</h3>
                     <p>Technical Lead</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
                 </div>
+                
                 <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Team Member 4">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sarah Wilson">
+                    </div>
                     <h3>Sarah Wilson</h3>
                     <p>Marketing Director</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <div class="footer">
-        <p>&copy; 2024 ClothLoop. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
-    </div>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ClothLoop</h3>
+                <p>Connecting Fashion with Sustainability</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="../frontend/Buyer/home.html">Home</a></li>
+                    <li><a href="about_us.html">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> contact@clothloop.com</p>
+                <p><i class="fas fa-phone"></i> +1 (123) 456-7890</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Fashion St, Mumbai, India</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
