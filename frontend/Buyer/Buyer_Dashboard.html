@@ -10,13 +10,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Origin tracking script -->
+    <script src="../../js/track-origin.js"></script>
 
     <style>
        
 
     </style>
 </head>
-<body>
+<body class="buyer-page">
     <!-- Add overlay and sort panel at the top of body -->
     <div class="sort-overlay" id="sortOverlay"></div>
 
@@ -42,7 +44,7 @@
             <div class="btn-container">
                 <button class="btn-black" style="background-color: black;" onclick="handleLogout()">Logout</button>
                 <button class="btn-black" style="background-color: black;" onclick="window.location.href='wish.html'">Wish List</button>
-                <button class="btn-black" style="background-color: black;" onclick="window.location.href='../../AboutUs/about_us.html'">About Us</button>
+                <button class="btn-black" style="background-color: black;" onclick="sessionStorage.setItem('userOrigin', 'buyer'); window.location.href='../../AboutUs/about_us.html'">About Us</button>
             </div>
         </div>
         <nav class="navbar">

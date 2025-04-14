@@ -11,8 +11,10 @@
   
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <!-- Origin tracking script -->
+  <script src="../../js/track-origin.js"></script>
 </head>
-<body>
+<body class="seller-page">
   <div class="container">
     <!-- Header -->
     <header class="main-header">
@@ -41,7 +43,7 @@
               <div class="dropdown-menu">
                 <a href="#"><i class="fas fa-user"></i> Profile</a>
                 <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-                <a href="../../AboutUs/about_us.html"><i class="fas fa-info-circle"></i> About Us</a>
+                <a href="../../AboutUs/about_us.html" onclick="sessionStorage.setItem('userOrigin', 'seller'); return true;"><i class="fas fa-info-circle"></i> About Us</a>
                 <a href="../../Registration/login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
               </div>
             </div>

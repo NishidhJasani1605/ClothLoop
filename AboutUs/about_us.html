@@ -7,6 +7,15 @@
     
     <link rel="stylesheet" href="about_us.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    
+    <!-- Script to handle direct visits (optional) -->
+    <script>
+        // This handles cases where someone visits the page directly without a referrer
+        if (!sessionStorage.getItem('userOrigin')) {
+            // Default to buyer for direct visits
+            sessionStorage.setItem('userOrigin', 'buyer');
+        }
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -18,15 +27,7 @@
             </div>
         </div>
         <div class="header-right">
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="../frontend/Buyer/home.html">Home</a></li>
-                    <li><a href="../frontend/categories.html">Categories</a></li>
-                    <li><a href="about_us.html" class="active">About Us</a></li>
-                    <li><a href="../Registration/login.html">Login</a></li>
-                    <li><a href="../Registration/signup.html">Register</a></li>
-                </ul>
-            </nav>
+            <a href="#" id="backButton" class="back-button"><i class="fas fa-arrow-left"></i>Back To Home</a>
         </div>
     </header>
 
@@ -187,5 +188,56 @@
             <p>&copy; 2024 ClothLoop. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Script to handle the back button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const backButton = document.getElementById('backButton');
+            
+            console.log("About Us page loaded - checking user origin");
+            
+            // Check if we have stored the origin in session storage (more reliable than referrer)
+            const userOrigin = sessionStorage.getItem('userOrigin') || '';
+            console.log("Initial origin from sessionStorage:", userOrigin);
+            
+            // If no origin is stored, try to determine it from the referrer
+            if (!userOrigin) {
+                const referrer = document.referrer;
+                console.log("No origin found in sessionStorage, referrer is:", referrer);
+                
+                if (referrer.includes('seller')) {
+                    console.log("Detected seller in referrer");
+                    sessionStorage.setItem('userOrigin', 'seller');
+                } else if (referrer.includes('buyer')) {
+                    console.log("Detected buyer in referrer");
+                    sessionStorage.setItem('userOrigin', 'buyer');
+                } else {
+                    console.log("Could not determine origin from referrer, defaulting to buyer");
+                    // Default to buyer if can't determine
+                    sessionStorage.setItem('userOrigin', 'buyer');
+                }
+            }
+            
+            // Log the final origin used
+            console.log("Final origin set to:", sessionStorage.getItem('userOrigin'));
+            
+            backButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Get the stored origin
+                const origin = sessionStorage.getItem('userOrigin');
+                console.log("Back button clicked, redirecting based on origin:", origin);
+                
+                if (origin === 'seller') {
+                    console.log("Redirecting to Seller_Dashboard.html");
+                    window.location.href = '../frontend/Seller/Seller_Dashboard.html';
+                } else {
+                    console.log("Redirecting to Buyer_Dashboard.html");
+                    // Default to buyer dashboard
+                    window.location.href = '../frontend/Buyer/Buyer_Dashboard.html';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
