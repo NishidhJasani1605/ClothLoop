@@ -113,6 +113,7 @@ try {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_type'] = $user['user_type'];
+            $_SESSION['email'] = $user['email'];
             
             // Return success response with user type
             echo json_encode([
