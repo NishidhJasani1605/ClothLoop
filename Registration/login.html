@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="signup" href="signup.html">
     <!-- <link rel="login-form" href="login.js"> -->
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/ClothLoop/Registration/login.css">
     <title>Login - ClothLoop</title>
     <style>
         #login-error {
@@ -45,7 +45,7 @@
             Continue with Google
         </button>
         <div style="text-align: center;">
-            <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+            <p>Don't have an account? <a href="/ClothLoop/Registration/signup.html">Sign up</a></p>
         </div>
     </div>
       
@@ -87,9 +87,9 @@
         // API paths to try (in order)
         const paths = [
             '/ClothLoop/backend/login.php',
-            '../backend/login.php',
-            '../../backend/login.php',
-            './backend/login.php'
+            '/ClothLoop/backend/login.php',
+            '/ClothLoop/backend/login.php',
+            '/ClothLoop/backend/login.php'
         ];
         
         // Try the first path

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - ClothLoop</title>
     
-    <link rel="stylesheet" href="about_us.css">
+    <link rel="stylesheet" href="/ClothLoop/AboutUs/about_us.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     
     <!-- Script to handle direct visits (optional) -->
@@ -22,7 +22,7 @@
     <header class="main-header">
         <div class="header-left">
             <div class="logo">
-                <img src="../frontend/Image/logo.webp" alt="ClothLoop logo" />
+                <img src="/ClothLoop/frontend/Image/logo.webp" alt="ClothLoop logo" />
                 <div class="brand-name">ClothLoop</div>
             </div>
         </div>
@@ -160,19 +160,19 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="../frontend/Buyer/home.html">Home</a></li>
-                    <li><a href="about_us.html">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="/ClothLoop/home.html">Home</a></li>
+                    <li><a href="/ClothLoop/AboutUs/about_us.html">About Us</a></li>
+                    <li><a href="/ClothLoop/contact.html">Contact</a></li>
+                    <li><a href="/ClothLoop/faq.html">FAQ</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
                 <h3>Legal</h3>
                 <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="/ClothLoop/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="/ClothLoop/terms-of-service.html">Terms of Service</a></li>
+                    <li><a href="/ClothLoop/return-policy.html">Return Policy</a></li>
                 </ul>
             </div>
             
@@ -230,11 +230,11 @@
                 
                 if (origin === 'seller') {
                     console.log("Redirecting to Seller_Dashboard.html");
-                    window.location.href = '../frontend/Seller/Seller_Dashboard.html';
+                    window.location.href = '/ClothLoop/frontend/Seller/Seller_Dashboard.html';
                 } else {
                     console.log("Redirecting to Buyer_Dashboard.html");
                     // Default to buyer dashboard
-                    window.location.href = '../frontend/Buyer/Buyer_Dashboard.html';
+                    window.location.href = '/ClothLoop/frontend/Buyer/Buyer_Dashboard.html';
                 }
             });
         });

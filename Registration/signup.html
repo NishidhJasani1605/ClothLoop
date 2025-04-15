@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - ClothLoop</title>
-    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="/ClothLoop/Registration/signup.css">
 </head>
 <body>
     <div class="container">
@@ -12,7 +12,7 @@
         
         <div id="success-message" class="success-message"></div>
         
-        <form id="signup-form" action="../backend/signup_process.php" method="POST">
+        <form id="signup-form" action="/ClothLoop/backend/signup_process.php" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" title="Enter your username" placeholder="Enter username" required>
@@ -58,10 +58,10 @@
         </form>
         
         <div class="login-link">
-            <p>Already have an account? <a href="login.html">Login</a></p>
+            <p>Already have an account? <a href="/ClothLoop/Registration/login.html">Login</a></p>
         </div>
     </div>
 
-    <script src="signup.js"></script>
+    <script src="/ClothLoop/Registration/signup.js"></script>
 </body>
 </html>

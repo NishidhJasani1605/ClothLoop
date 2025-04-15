@@ -27,7 +27,7 @@
         });
 
           // List of image sources
-    const images = ["frontend/Image/1.jpg", "frontend/Image/2.jpg", "frontend/Image/3.jpg", "frontend/Image/4.jpg", "frontend/Image/5.jpg"];
+    const images = ["/ClothLoop/frontend/Image/1.jpg", "/ClothLoop/frontend/Image/2.jpg", "/ClothLoop/frontend/Image/3.jpg", "/ClothLoop/frontend/Image/4.jpg", "/ClothLoop/frontend/Image/5.jpg"];
     let currentImageIndex = 0;
     let interval;
 
@@ -168,5 +168,5 @@
             // Clear any stored user data
             localStorage.clear();
             // Redirect to login page
-            window.location.href = '../../Registration/login.html';
+            window.location.href = '/ClothLoop/Registration/login.html';
         }
