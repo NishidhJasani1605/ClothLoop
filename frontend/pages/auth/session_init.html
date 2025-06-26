@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Initializer | ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --success-color: #34C759;
+            --error-color: #FF3B30;
+            --input-bg: #222222;
+            --input-border: #333333;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            height: 50px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--text-color);
+            padding: 0 15px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        button {
+            height: 50px;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .message {
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+        
+        .success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .error {
+            background-color: var(--error-color);
+            color: white;
+        }
+        
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            border: 1px solid var(--accent-color);
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Session Initializer</h1>
+        <p>Use this utility to set up a seller session for testing.</p>
+        
+        <div class="form-group">
+            <label for="sellerId">Seller ID:</label>
+            <input type="number" id="sellerId" placeholder="Enter seller ID">
+        </div>
+        
+        <button id="initSession">Initialize Session</button>
+        
+        <div id="message" class="message" style="display: none;"></div>
+    </div>
+    
+    <script>
+        document.getElementById('initSession').addEventListener('click', function() {
+            const sellerId = document.getElementById('sellerId').value;
+            
+            if (!sellerId) {
+                showMessage('Please enter a seller ID', 'error');
+                return;
+            }
+            
+            // Store seller ID in session storage
+            sessionStorage.setItem('user_id', sellerId);
+            sessionStorage.setItem('user_role', 'seller');
+            
+            showMessage('Session initialized! You can now visit the seller profile page.', 'success');
+            
+            // Add a link to the seller profile page
+            const message = document.getElementById('message');
+            message.innerHTML += '<br><br><a href="../seller/seller_profile.html">Go to Seller Profile</a>';
+        });
+        
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+            message.style.display = 'block';
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #000000;
+            --text-color: #000000;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #f5f5f5;
+            --footer-text: #000000;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Light theme specific overrides */
+        .light-theme .hero {
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.8)),
+                        url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            color: var(--text-color);
+        }
+        
+        .light-theme .hero .btn {
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .light-theme .hero .btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-theme .about-card {
+            border: 1px solid #e0e0e0;
+        }
+        
+        .light-theme .mission-vision {
+            background-color: #f0f0f0;
+            color: var(--text-color);
+        }
+        
+        .light-theme .mv-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .light-theme .team-member {
+            border: 1px solid #e0e0e0;
+        }
+        
+        .light-theme .social-links a {
+            background-color: #f0f0f0;
+            border: 1px solid #000000;
+        }
+        
+        .light-theme .footer-logo {
+            color: #000000;
+        }
+        
+        .light-theme .footer-logo i {
+            color: #000000 !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Header */
+        .hero {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.8)),
+                        url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            margin-top: 73px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 1rem 2rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s linear;
+            animation: fadeIn 2s ease-out;
+            border: 2px solid var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero .btn:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            transform: skewX(-20deg);
+        }
+
+        /* About section */
+        .about-section {
+            margin-bottom: 3rem;
+        }
+
+        .about-intro {
+            max-width: 800px;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .about-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 0;
+            box-shadow: var(--box-shadow);
+            transition: all 0.2s linear;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333333;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px) skewX(-3deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .about-card h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .about-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Mission & Vision section */
+        .mission-vision {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            padding: 3rem 0;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .mission-vision::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translate(50%, -50%) skewX(-15deg);
+        }
+
+        .mission-vision::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.03);
+            transform: translate(-30%, 30%) skewX(-15deg);
+        }
+
+        .mission-vision .section-title {
+            color: var(--accent-color);
+            text-align: center;
+        }
+
+        .mission-vision .section-title::after {
+            left: 50%;
+            transform: translateX(-50%) skewX(-20deg);
+            background-color: var(--accent-color);
+        }
+
+        .mv-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .mv-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .mv-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mv-card h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mv-card h3 i {
+            margin-right: 10px;
+        }
+
+        /* Team section */
+        .team-section {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .team-section .section-title {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .team-section .section-title::after {
+            left: 50%;
+            transform: translateX(-50%) skewX(-20deg);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: var(--card-bg);
+            border-radius: 0;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: all 0.2s linear;
+            border: 1px solid #333333;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px) skewX(-3deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--accent-color);
+            filter: none;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover img {
+            filter: none;
+            transform: scale(1.05);
+        }
+
+        .team-info {
+            padding: 1.5rem;
+        }
+
+        .team-info h3 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-info p {
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border-radius: 0;
+            transition: all 0.2s linear;
+            border: 1px solid var(--accent-color);
+        }
+
+        .social-links a:hover {
+            transform: skewX(-10deg);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 1rem 0 1rem;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 5rem !important;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--accent-color) !important;
+        }
+
+        .footer-about p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .footer h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+            transform: skewX(-20deg);
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.2s linear;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 0;
+            border-top: none;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .container, .mv-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav ul li {
+                margin-left: 0.5rem;
+            }
+            
+            nav ul li a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Light theme overrides for team images */
+        .light-theme .team-member img {
+            filter: none;
+        }
+        
+        .light-theme .team-member:hover img {
+            filter: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../../../home.html" class="logo">
+            <img id="navbar-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="javascript:history.back()">Back</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>About ClothLoop</h1>
+            <p>Connecting Fashion with Sustainability</p>
+            <a href="../../../home.html" class="btn">JOIN OUR COMMUNITY</a>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Meet Our Team</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="../../assets/images/Aadi.jpg" alt="Aaditya Desai">
+                    <div class="team-info">
+                        <h3>Aaditya Desai</h3>
+                        <p>Backend Developer</p>
+                        <div class="social-links">
+                            <a href="http://www.linkedin.com/in/aaditya-desai1"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/aaditya-desai1"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="../../assets/images/Aaryan.jpg" alt="Aaryan Joshi">
+                    <div class="team-info">
+                        <h3>Aaryan Joshi</h3>
+                        <p>Backend Developer </p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/aaryan-joshi-36114a16b/"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/Aaryan4144"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="../../assets/images/Yash.jpg" alt="Yash Jariwala">
+                    <div class="team-info">
+                        <h3>Yash Jariwala</h3>
+                        <p>Database Management</p>
+                        <div class="social-links">
+                            <a href="http://www.linkedin.com/in/yashjariwala1303"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/neel3103"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="../../assets/images/Nishidh.jpg" alt="Nidhidh Jasani">
+                    <div class="team-info">
+                        <h3>Nishidh Jasani</h3>
+                        <p>Frontend Developer</p>
+                        <div class="social-links">
+                            <a href="http://www.linkedin.com/in/nishidh-jasani-n1605"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/NishidhJasani1605"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <h2 class="section-title">Who We Are</h2>
+            <p class="about-intro">ClothLoop is a revolutionary platform that connects fashion enthusiasts with sustainable clothing options. We believe in creating a circular fashion economy where quality clothes find new homes and reduce environmental impact.</p>
+            
+            <div class="about-cards">
+                <div class="about-card">
+                    <h3>Our Story</h3>
+                    <p>Founded in 2024, ClothLoop emerged from a simple idea: making sustainable fashion accessible to everyone while reducing textile waste.</p>
+                    <p>What started as a small initiative by a group of fashion enthusiasts and environmentalists quickly grew into a thriving community. Our founders recognized the growing problem of fast fashion and its environmental impact.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>What We Do</h3>
+                    <p>We provide a secure and user-friendly platform for buying and selling pre-loved clothing, ensuring quality and authenticity in every transaction.</p>
+                    <p>Our platform is designed to make sustainable fashion accessible and convenient. We carefully verify each seller and item to maintain high quality standards.</p>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Why Choose Us</h3>
+                    <p>We offer verified sellers, secure payments, and a commitment to sustainability that makes fashion both affordable and environmentally responsible.</p>
+                    <p>We stand out from traditional marketplaces by prioritizing sustainability and user security while maintaining affordability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision">
+        <div class="mv-container">
+            <h2 class="section-title">Our Mission & Vision</h2>
+            
+            <div class="mv-cards">
+                <div class="mv-card">
+                    <h3><i class="fas fa-bullseye"></i> Mission</h3>
+                    <p>To create a sustainable fashion ecosystem that benefits both sellers and buyers while reducing the environmental impact of textile waste.</p>
+                </div>
+                
+                <div class="mv-card">
+                    <h3><i class="fas fa-eye"></i> Vision</h3>
+                    <p>To become the leading platform for sustainable fashion commerce, making eco-friendly fashion choices accessible to everyone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo" style="justify-content: center; margin-bottom: 1rem;">
+                <img id="footer-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+
+    <script>
+        // Theme switcher functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Function to update logos based on theme
+        function updateLogos(isLightTheme) {
+            const navbarLogo = document.getElementById('navbar-logo');
+            const footerLogo = document.getElementById('footer-logo');
+            
+            if (isLightTheme) {
+                navbarLogo.src = '../../assets/images/logo_b.png';
+                footerLogo.src = '../../assets/images/logo_b.png';
+            } else {
+                navbarLogo.src = '../../assets/images/logo_f.png';
+                footerLogo.src = '../../assets/images/logo_f.png';
+            }
+        }
+        
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('clothloop-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            updateLogos(true);
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const isLightTheme = document.body.classList.toggle('light-theme');
+            
+            // Update icon
+            if (isLightTheme) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('clothloop-theme', 'light');
+                updateLogos(true);
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('clothloop-theme', 'dark');
+                updateLogos(false);
+            }
+        });
+    </script>
+</body>
+</html>

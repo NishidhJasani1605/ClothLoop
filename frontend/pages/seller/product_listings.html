@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<!-- 
+    Version 2.0: If changes are not visible, please try:
+    1. Hard refresh (Ctrl+F5 or Cmd+Shift+R)
+    2. Clear browser cache
+    3. Try in private/incognito mode
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Product Listings - ClothLoop</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Inline CSS -->
+  <style>
+    /* Theme Variables */
+    :root {
+        /* Dark Theme (Default) */
+        --primary-color: #000000;
+        --secondary-color: #222222;
+        --accent-color: #ffffff;
+        --text-color: #ffffff;
+        --light-bg: #111111;
+        --card-bg: #1a1a1a;
+        --card-header-bg: #222222;
+        --footer-bg: #000000;
+        --footer-text: #cccccc;
+        --border-radius: 0;
+        --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        --border-color: #333333;
+        --hover-bg: #222222;
+        --input-bg: #333333;
+        --input-text: #ffffff;
+        --error-color: #FF3B30;
+        --success-color: #34C759;
+        --seller-highlight: #ffffff;
+        --button-border: #444444;
+        --toggle-bg-off: #444444;
+        --toggle-bg-on: #34C759;
+    }
+
+    /* Light Theme Variables */
+    .light-theme {
+        --primary-color: #ffffff;
+        --secondary-color: #eeeeee;
+        --accent-color: #000000;
+        --text-color: #000000;
+        --light-bg: #f5f5f5;
+        --card-bg: #ffffff;
+        --card-header-bg: #f0f0f0;
+        --footer-bg: #f5f5f5;
+        --footer-text: #000000;
+        --border-radius: 0;
+        --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        --border-color: #e0e0e0;
+        --hover-bg: #e0e0e0;
+        --input-bg: #f0f0f0;
+        --input-text: #333333;
+        --error-color: #FF3B30;
+        --success-color: #34C759;
+        --seller-highlight: #000000;
+        --button-border: #cccccc;
+        --toggle-bg-off: #cccccc;
+        --toggle-bg-on: #34C759;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Apply colors to elements */
+    body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.7;
+        color: var(--text-color);
+        background-color: var(--light-bg);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Theme Switcher */
+    .theme-switcher {
+        background: var(--primary-color);
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        width: 40px;
+        height: 40px;
+        border-radius: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-left: 20px;
+        transition: all 0.2s linear;
+    }
+    
+    .theme-switcher:hover {
+        transform: skewX(-5deg);
+        box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+    }
+
+    /* Header styles */
+    nav {
+        background-color: var(--primary-color);
+        padding: 1.2rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+    nav .logo {
+        color: var(--accent-color);
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        position: relative;
+    }
+
+    nav .logo i {
+        margin-right: 10px;
+    }
+
+    nav ul {
+        display: flex;
+        list-style: none;
+    }
+
+    nav ul li {
+        margin-left: 1.5rem;
+    }
+
+    nav ul li a {
+        color: var(--accent-color);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0;
+        transition: all 0.2s linear;
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+    }
+
+    nav ul li a:hover, nav ul li a.active {
+        background-color: transparent;
+        color: var(--accent-color);
+        border-bottom: 2px solid var(--accent-color);
+    }
+    
+    /* Seller badge */
+    .seller-badge {
+        position: absolute;
+        top: -10px;
+        right: -30px;
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        font-size: 10px;
+        font-weight: bold;
+        padding: 3px 8px;
+        border-radius: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* User Actions */
+    .user-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .action-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 1rem;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .action-item i {
+        font-size: 1.2rem;
+        margin-bottom: 0.3rem;
+        color: var(--accent-color);
+    }
+
+    .action-item span {
+        font-size: 0.8rem;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* Main Content */
+    .main-content {
+        flex: 1;
+        max-width: 1200px;
+        margin: 120px auto 50px;
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 0;
+        box-shadow: var(--box-shadow);
+    }
+
+    .content-title {
+        font-size: 24px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-color);
+        margin-right: auto;
+    }
+
+    .action-button {
+        background-color: transparent;
+        color: var(--accent-color);
+        border: 2px solid var(--accent-color);
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.2s linear;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .action-button:hover {
+        transform: translateY(-5px) skewX(-5deg);
+        box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .action-button i {
+        margin-right: 10px;
+    }
+
+    /* Product grid styles */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 40px;
+        width: 100%;
+    }
+
+    /* Product Card v2.0 */
+    .product-card {
+        background-color: var(--card-bg);
+        border-radius: 0;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        transition: all 0.3s ease;
+        border: 2px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: relative;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px) skewX(-3deg);
+        box-shadow: 12px 12px 0 rgba(255, 255, 255, 0.15);
+        border-color: var(--accent-color);
+    }
+
+    .product-image {
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-info {
+        padding: 20px;
+        background-color: var(--card-header-bg);
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 250px;
+    }
+
+    /* Create a wrapper for product details */
+    .product-details {
+        margin-bottom: 15px;
+    }
+
+    .product-name {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 10px 0;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .product-price {
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 5px;
+        font-size: 18px;
+    }
+
+    .product-category {
+        font-size: 14px;
+        color: var(--text-color);
+        margin-bottom: 5px;
+    }
+
+    .product-date {
+        font-size: 14px;
+        color: var(--text-color);
+        margin-bottom: 5px;
+    }
+
+    .product-interest {
+        font-size: 14px;
+        color: var(--text-color);
+        margin-bottom: 20px;
+    }
+
+    .product-shop {
+        font-size: 14px;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        opacity: 0.7;
+    }
+
+    .view-details-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: transparent;
+        color: var(--accent-color);
+        text-decoration: none;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border: 2px solid var(--accent-color);
+        margin-bottom: 15px;
+        transition: all 0.2s linear;
+        height: 46px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .view-details-btn:hover {
+        transform: translateY(-3px) skewX(-5deg);
+        box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .light-theme .view-details-btn:hover {
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    /* Product action buttons */
+    .product-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 8px; /* Consistent small gap between buttons */
+        width: 100%;
+        margin-top: auto;
+    }
+    
+    .product-action-btn {
+        background-color: transparent;
+        color: var(--accent-color);
+        border: 2px solid var(--accent-color);
+        height: 46px; /* Match height with view-details-btn */
+        padding: 0 5px; /* Horizontal padding only */
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 0;
+        cursor: pointer;
+        transition: all 0.2s linear;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 1px;
+        flex: 1;
+        box-sizing: border-box; /* Ensure padding is included in height */
+    }
+    
+    .product-action-btn:hover {
+        transform: translateY(-3px) skewX(-5deg);
+        box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .light-theme .product-action-btn:hover {
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    .product-action-btn.unavailable-btn {
+        background-color: transparent;
+        margin: 0;
+    }
+    
+    .product-action-btn.unavailable-btn.active {
+        background-color: rgba(255, 59, 48, 0.2);
+    }
+    
+    .edit-btn i, .delete-btn i, .unavailable-btn i {
+        margin-right: 5px;
+    }
+
+    /* Update responsive styles for buttons */
+    @media (max-width: 576px) {
+        .product-buttons {
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .product-action-btn.unavailable-btn {
+            margin: 5px 0; /* Reset margins on mobile */
+        }
+    }
+
+    .no-products {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 50px;
+        background-color: var(--card-bg);
+        border-radius: 0;
+        box-shadow: var(--box-shadow);
+        border: 2px solid var(--border-color);
+        animation: pulse-border 2s infinite;
+        width: 100%;
+        max-width: 600px;
+        margin: 50px auto;
+    }
+    
+    .no-products i {
+        font-size: 60px;
+        margin-bottom: 30px;
+        color: var(--accent-color);
+    }
+    
+    .no-products h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: var(--accent-color);
+    }
+    
+    .no-products p {
+        margin-bottom: 30px;
+        color: var(--text-color);
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 50px;
+        background-color: var(--card-bg);
+        border-radius: 0;
+        box-shadow: var(--box-shadow);
+        border: 2px solid var(--border-color);
+        animation: pulse-border 2s infinite;
+    }
+    
+    .empty-state img {
+        max-width: 100px;
+        margin-bottom: 20px;
+    }
+    
+    .empty-state h3 {
+        margin-bottom: 10px;
+        font-size: 24px;
+        color: var(--accent-color);
+    }
+    
+    .empty-state p {
+        margin-bottom: 30px;
+        color: var(--text-color);
+    }
+    
+    .btn-add-product {
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        border: 2px solid var(--accent-color);
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.2s linear;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .btn-add-product:hover {
+        transform: translateY(-5px) skewX(-5deg);
+        box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .no-products .action-button {
+        display: inline-flex;
+        margin: 0 auto;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+
+    .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid var(--accent-color);
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+    }
+
+    .light-theme .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top: 4px solid var(--accent-color);
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Alert messages */
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 0;
+        text-align: center;
+        border-left: 4px solid transparent;
+        box-shadow: var(--box-shadow);
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .alert-success {
+        background-color: rgba(52, 199, 89, 0.1);
+        color: var(--success-color);
+        border-left-color: var(--success-color);
+    }
+
+    .alert-error {
+        background-color: rgba(255, 59, 48, 0.1);
+        color: var(--error-color);
+        border-left-color: var(--error-color);
+    }
+    
+    /* Footer */
+    .footer {
+        background-color: var(--footer-bg);
+        color: var(--footer-text);
+        padding: 1rem 0 1rem;
+        clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+        padding-top: 1rem !important;
+        margin-top: auto;
+        width: 100%;
+    }
+
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem 0;
+        border-top: none;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--accent-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+
+    .footer-logo i {
+        margin-right: 10px;
+        color: var(--accent-color) !important;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* Version 2.0 - Force refresh */
+    @media (max-width: 992px) {
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 1rem;
+        }
+        
+        .main-content {
+            padding: 30px 15px;
+        }
+        
+        .content-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .content-title {
+            margin-bottom: 15px;
+            margin-right: 0;
+        }
+        
+        .action-button {
+            margin-top: 15px;
+            margin-left: 0;
+        }
+        
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .content-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .action-item {
+            margin: 0 0.5rem;
+        }
+        
+        .action-item span {
+            display: none;
+        }
+        
+        .products-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .product-buttons {
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .product-action-btn.unavailable-btn {
+            margin: 5px 0; /* Reset margins on mobile */
+        }
+    }
+
+    .light-theme .product-card:hover {
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .light-theme .action-button:hover {
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-btn i, .delete-btn i {
+        margin-right: 8px;
+    }
+    
+    /* Force Refresh Styles */
+    .refreshed-styles .content-header {
+        animation: pulse-bg 1s ease;
+    }
+    
+    .refreshed-styles .product-card {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .animation-enabled .product-card {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    @keyframes pulse-bg {
+        0% { background-color: rgba(255, 255, 255, 0.3); }
+        50% { background-color: rgba(255, 255, 255, 0.1); }
+        100% { background-color: rgba(255, 255, 255, 0.05); }
+    }
+
+    /* Product status badges */
+    .product-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+        z-index: 10;
+    }
+    
+    .status-active {
+        background-color: #34C759;
+    }
+    
+    .status-inactive {
+        background-color: #FF3B30;
+    }
+    
+    .status-pending {
+        background-color: #FF9500;
+    }
+
+    /* Toggle Switch Styles */
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 95px;
+        height: 46px;
+        flex: 1;
+    }
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--toggle-bg-off);
+        transition: .4s;
+        border: 2px solid var(--accent-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 70%;
+        width: 10px;
+        left: 8px;
+        bottom: 15%;
+        background-color: var(--accent-color);
+        transition: .4s;
+        z-index: 1;
+    }
+
+    input:checked + .toggle-slider {
+        background-color: var(--toggle-bg-on);
+    }
+
+    input:checked + .toggle-slider:before {
+        transform: translateX(70px);
+    }
+
+    .toggle-switch:hover .toggle-slider {
+        transform: translateY(-3px) skewX(-5deg);
+        box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .light-theme .toggle-switch:hover .toggle-slider {
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-status {
+        position: relative;
+        z-index: 2;
+        transition: opacity 0.3s ease;
+    }
+
+    .toggle-on {
+        opacity: 0;
+    }
+
+    .toggle-off {
+        opacity: 1;
+    }
+
+    input:checked + .toggle-slider .toggle-on {
+        opacity: 1;
+    }
+
+    input:checked + .toggle-slider .toggle-off {
+        opacity: 0;
+    }
+
+    /* Wrapper for product actions buttons */
+    .product-actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Admin restriction badge */
+    .admin-restriction-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: var(--error-color);
+        color: white;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 3px;
+        z-index: 5;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .admin-restriction-badge i {
+        font-size: 1rem;
+    }
+    
+    /* Restriction notifications */
+    .restriction-notifications {
+        background-color: rgba(255, 59, 48, 0.1);
+        border-left: 4px solid var(--error-color);
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    .notification-heading {
+        font-size: 1.1rem;
+        color: var(--error-color);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .notification-item {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .notification-content {
+        flex: 1;
+    }
+    
+    .notification-time {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin-top: 5px;
+    }
+    
+    .dismiss-notification {
+        background: none;
+        border: none;
+        color: var(--text-color);
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 10px;
+        opacity: 0.6;
+        transition: opacity 0.3s;
+    }
+    
+    .dismiss-notification:hover {
+        opacity: 1;
+    }
+    
+    /* Styles for products hidden by admin */
+    .product-hidden {
+        filter: grayscale(100%);
+        opacity: 0.7;
+        position: relative;
+    }
+    
+    .product-hidden .product-image-container {
+        pointer-events: none;
+    }
+    
+    .product-hidden .product-buttons,
+    .product-hidden .view-details-btn {
+        opacity: 0.8;
+        position: relative;
+        z-index: 5;
+    }
+    
+    .product-hidden .admin-restriction-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        z-index: 4;
+        width: 80%;
+        pointer-events: none;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="seller_dashboard.html" class="logo">
+            <img src="../../assets/images/logo_b.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            <span class="seller-badge">Seller</span>
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="seller_dashboard.html">Dashboard</a></li>
+                <li><a href="product_listings.html" class="active">Listings</a></li>
+                <li><a href="seller_reviews.html">Reviews</a></li>
+                <li><a href="seller_profile.html">Profile</a></li>
+                <li><a href="../about/about_us.html">About</a></li>
+                <li><a href="javascript:void(0);" onclick="logout()">Logout</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1 class="content-title">Product Listings</h1>
+            <button class="action-button" id="addProductBtn">
+                <i class="fas fa-plus"></i> Add New Product
+            </button>
+        </div>
+      
+        <div id="alertContainer"></div>
+
+        <!-- Search and Filters -->
+        <!-- Search and filter section removed -->
+
+        <div id="loadingSpinner" class="loading-spinner">
+            <div class="spinner"></div>
+        </div>
+        
+        <!-- Products List -->
+        <div class="products-container">
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be generated dynamically -->
+        </div>
+        </div>
+    </main>
+
+    <!-- Product template for JavaScript rendering -->
+    <template id="product-template">
+        <div class="product-card">
+            <div class="product-image-container" style="position: relative; height: 250px; overflow: hidden;">
+                <img class="product-image" src="" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="product-status"></div>
+            </div>
+            <div class="product-info">
+                <div class="product-details">
+                    <h3 class="product-name"></h3>
+                    <div class="product-price"></div>
+                    <div class="product-category"></div>
+                    <div class="product-date"></div>
+                    <div class="product-interest">
+                        <i class="fas fa-users"></i> <span class="interest-count"></span> interested
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="#" class="view-details-btn">View Details</a>
+                    <div class="product-buttons">
+                        <button class="product-action-btn edit-btn">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <label class="toggle-switch" title="Toggle availability">
+                            <input type="checkbox" class="availability-toggle">
+                            <span class="toggle-slider">
+                                <span class="toggle-status toggle-on">SHOW</span>
+                                <span class="toggle-status toggle-off">HIDE</span>
+                            </span>
+                        </label>
+                        <button class="product-action-btn delete-btn">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- JavaScript for Product Listings -->
+    <script>
+        // Global variables
+        const productsPerPage = 10;
+        let currentProducts = [];
+        let productsContainer;
+        let paginationContainer;
+        
+        // Create a status cache manager
+        const statusCacheManager = {
+            getCache: function() {
+                const cache = localStorage.getItem('product_status_cache');
+                return cache ? JSON.parse(cache) : {};
+            },
+            
+            updateStatus: function(productId, status) {
+                const cache = this.getCache();
+                cache[productId] = status;
+                localStorage.setItem('product_status_cache', JSON.stringify(cache));
+            },
+            
+            getStatus: function(productId) {
+                const cache = this.getCache();
+                return cache[productId] || null;
+            },
+            
+            removeItem: function(productId) {
+                const cache = this.getCache();
+                if (cache[productId]) {
+                    delete cache[productId];
+                    localStorage.setItem('product_status_cache', JSON.stringify(cache));
+                }
+            },
+            
+            clearCache: function() {
+                localStorage.removeItem('product_status_cache');
+            }
+        };
+        
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize DOM elements
+            productsContainer = document.getElementById('productsGrid');
+            paginationContainer = document.getElementById('pagination');
+            
+            // Setup theme switching
+            setupThemeSwitcher();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Check authentication before loading products
+            checkAuthenticationStatus();
+        });
+        
+        // Function to check authentication status
+        function checkAuthenticationStatus() {
+            // Show loading spinner while checking
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'flex';
+            
+            // Verify session with a lightweight API call
+            fetch('../../../backend/api/users/check_session.php')
+                .then(response => {
+                    // First check if the response is OK
+                    if (!response.ok) {
+                        throw new Error('Authentication check failed');
+                    }
+                    
+                    // Check content type to ensure it's JSON
+                    const contentType = response.headers.get("content-type");
+                    if (!contentType || !contentType.includes("application/json")) {
+                        return response.text().then(text => {
+                            throw new Error(`Invalid response format`);
+                        });
+                    }
+                    
+                    return response.json();
+                })
+                .then(data => {
+                    loadingSpinner.style.display = 'none';
+                    
+                    if (data.authenticated === true && data.user && data.user.role === 'seller') {
+                        // Load products if authenticated as seller
+                        loadProducts();
+                    } else {
+                        // Only redirect if explicitly not authenticated
+                        // This prevents redirects when the authentication status is unclear
+                        if (data.authenticated === false) {
+                            showAlert('Please login to view your product listings', 'error');
+                            setTimeout(() => {
+                                window.location.href = '../account/login.html';
+                            }, 2000);
+                        } else {
+                            // If status is unclear, still try to load products
+                            loadProducts();
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Authentication check failed:', error);
+                    loadingSpinner.style.display = 'none';
+                    
+                    // If authentication check fails, still try to load products
+                    // The product loading function will handle auth errors if needed
+                    loadProducts();
+                });
+        }
+        
+        // Theme switcher functionality
+        function setupThemeSwitcher() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('clothloop-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            
+            // Update icon
+            if (document.body.classList.contains('light-theme')) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('clothloop-theme', 'light');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('clothloop-theme', 'dark');
+            }
+        });
+        }
+        
+        // Function to setup all event listeners
+        function setupEventListeners() {
+            // Add Product button
+            const addProductBtn = document.getElementById('addProductBtn');
+                addProductBtn.addEventListener('click', function() {
+                    window.location.href = 'cloth_upload.html';
+                });
+            }
+            
+        // Function to load products from API
+        function loadProducts(page = 1, limit = productsPerPage) {
+            showSpinner();
+            
+            // Build API URL with parameters
+            const apiUrl = new URL('../../../backend/api/sellers/product_listings.php', window.location.href);
+            apiUrl.searchParams.append('page', page);
+            apiUrl.searchParams.append('limit', limit);
+            
+            // Add search parameter if available (if element exists)
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && searchInput.value.trim()) {
+                apiUrl.searchParams.append('search', searchInput.value.trim());
+            }
+            
+            // Add category filter if selected (if element exists)
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (categoryFilter && categoryFilter.value) {
+                apiUrl.searchParams.append('category', categoryFilter.value);
+            }
+            
+            // Add status filter if selected (if element exists)
+            const statusFilter = document.getElementById('statusFilter');
+            if (statusFilter && statusFilter.value) {
+                apiUrl.searchParams.append('status', statusFilter.value);
+            }
+            
+            console.log('Fetching products from:', apiUrl.toString());
+            
+            fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();  // Get response as text first
+                })
+                .then(text => {
+                    // Try to parse as JSON, handle HTML error responses
+                    try {
+                        console.log('API response received:', text.substring(0, 200) + '...');
+                        return JSON.parse(text);
+                    } catch (e) {
+                        console.error('Error parsing response:', e);
+                        // If it contains HTML, it might be a PHP error
+                        if (text.includes('<') && text.includes('>')) {
+                            throw new Error('Server returned HTML instead of JSON. Please check server logs.');
+                        } else {
+                            throw new Error('Invalid response format from server');
+                        }
+                    }
+            })
+            .then(data => {
+                    hideSpinner();
+                    console.log('Parsed data:', data);
+                    
+                if (data.status === 'success') {
+                        // Clear existing products
+                        productsContainer.innerHTML = '';
+                        
+                        const products = data.data.products;
+                        currentProducts = products;
+                        
+                        console.log('Products received:', products);
+                        
+                        if (!products || products.length === 0) {
+                            // Show empty state if no products found
+                            productsContainer.innerHTML = `
+                                <div class="no-products">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <h3>No products found</h3>
+                                    <p>You haven't added any products yet. Ready to start selling? Add your first product now!</p>
+                                    <button class="btn-add-product">Add New Product</button>
+                                </div>
+                            `;
+                            
+                            // Add event listener to the "Add New Product" button
+                            const addProductBtn = productsContainer.querySelector('.btn-add-product');
+                            addProductBtn.addEventListener('click', () => {
+                                window.location.href = 'cloth_upload.html';
+                            });
+                            
+                            // Hide pagination if no products
+                            paginationContainer.style.display = 'none';
+                        } else {
+                            // Display products in grid
+                            displayProducts(products);
+                            
+                            // Setup pagination
+                            setupPagination(data.data.pagination);
+                            
+                            // Show pagination
+                            paginationContainer.style.display = 'block';
+                        }
+                } else {
+                    showAlert(data.message || 'Error loading products', 'error');
+                        
+                        // Show empty state with error message
+                        productsContainer.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-exclamation-circle" style="font-size: 50px; color: var(--error-color); margin-bottom: 20px;"></i>
+                                <h3>Error loading products</h3>
+                                <p>${data.message || 'Failed to load products. Please try again.'}</p>
+                            </div>
+                        `;
+                        
+                        // Hide pagination if error
+                        paginationContainer.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                    hideSpinner();
+                    console.error('Error loading products:', error);
+                    
+                    // Prepare user-friendly error message
+                    let errorMessage = 'Error loading products. Please try again.';
+                    if (error.message) {
+                        // Truncate long error messages
+                        errorMessage = error.message.length > 100 
+                            ? error.message.substring(0, 100) + '...' 
+                            : error.message;
+                    }
+                    
+                    showAlert(errorMessage, 'error');
+                    
+                    // Show empty state with error message
+                    productsContainer.innerHTML = `
+                        <div class="no-products">
+                            <i class="fas fa-exclamation-circle" style="color: var(--error-color);"></i>
+                            <h3>Error loading products</h3>
+                            <p>${errorMessage}</p>
+                            <button class="btn-add-product" id="retryButton">Retry</button>
+                        </div>
+                    `;
+                    
+                    // Add event listener to retry button
+                    const retryButton = document.getElementById('retryButton');
+                    if (retryButton) {
+                        retryButton.addEventListener('click', () => {
+                            loadProducts();
+                        });
+                    }
+                    
+                    // Hide pagination on error
+                    paginationContainer.style.display = 'none';
+            });
+        }
+        
+        // Function to display products in the grid
+        function displayProducts(products) {
+            // Get the product template
+            const template = document.getElementById('product-template');
+            const productsGrid = document.getElementById('productsGrid');
+            
+            // Clear existing content
+            productsGrid.innerHTML = '';
+            
+            // If no products, show empty state and return early
+            if (!products || products.length === 0) {
+                const emptyState = document.createElement('div');
+                emptyState.className = 'no-products';
+                emptyState.innerHTML = `
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>No products found</h3>
+                    <p>You haven't added any products yet. Ready to start selling? Add your first product now!</p>
+                    <button class="btn-add-product">Add New Product</button>
+                `;
+                
+                productsGrid.appendChild(emptyState);
+                
+                // Add event listener to the "Add New Product" button
+                const addProductBtn = emptyState.querySelector('.btn-add-product');
+                addProductBtn.addEventListener('click', () => {
+                    window.location.href = 'cloth_upload.html';
+                });
+                
+                return;
+            }
+            
+            console.log('Displaying', products.length, 'products');
+            
+            // Add products to grid
+            products.forEach((product, index) => {
+                console.log(`Processing product ${index}:`, product);
+                console.log(`Product ${product.id} status in DB:`, product.status || 'empty');
+                
+                // Clone the template
+                const productElement = document.importNode(template.content, true).querySelector('.product-card');
+                
+                // Add data-id attribute for easier reference
+                productElement.setAttribute('data-id', product.id);
+                
+                // Mark hidden products
+                if (product.is_hidden === '1' || product.is_hidden === 1 || product.is_hidden === true) {
+                    productElement.classList.add('product-hidden');
+                    
+                    // Add admin restriction badge to product image container
+                    const imageContainer = productElement.querySelector('.product-image-container');
+                    const restrictionBadge = document.createElement('div');
+                    restrictionBadge.className = 'admin-restriction-badge';
+                    restrictionBadge.innerHTML = '<i class="fas fa-ban"></i> Hidden by Admin';
+                    imageContainer.appendChild(restrictionBadge);
+                    
+                    // Add overlay message
+                    const overlayMessage = document.createElement('div');
+                    overlayMessage.className = 'admin-restriction-message';
+                    overlayMessage.textContent = 'This product has been hidden by an administrator';
+                    productElement.appendChild(overlayMessage);
+                    
+                    // Add title attribute to buttons and links for context
+                    const allButtons = productElement.querySelectorAll('button');
+                    allButtons.forEach(button => {
+                        button.setAttribute('title', 'This product has been hidden by an administrator');
+                    });
+                    
+                    const allLinks = productElement.querySelectorAll('a');
+                    allLinks.forEach(link => {
+                        link.setAttribute('title', 'This product has been hidden by an administrator');
+                    });
+                    
+                    // Disable toggle
+                    const toggle = productElement.querySelector('.availability-toggle');
+                    if (toggle) {
+                        toggle.disabled = true;
+                    }
+                }
+                
+                // Set product image
+                const imageElement = productElement.querySelector('.product-image');
+                
+                // Define the base URL to ensure paths are consistent
+                // Get base URL from current page location
+                const basePath = window.location.pathname.includes('/ClothLoop/') ? '/ClothLoop/' : '/';
+                
+                // Define baseUrl for image paths
+                const baseUrl = window.location.origin;
+                console.log('Base URL:', baseUrl, 'Base Path:', basePath);
+                
+                // Add timestamp to prevent caching
+                const timestamp = new Date().getTime();
+                
+                // Check if the product has an image_path specified directly
+                if (product.image_path) {
+                    // Use the direct image path from the database
+                    const directImageUrl = `${baseUrl}${basePath}backend/${product.image_path}?t=${timestamp}`;
+                    console.log(`Using direct image path for product ${product.id}:`, directImageUrl);
+                    imageElement.src = directImageUrl;
+                    imageElement.alt = product.title || product.name || 'Product Image';
+                } else {
+                    // Fallback to trying various image sources
+                    console.log(`No direct image path for product ${product.id}, trying fallback sources...`);
+                    
+                    // Create a list of fallback image sources to try in order
+                    const imageSources = [
+                        `${baseUrl}${basePath}backend/api/image_display.php?type=product&id=${product.id}&t=${timestamp}`,
+                        `${baseUrl}${basePath}backend/uploads/products/${product.id}/${product.image_filename || 'product_image.jpg'}?t=${timestamp}`,
+                        `${baseUrl}${basePath}backend/uploads/products/${product.id}/product_image.jpg?t=${timestamp}`,
+                        `${baseUrl}${basePath}backend/api/products/direct_image.php?product_id=${product.id}&t=${timestamp}`,
+                        `${baseUrl}${basePath}frontend/assets/images/Clothify.png`,
+                        `${baseUrl}${basePath}frontend/assets/images/placeholder.png`,
+                        `${baseUrl}${basePath}frontend/assets/images/p3.jpg`
+                    ];
+                    
+                    // Recursive function to try loading images from the sources array
+                    function tryNextImage(index) {
+                        if (index >= imageSources.length) {
+                            console.log('All paths failed, using default placeholder');
+                            imageElement.src = `${baseUrl}${basePath}frontend/assets/images/placeholder.png`;
+                            return;
+                        }
+                        
+                        // Try current image source
+                        imageElement.src = imageSources[index];
+                        console.log(`Trying image source ${index + 1}/${imageSources.length}:`, imageSources[index]);
+                        
+                        // Set up error handler to try next source if this one fails
+                        imageElement.onerror = function() {
+                            console.log(`Image source ${index + 1} failed, trying next...`);
+                            // Add a random query parameter to prevent browser caching
+                            if (index === 0 || index === 1 || index === 2) {
+                                // First try directly accessing the product folder to see if we can find any images
+                                console.log(`Trying direct folder access for product ${product.id}...`);
+                                // Make an AJAX request to check if the directory exists and has images
+                                fetch(`${baseUrl}${basePath}backend/api/check_product_images.php?product_id=${product.id}&t=${timestamp}`, {
+                                    cache: 'no-store' // Prevent browser caching
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status === 'success' && data.image_path) {
+                                        console.log(`Found image at: ${data.image_path}`);
+                                        // Add timestamp to prevent caching
+                                        imageElement.src = `${baseUrl}${data.image_path}?t=${timestamp}`;
+                                    } else {
+                                        tryNextImage(index + 1);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.log('Error checking product images:', error);
+                                    tryNextImage(index + 1);
+                                });
+                            } else {
+                                tryNextImage(index + 1);
+                            }
+                        };
+                    }
+                    
+                    // Start trying paths
+                    tryNextImage(0);
+                    
+                    // Set a default error handler for the image element
+                    imageElement.onerror = function() {
+                        console.error(`Final image failed to load for product ${product.id}`);
+                        // Use a placeholder as last resort
+                        imageElement.src = `${baseUrl}${basePath}frontend/assets/images/placeholder.png`;
+                    };
+                }
+
+                // Set product status badge
+                const statusElement = productElement.querySelector('.product-status');
+                let statusClass = '';
+                
+                // First check if we have a cached status
+                const cachedStatus = statusCacheManager.getStatus(product.id);
+                // Use cached status if available, otherwise use status_normalized from API
+                // status_normalized will never be empty, it will be either 'active', 'available', or 'inactive'
+                const dbStatus = product.status_normalized ? product.status_normalized.toLowerCase() : 
+                                (product.status ? product.status.toLowerCase() : '');
+                const status = cachedStatus || (dbStatus === 'active' || dbStatus === 'available' ? dbStatus : 'inactive');
+                
+                switch (status) {
+                    case 'active':
+                    case 'available':
+                        statusClass = 'status-active';
+                        statusElement.textContent = 'Available';
+                        break;
+                    case 'inactive':
+                    case 'unavailable':
+                        statusClass = 'status-inactive';
+                        statusElement.textContent = 'Unavailable';
+                        break;
+                    case 'rented':
+                    case 'pending':
+                        statusClass = 'status-pending';
+                        statusElement.textContent = 'Rented';
+                        break;
+                    default:
+                        statusClass = 'status-inactive'; // Default to inactive if no status
+                        statusElement.textContent = 'Unavailable';
+                }
+                
+                statusElement.className = `product-status ${statusClass}`;
+                
+                // Set product details using database field names
+                productElement.querySelector('.product-name').textContent = product.title || product.name || 'Unnamed Product';
+                productElement.querySelector('.product-price').textContent = `₹${parseFloat(product.price || product.rental_price || 0).toLocaleString('en-IN')}`;
+                productElement.querySelector('.product-category').textContent = product.category_name || getCategoryName(product.category_id) || 'Uncategorized';
+                
+                // Format date
+                try {
+                    const date = new Date(product.created_at || new Date());
+                    productElement.querySelector('.product-date').textContent = `Added on ${date.toLocaleDateString('en-IN')}`;
+                } catch (e) {
+                    console.error('Error formatting date:', e);
+                    productElement.querySelector('.product-date').textContent = 'Date not available';
+                }
+                
+                // Interest count
+                productElement.querySelector('.interest-count').textContent = product.interest_count || 0;
+                
+                // Set action links
+                const viewDetailsLink = productElement.querySelector('.view-details-btn');
+                viewDetailsLink.href = `product_detail.html?id=${product.id}`;
+                
+                // Setup edit button
+                const editBtn = productElement.querySelector('.edit-btn');
+                editBtn.addEventListener('click', function() {
+                    // Check which edit page to use based on product type
+                    const editPage = 'cloth_upload.html';
+                    window.location.href = `${editPage}?edit=${product.id}`;
+                });
+                
+                // Setup delete button
+                const deleteBtn = productElement.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', function() {
+                    const productName = product.title || product.name || 'this product';
+                    confirmDeleteProduct(product.id, productName);
+                });
+                
+                // Setup availability toggle
+                const availabilityToggle = productElement.querySelector('.availability-toggle');
+                
+                // Set initial state based on product status
+                const isAvailable = (status === 'active' || status === 'available');
+                availabilityToggle.checked = isAvailable;
+                
+                // If the database status is empty, update it to match the current toggle state
+                if (!product.status && !cachedStatus) {
+                    // Update database to set proper initial status
+                    const initialStatus = isAvailable ? 'available' : 'unavailable';
+                    toggleProductStatus(product.id, initialStatus);
+                }
+                
+                // Add event listener for toggle
+                availabilityToggle.addEventListener('change', function() {
+                    const newStatus = this.checked ? 'available' : 'unavailable';
+                    // Update cache immediately so page refresh doesn't reset it
+                    statusCacheManager.updateStatus(product.id, newStatus);
+                    toggleProductStatus(product.id, newStatus);
+                });
+                
+                // Add to grid
+                productsGrid.appendChild(productElement);
+                console.log(`Added product ${index} to grid`);
+            });
+        }
+        
+        // Function to update pagination
+        function updatePagination(pagination) {
+            const paginationElement = document.getElementById('pagination');
+            paginationElement.innerHTML = '';
+            
+            if (!pagination || pagination.total_pages <= 1) {
+                return;
+            }
+            
+            // Create pagination controls
+            const paginationControls = document.createElement('div');
+            paginationControls.className = 'pagination-controls';
+            
+            // Add prev button
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn prev';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+            prevBtn.disabled = !pagination.has_prev_page;
+            
+            if (pagination.has_prev_page) {
+                prevBtn.addEventListener('click', function() {
+                    loadProducts(pagination.current_page - 1);
+                });
+            }
+            
+            paginationControls.appendChild(prevBtn);
+            
+            // Add page buttons
+            const maxPageButtons = 5; // Maximum number of page buttons to show
+            let startPage = Math.max(1, pagination.current_page - Math.floor(maxPageButtons / 2));
+            let endPage = Math.min(pagination.total_pages, startPage + maxPageButtons - 1);
+            
+            // Adjust startPage if we're at the end
+            if (endPage - startPage + 1 < maxPageButtons) {
+                startPage = Math.max(1, endPage - maxPageButtons + 1);
+            }
+            
+            // Add first page button if not starting at page 1
+            if (startPage > 1) {
+                const firstPageBtn = document.createElement('button');
+                firstPageBtn.className = 'pagination-btn page';
+                firstPageBtn.textContent = '1';
+                firstPageBtn.addEventListener('click', function() {
+                    loadProducts(1);
+                });
+                paginationControls.appendChild(firstPageBtn);
+                
+                if (startPage > 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'pagination-ellipsis';
+                    ellipsis.textContent = '...';
+                    paginationControls.appendChild(ellipsis);
+                }
+            }
+            
+            // Add page buttons
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'pagination-btn page';
+                if (i === pagination.current_page) {
+                    pageBtn.classList.add('active');
+                }
+                pageBtn.textContent = i;
+                
+                pageBtn.addEventListener('click', function() {
+                    loadProducts(i);
+                });
+                
+                paginationControls.appendChild(pageBtn);
+            }
+            
+            // Add last page button if not ending at the last page
+            if (endPage < pagination.total_pages) {
+                if (endPage < pagination.total_pages - 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'pagination-ellipsis';
+                    ellipsis.textContent = '...';
+                    paginationControls.appendChild(ellipsis);
+                }
+                
+                const lastPageBtn = document.createElement('button');
+                lastPageBtn.className = 'pagination-btn page';
+                lastPageBtn.textContent = pagination.total_pages;
+                lastPageBtn.addEventListener('click', function() {
+                    loadProducts(pagination.total_pages);
+                });
+                paginationControls.appendChild(lastPageBtn);
+            }
+            
+            // Add next button
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn next';
+            nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+            nextBtn.disabled = !pagination.has_next_page;
+            
+            if (pagination.has_next_page) {
+                nextBtn.addEventListener('click', function() {
+                    loadProducts(pagination.current_page + 1);
+                });
+            }
+            
+            paginationControls.appendChild(nextBtn);
+            
+            // Add pagination info
+            const paginationInfo = document.createElement('div');
+            paginationInfo.className = 'pagination-info';
+            paginationInfo.textContent = `Showing ${pagination.current_page} of ${pagination.total_pages} pages (${pagination.total_records} products)`;
+            
+            // Add to pagination element
+            paginationElement.appendChild(paginationControls);
+            paginationElement.appendChild(paginationInfo);
+        }
+        
+        // Function for setting up pagination
+        function setupPagination(pagination) {
+            updatePagination(pagination);
+        }
+        
+        // Function to confirm delete product
+        function confirmDeleteProduct(productId, productName) {
+            if (confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
+                deleteProduct(productId);
+            }
+        }
+        
+        // Function to delete product
+        function deleteProduct(productId) {
+            // Show loading
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'flex';
+            
+            fetch('../../../backend/api/sellers/delete_product.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: productId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                loadingSpinner.style.display = 'none';
+                
+                        if (data.status === 'success') {
+                    showAlert('Product deleted successfully', 'success');
+                    // Remove deleted product from status cache
+                    statusCacheManager.removeItem(productId);
+                    loadProducts(); // Reload products
+                        } else {
+                    showAlert(data.message || 'Error deleting product', 'error');
+                        }
+                    })
+                    .catch(error => {
+                loadingSpinner.style.display = 'none';
+                        console.error('Error:', error);
+                showAlert('Error deleting product. Please try again.', 'error');
+            });
+        }
+        
+        // Function to toggle product status
+        function toggleProductStatus(productId, newStatus) {
+            // Show loading
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'flex';
+            
+            // Log what we're trying to update for debugging
+            console.log(`Updating product ${productId} status to ${newStatus}...`);
+            
+            // Create the request payload
+            const payload = {
+                id: productId,
+                status: newStatus
+            };
+            
+            console.log('Request payload:', payload);
+            
+            fetch('../../../backend/api/sellers/update_product_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    // Check if the response is OK
+                    if (!response.ok) {
+                        console.error(`HTTP error: ${response.status}`);
+                        return response.text().then(text => {
+                            console.error('Response text:', text);
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loadingSpinner.style.display = 'none';
+                    console.log('API response:', data);
+                    
+                    if (data.status === 'success') {
+                        // Save status to cache
+                        statusCacheManager.updateStatus(productId, newStatus);
+                        
+                        const statusText = newStatus === 'available' ? 'visible to buyers' : 'hidden from buyers';
+                        showAlert(`Product is now ${statusText}`, 'success');
+                        
+                        // Update the status badge directly instead of reloading all products
+                        const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+                        if (productCard) {
+                            const statusBadge = productCard.querySelector('.product-status');
+                            if (statusBadge) {
+                                statusBadge.className = `product-status ${newStatus === 'available' ? 'status-active' : 'status-inactive'}`;
+                                statusBadge.textContent = newStatus === 'available' ? 'Available' : 'Unavailable';
+                            }
+                        } else {
+                            // If can't find the specific card, reload all products
+                            loadProducts();
+                        }
+                    } else {
+                        console.error('Error updating status:', data);
+                        showAlert(data.message || 'Error updating product status', 'error');
+                        
+                        // Revert toggle state on error
+                        const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+                        if (productCard) {
+                            const toggle = productCard.querySelector('.availability-toggle');
+                            if (toggle) {
+                                toggle.checked = newStatus !== 'active';
+                            }
+                        }
+                    }
+                })
+                .catch(error => {
+                    loadingSpinner.style.display = 'none';
+                    console.error('Error:', error);
+                    showAlert('Error updating product status. Please try again.', 'error');
+                    
+                    // Revert toggle state on error
+                    const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+                    if (productCard) {
+                        const toggle = productCard.querySelector('.availability-toggle');
+                        if (toggle) {
+                            toggle.checked = newStatus !== 'active';
+                        }
+                    }
+                });
+        }
+        
+        // Function to handle logout
+        function logout() {
+            fetch('../../../backend/api/users/logout.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.href = '../account/login.html';
+                    } else {
+                        showAlert('Error logging out. Please try again.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showAlert('Error logging out. Please try again.', 'error');
+                });
+        }
+        
+        // Function to show alerts
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            if (!alertContainer) return;
+            
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            // Add to container
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    alertContainer.innerHTML = '';
+                }, 500);
+            }, 3000);
+        }
+        
+        // Function to show loading spinner
+        function showSpinner() {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'flex';
+            }
+        }
+        
+        // Function to hide loading spinner
+        function hideSpinner() {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        // Helper function to get category name from ID
+        function getCategoryName(categoryId) {
+            const categories = {
+                1: 'Traditional',
+                2: 'Casual',
+                3: 'Formal',
+                4: 'Sports',
+                5: 'Ethnic'
+            };
+            return categories[categoryId] || 'Uncategorized';
+        }
+
+        // Helper function to format image paths correctly
+        function formatImagePath(path, baseUrl) {
+            if (!path) return null;
+            
+            // Clean the path string
+            path = path.trim();
+            
+            // Already an absolute URL
+            if (path.startsWith('http')) {
+                return path;
+            }
+            
+            // Remove any leading slash for consistency
+            if (path.startsWith('/')) {
+                path = path.substring(1);
+            }
+            
+            // Based on screenshots, the image path could be like "uploads/products/1/1744678607_p3.jpg"
+            // Or it could be a relative path from the web root
+            
+            // Format based on the path pattern
+            if (path.includes('uploads/products')) {
+                // Direct path to uploads folder
+                return `${baseUrl}/${path}`;
+            } else if (path.match(/\d+[_-][\w\.]+$/)) {
+                // Filename with timestamp prefix (e.g., "1744678607_p3.jpg")
+                return `${baseUrl}/uploads/products/${path}`;
+            } else if (path.match(/^[a-zA-Z0-9_-]+\.[a-z]{3,4}$/)) {
+                // Just a filename with extension (e.g., "image.jpg")
+                return `${baseUrl}/uploads/products/${path}`;
+            } else {
+                // Other relative paths
+                return `${baseUrl}/${path}`;
+            }
+        }
+
+        // Function to try multiple image paths until one works
+        function tryImagePaths(paths, imageElement, baseUrl) {
+            console.log('Trying multiple image paths:', paths);
+            
+            // Start with the first path
+            let currentIndex = 0;
+            
+            // Try the current path
+            function tryCurrentPath() {
+                if (currentIndex >= paths.length) {
+                    console.log('All paths failed, using default placeholder');
+                    imageElement.src = `${baseUrl}/frontend/assets/images/placeholder.png`;
+                    return;
+                }
+                
+                const currentPath = paths[currentIndex];
+                console.log(`Trying path ${currentIndex + 1}/${paths.length}:`, currentPath);
+                
+                // Format the path
+                const formattedPath = formatImagePath(currentPath.path, baseUrl);
+                console.log('Formatted path:', formattedPath);
+                
+                // Create a new image to test if it loads
+                const testImg = new Image();
+                
+                // Set up success and error handlers
+                testImg.onload = function() {
+                    console.log('Image loaded successfully:', formattedPath);
+                    imageElement.src = formattedPath;
+                };
+                
+                testImg.onerror = function() {
+                    console.log('Image failed to load:', formattedPath);
+                    currentIndex++;
+                    tryCurrentPath(); // Try the next path
+                };
+                
+                // Start loading the image
+                testImg.src = formattedPath;
+            }
+            
+            // Start trying paths
+            tryCurrentPath();
+        }
+
+        // Initialize the page
+    </script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+</body>
+</html> 

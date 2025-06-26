@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            --button-color: #ffffff;
+            --button-text: #000000;
+            --button-hover: #cccccc;
+            --card-border: 1px solid #333333;
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #000000;
+            --text-color: #000000;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #f5f5f5;
+            --footer-text: #000000;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            --button-color: #000000;
+            --button-text: #ffffff;
+            --button-hover: #333333;
+            --card-border: 1px solid #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        /* Main Content Section */
+        .main-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 15px;
+            width: 100%;
+        }
+        
+        /* Add a spacer to push footer down */
+        .spacer {
+            flex: 1;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            transform: skewX(-20deg);
+        }
+        
+        /* Wishlist Grid */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            animation: fadeIn 1.5s ease-out;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .wishlist-item {
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            border: var(--card-border);
+            animation: fadeIn 0.5s ease-out;
+            min-width: 300px;
+        }
+        
+        .wishlist-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+        
+        .wishlist-item:hover {
+            transform: translateY(-10px) skewX(-3deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .wishlist-item:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .wishlist-img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            border-bottom: 4px solid var(--accent-color);
+        }
+        
+        .wishlist-item:hover .wishlist-img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-details {
+            padding: 25px;
+        }
+        
+        .wishlist-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .wishlist-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+        }
+        
+        .wishlist-seller {
+            font-size: 1rem;
+            margin-bottom: 25px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .view-btn, .remove-btn {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 12px 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s linear;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .view-btn:hover, .remove-btn:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .view-btn:hover, 
+        .light-theme .remove-btn:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Empty Wishlist */
+        .empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            border: var(--card-border);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .empty-wishlist i {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            opacity: 0.5;
+        }
+        
+        .empty-wishlist p {
+            margin-bottom: 30px;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        .browse-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 12px 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s linear;
+        }
+        
+        .browse-btn:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .browse-btn:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .wishlist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .wishlist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            nav {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul li {
+                margin-left: 0.5rem;
+            }
+            
+            nav ul li a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 1rem 0 1rem;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 1rem !important;
+            margin-top: auto;
+            width: 100%;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem 0;
+            border-top: none;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../../../home.html" class="logo">
+            <img id="navbar-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="buyer_dashboard.html">Listings</a></li>
+                <li><a href="wish.html" class="active">Wishlist</a></li>
+                <li><a href="buyer_profile.html">Profile</a></li>
+                <li><a href="../about/about_us.html">About</a></li>
+                <li><a href="../../../home.html" id="logout-link">Logout</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h2 class="section-title">Your Wishlist</h2>
+        
+        <div id="wishlist-container">
+            <div class="wishlist-grid" id="wishlist-grid">
+                <!-- Dynamic wishlist items will be loaded here -->
+            </div>
+            
+            <!-- Empty wishlist message (hidden by default) -->
+            <div class="empty-wishlist" id="empty-wishlist" style="display: none;">
+                <i class="far fa-heart"></i>
+                <p>Your wishlist is empty</p>
+                <a href="buyer_dashboard.html" class="browse-btn">Browse Products</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spacer to push footer to bottom -->
+    <div class="spacer"></div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img id="footer-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+
+    <script>
+        // Theme switcher functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Function to update logo based on theme
+        function updateLogo(isLightTheme) {
+            const navbarLogo = document.getElementById('navbar-logo');
+            
+            if (isLightTheme) {
+                navbarLogo.src = '../../assets/images/logo_b.png';
+            } else {
+                navbarLogo.src = '../../assets/images/logo_f.png';
+            }
+        }
+        
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('clothloop-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            updateLogo(true);
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const isLightTheme = document.body.classList.toggle('light-theme');
+            
+            // Update icon
+            if (isLightTheme) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('clothloop-theme', 'light');
+                updateLogo(true);
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('clothloop-theme', 'dark');
+                updateLogo(false);
+            }
+        });
+
+        // Function to get wishlist items from localStorage (user-specific)
+        async function getWishlistItems() {
+            try {
+                const userId = localStorage.getItem('user_id');
+                
+                // Only use user-specific wishlist if user is logged in with valid ID
+                const wishlistKey = userId ? `wishlist_${userId}` : 'wishlist';
+                
+                console.log(`getWishlistItems: Accessing wishlist for user ID: ${userId || 'guest'}`);
+                
+                // If user is logged in, try to fetch from server first
+                if (userId) {
+                    try {
+                        const serverWishlist = await fetchWishlistFromServer();
+                        if (serverWishlist && serverWishlist.length > 0) {
+                            console.log(`getWishlistItems: Got ${serverWishlist.length} items from server`);
+                            return serverWishlist;
+                        }
+                    } catch (error) {
+                        console.error('Error fetching wishlist from server:', error);
+                        // Fall back to localStorage
+                    }
+                }
+                
+                // Fallback: get from localStorage
+                let wishlistIds = [];
+                try {
+                    const storedWishlist = localStorage.getItem(wishlistKey);
+                    if (storedWishlist) {
+                        wishlistIds = JSON.parse(storedWishlist);
+                        
+                        // Ensure wishlistIds is an array
+                        if (!Array.isArray(wishlistIds)) {
+                            console.error(`Invalid wishlist format in localStorage: ${typeof wishlistIds}`);
+                            wishlistIds = [];
+                        }
+                    }
+                    
+                    // Check the old format from details.html
+                    const oldWishlist = JSON.parse(localStorage.getItem('clothloop-wishlist') || '[]');
+                    if (oldWishlist.length > 0) {
+                        console.log(`Found ${oldWishlist.length} items in old wishlist format, merging`);
+                        // Extract IDs from old format (which might be objects or strings)
+                        const oldIds = oldWishlist.map(item => typeof item === 'object' ? item.id.toString() : item.toString());
+                        
+                        // Merge the lists without duplicates
+                        const mergedIds = [...new Set([...wishlistIds, ...oldIds])];
+                        wishlistIds = mergedIds;
+                        
+                        // Save back to the new format and clear old format
+                        localStorage.setItem(wishlistKey, JSON.stringify(wishlistIds));
+                        localStorage.removeItem('clothloop-wishlist');
+                    }
+                    
+                    // If not already using a user-specific key but user is logged in,
+                    // also ensure wishlistIds are stored in user-specific storage
+                    if (userId && wishlistKey !== 'wishlist' && wishlistIds.length > 0) {
+                        localStorage.setItem(`wishlist_${userId}`, JSON.stringify(wishlistIds));
+                        
+                        // Sync with server if user is logged in
+                        syncWishlistWithServer(wishlistIds).catch(err => {
+                            console.error('Error syncing with server during get:', err);
+                        });
+                    }
+                    
+                    // Ensure all IDs are strings for consistent comparison
+                    wishlistIds = wishlistIds.map(id => id.toString());
+                    console.log(`getWishlistItems: Found ${wishlistIds.length} items in ${wishlistKey}`);
+                } catch (e) {
+                    console.error(`Error parsing wishlist from localStorage: ${e.message}`);
+                    wishlistIds = [];
+                }
+                
+                return wishlistIds;
+            } catch (e) {
+                console.error(`Error in getWishlistItems: ${e.message}`);
+                return [];
+            }
+        }
+        
+        // Function to check if a product is in the wishlist
+        function isInWishlist(productId) {
+            const wishlist = getWishlistItems();
+            return wishlist.includes(productId.toString());
+        }
+        
+        // Function to fetch wishlist from server
+        async function fetchWishlistFromServer() {
+            try {
+                const userId = localStorage.getItem('user_id');
+                if (!userId || userId === 'guest') {
+                    console.log('Not fetching wishlist - user not logged in');
+                    return [];
+                }
+                
+                console.log(`Fetching wishlist for user ${userId} from server`);
+                
+                // Get wishlist from server with user_id in URL params
+                const response = await fetch(`/ClothLoop/backend/api/buyers/sync_wishlist.php?user_id=${userId}`, {
+                    method: 'GET',
+                    credentials: 'include' // Include cookies for session
+                });
+                
+                const responseText = await response.text();
+                console.log('Server response text:', responseText.substring(0, 300) + '...');
+                
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (e) {
+                    console.error('Error parsing server response:', e);
+                    return [];
+                }
+                
+                if (!response.ok) {
+                    console.error(`Server responded with ${response.status}: ${response.statusText}`);
+                    return [];
+                }
+                
+                if (data.status === 'success' && data.data && data.data.ids) {
+                    console.log('Wishlist fetched from server successfully:', data.data.ids);
+                    
+                    // Update localStorage with the ids from server
+                    const wishlistKey = `wishlist_${userId}`;
+                    localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                    
+                    // Store each product's details if available
+                    if (data.data.items && Array.isArray(data.data.items)) {
+                        data.data.items.forEach(item => {
+                            if (item.product_id) {
+                                const productInfo = {
+                                    id: item.product_id,
+                                    title: item.title || 'Product',
+                                    price: item.rental_price || '0',
+                                    seller: item.seller_name || 'ClothLoop Seller',
+                                    image: item.image_path || ''
+                                };
+                                localStorage.setItem(`product_${item.product_id}`, JSON.stringify(productInfo));
+                            }
+                        });
+                    }
+                    
+                    return data.data.ids;
+                } else {
+                    console.error('Error fetching wishlist from server:', data.message || 'Unknown error');
+                    return [];
+                }
+            } catch (error) {
+                console.error('Error in fetchWishlistFromServer:', error);
+                return [];
+            }
+        }
+        
+        // Function to sync wishlist with server
+        async function syncWishlistWithServer(wishlist) {
+            try {
+                const userId = localStorage.getItem('user_id');
+                if (!userId || userId === 'guest') {
+                    console.log('Not syncing wishlist - user not logged in');
+                    return Promise.resolve(); // Return resolved promise
+                }
+                
+                // Ensure wishlist is an array of strings
+                if (!Array.isArray(wishlist)) {
+                    console.error('Invalid wishlist format for sync:', wishlist);
+                    return Promise.reject(new Error('Invalid wishlist format')); 
+                }
+                
+                console.log(`Syncing wishlist for user ${userId} with server. Items: ${wishlist.length}`);
+                
+                // Send wishlist to server
+                const response = await fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        items: wishlist,
+                        user_id: userId  // Explicitly include user_id in request
+                    }),
+                    credentials: 'include' // Include cookies for session
+                });
+                
+                const responseText = await response.text();
+                console.log('Server response:', responseText.substring(0, 200) + '...');
+                
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (e) {
+                    console.error('Error parsing server response:', e);
+                    return Promise.reject(new Error('Invalid server response')); 
+                }
+                
+                if (!response.ok) {
+                    console.error(`Server responded with ${response.status}: ${response.statusText}`);
+                    return Promise.reject(new Error(`Server error: ${response.status}`));
+                }
+                
+                if (data.status === 'success') {
+                    console.log('Wishlist synced with server successfully');
+                    // Update localStorage with server data if available
+                    if (data.data && data.data.ids) {
+                        const wishlistKey = `wishlist_${userId}`;
+                        localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                        console.log(`Updated localStorage wishlist with ${data.data.ids.length} items from server`);
+                    }
+                    return Promise.resolve(data); // Return the data
+                } else {
+                    console.error('Error syncing wishlist with server:', data.message);
+                    return Promise.reject(new Error(data.message));
+                }
+            } catch (error) {
+                console.error('Error in syncWishlistWithServer:', error);
+                return Promise.reject(error); // Re-throw the error for the caller to handle
+            }
+        }
+        
+        // Function to remove an item from wishlist
+        function removeFromWishlist(productId) {
+            try {
+            const userId = localStorage.getItem('user_id');
+            const wishlistKey = userId ? `wishlist_${userId}` : 'wishlist';
+            
+            console.log(`removeFromWishlist: Removing product ${productId} for user ${userId || 'guest'}`);
+            
+                // Get existing wishlist
+            let wishlist = [];
+                const storedWishlist = localStorage.getItem(wishlistKey);
+                if (storedWishlist) {
+                    try {
+                        wishlist = JSON.parse(storedWishlist);
+                    } catch (e) {
+                        console.error(`Error parsing existing wishlist: ${e.message}`);
+                        return false;
+                    }
+                }
+                
+                // Convert productId to string to ensure consistent comparison
+                const productIdStr = productId.toString();
+                
+                // Check if product exists in wishlist before removing
+                if (!wishlist.includes(productIdStr)) {
+                    console.warn(`Product ${productIdStr} not found in wishlist`);
+                    console.log('Current wishlist:', wishlist);
+                    // Try removing by direct API call even if not in local storage
+                    if (userId) {
+                        const updatedWishlist = wishlist.filter(id => id !== productIdStr);
+                        syncWishlistWithServer(updatedWishlist)
+                            .then(() => {
+                                console.log('Wishlist synced with server after removal');
+                                // Reload wishlist after server sync
+                                setTimeout(() => {
+                                    loadWishlistItems();
+                                }, 300);
+                            })
+                            .catch(err => {
+                                console.error('Error syncing with server after removal:', err);
+                            });
+                    }
+                    return true; // Return true to allow the animation to complete
+                }
+                
+                // Filter out the product
+                wishlist = wishlist.filter(id => id !== productIdStr);
+                
+                // Update localStorage
+                localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+                console.log(`removeFromWishlist: Updated wishlist has ${wishlist.length} items`);
+                
+                // Also update old format for compatibility with details.html page
+                try {
+                    let oldWishlist = JSON.parse(localStorage.getItem('clothloop-wishlist') || '[]');
+                    oldWishlist = oldWishlist.filter(item => {
+                        const itemId = typeof item === 'object' ? item.id.toString() : item.toString();
+                        return itemId !== productIdStr;
+                    });
+                    localStorage.setItem('clothloop-wishlist', JSON.stringify(oldWishlist));
+                } catch (e) {
+                    console.error(`Error updating old wishlist format: ${e.message}`);
+                }
+                
+                // If user is logged in, sync with server
+                if (userId) {
+                    // Send the update to the server asynchronously
+                    syncWishlistWithServer(wishlist)
+                        .then(() => {
+                            console.log('Wishlist synced with server after removal');
+                        })
+                        .catch(err => {
+                            console.error('Error syncing with server after removal:', err);
+                            // Even if server sync fails, we've updated localStorage, so consider it a success
+                        });
+                }
+                
+                // Immediately check if wishlist is now empty
+                if (wishlist.length === 0) {
+                    // Show empty wishlist message
+                    document.getElementById('wishlist-grid').style.display = 'none';
+                    document.getElementById('empty-wishlist').style.display = 'block';
+                } else {
+                    // Reload the wishlist
+                    setTimeout(() => {
+                    loadWishlistItems();
+                    }, 350); // Wait for animation to complete
+                }
+                
+                // Indicate success
+                return true;
+            } catch (e) {
+                console.error(`Error in removeFromWishlist: ${e.message}`);
+                return false;
+            }
+        }
+        
+        // Function to load and display wishlist items
+        async function loadWishlistItems() {
+            const wishlistGrid = document.getElementById('wishlist-grid');
+            const emptyWishlist = document.getElementById('empty-wishlist');
+            
+            // Show loading state
+            wishlistGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--text-color);"></i><p style="margin-top: 20px;">Loading your wishlist...</p></div>';
+            
+            try {
+                // Always try to get fresh data from server first
+                const userId = localStorage.getItem('user_id');
+                let wishlistItems = [];
+                let wishlistIds = [];
+                
+                if (userId) {
+                    console.log(`Attempting to fetch wishlist from server for user ${userId}`);
+                    try {
+                        // Force a fetch from server to ensure we have the latest data
+                        const response = await fetch(`/ClothLoop/backend/api/buyers/sync_wishlist.php?user_id=${userId}`, {
+                            method: 'GET',
+                            credentials: 'include'
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            console.log('Server response:', data);
+                            
+                            if (data.status === 'success' && data.data) {
+                                wishlistIds = data.data.ids || [];
+                                wishlistItems = data.data.items || [];
+                                
+                                // Save ids to localStorage
+                                localStorage.setItem(`wishlist_${userId}`, JSON.stringify(wishlistIds));
+                                
+                                // Display items directly from API response if available
+                                if (wishlistItems.length > 0) {
+                                    console.log(`Displaying ${wishlistItems.length} items from server response`);
+                                    displayServerItems(wishlistItems, wishlistGrid);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error fetching from server:', error);
+                    }
+                    
+                    // Fall back to localStorage if server fetch failed or returned no items
+            if (wishlistIds.length === 0) {
+                        console.log('Falling back to localStorage');
+                        const wishlistKey = `wishlist_${userId}`;
+                        const storedList = localStorage.getItem(wishlistKey);
+                        if (storedList) {
+                            wishlistIds = JSON.parse(storedList);
+                        }
+                    }
+                } else {
+                    // No user ID, try localStorage for guest
+                    const storedList = localStorage.getItem('wishlist');
+                    if (storedList) {
+                        wishlistIds = JSON.parse(storedList);
+                    }
+                }
+                
+                console.log(`loadWishlistItems: Found ${wishlistIds.length} items in wishlist:`, wishlistIds);
+                
+                // If there are no wishlist items, show empty message
+                if (!wishlistIds || wishlistIds.length === 0) {
+                wishlistGrid.style.display = 'none';
+                emptyWishlist.style.display = 'block';
+                return;
+            }
+            
+            // Hide empty message, show grid
+            wishlistGrid.style.display = 'grid';
+            emptyWishlist.style.display = 'none';
+            
+                // Display fallback items using the product IDs
+                displayFallbackItems(wishlistIds, wishlistGrid);
+                
+            } catch (error) {
+                console.error('Error loading wishlist items:', error);
+                
+                // Create error message
+                const errorMessage = document.createElement('div');
+                errorMessage.style.gridColumn = '1/-1';
+                errorMessage.style.textAlign = 'center';
+                errorMessage.style.padding = '20px';
+                errorMessage.style.color = 'var(--accent-color)';
+                errorMessage.style.marginBottom = '20px';
+                errorMessage.innerHTML = `
+                    <p>Error loading your wishlist items.</p>
+                    <p>Please try again later or refresh the page.</p>
+                `;
+                wishlistGrid.innerHTML = '';
+                wishlistGrid.appendChild(errorMessage);
+            }
+        }
+        
+        // Function to display items directly from server response
+        function displayServerItems(items, container) {
+            console.log('Displaying server items:', items);
+            container.innerHTML = ''; // Clear container
+            
+            if (!items || items.length === 0) {
+                const emptyWishlist = document.getElementById('empty-wishlist');
+                container.style.display = 'none';
+                emptyWishlist.style.display = 'block';
+                            return;
+                        }
+                        
+            container.style.display = 'grid';
+            document.getElementById('empty-wishlist').style.display = 'none';
+            
+            items.forEach((item, index) => {
+                            // Create wishlist item element
+                            const wishlistItem = document.createElement('div');
+                            wishlistItem.className = 'wishlist-item';
+                            wishlistItem.style.animationDelay = `${0.1 * index}s`;
+                
+                // Store product info in localStorage for later use
+                const productInfo = {
+                    id: item.product_id,
+                    title: item.title || 'Product',
+                    price: item.rental_price || '0',
+                    seller: item.seller_name || 'ClothLoop Seller',
+                    image: item.image_path || ''
+                };
+                localStorage.setItem(`product_${item.product_id}`, JSON.stringify(productInfo));
+                            
+                            // Create URL params for details page
+                            const queryParams = new URLSearchParams({
+                    id: item.product_id,
+                    title: item.title || 'Product',
+                    price: item.rental_price || '0'
+                });
+                
+                // Create image element
+                            const imgElement = document.createElement('img');
+                            imgElement.className = 'wishlist-img';
+                imgElement.alt = item.title || 'Product';
+                
+                // Add error handler for image
+                            imgElement.addEventListener('error', function() {
+                    console.warn(`Failed to load image for product ${item.product_id}, trying direct API`);
+                    this.src = `/ClothLoop/backend/api/products/direct_image.php?product_id=${item.product_id}`;
+                                
+                                this.addEventListener('error', function() {
+                        console.warn(`API failed, trying uploads path for product ${item.product_id}`);
+                        this.src = `/ClothLoop/backend/uploads/products/${item.product_id}/1.jpg`;
+                        
+                        this.addEventListener('error', function() {
+                            console.error(`All paths failed for product ${item.product_id}`);
+                                    this.src = '../../assets/images/placeholder.png';
+                                });
+                            });
+                });
+                
+                // Set image source based on available data
+                if (item.image_path) {
+                    if (item.image_path.startsWith('http')) {
+                        imgElement.src = item.image_path;
+                    } else if (item.image_path.startsWith('/')) {
+                        imgElement.src = item.image_path;
+                    } else if (item.image_path.startsWith('uploads/')) {
+                        imgElement.src = `/ClothLoop/backend/${item.image_path}`;
+                    } else {
+                        imgElement.src = `/ClothLoop/backend/${item.image_path}`;
+                    }
+                } else {
+                    imgElement.src = `/ClothLoop/backend/api/products/direct_image.php?product_id=${item.product_id}`;
+                }
+                            
+                            // Create details div
+                            const detailsDiv = document.createElement('div');
+                            detailsDiv.className = 'wishlist-details';
+                            detailsDiv.innerHTML = `
+                    <h3 class="wishlist-title">${item.title || 'Product'}</h3>
+                    <p class="wishlist-price">₹${item.rental_price || '0'} / day</p>
+                    <p class="wishlist-seller">${item.seller_name || 'ClothLoop Seller'}</p>
+                                <div class="wishlist-actions">
+                        <a href="details.html?${queryParams.toString()}" class="view-btn">VIEW DETAILS</a>
+                        <button class="remove-btn" data-product-id="${item.product_id}">REMOVE</button>
+                                </div>
+                            `;
+                            
+                            // Append elements
+                            wishlistItem.appendChild(imgElement);
+                            wishlistItem.appendChild(detailsDiv);
+                container.appendChild(wishlistItem);
+                            
+                            // Add event listener to remove button
+                            const removeBtn = wishlistItem.querySelector('.remove-btn');
+                            removeBtn.addEventListener('click', function() {
+                                const productId = this.getAttribute('data-product-id');
+                                
+                                // Add animation before removing
+                                wishlistItem.style.animation = 'fadeOut 0.3s forwards';
+                                
+                    // Create a direct server call to remove the item
+                    const userId = localStorage.getItem('user_id');
+                    if (userId) {
+                        // Get current wishlist from localStorage
+                        const wishlistKey = `wishlist_${userId}`;
+                        let currentWishlist = [];
+                        try {
+                            const storedList = localStorage.getItem(wishlistKey);
+                            if (storedList) {
+                                currentWishlist = JSON.parse(storedList);
+                            }
+                        } catch (e) {
+                            console.error('Error reading wishlist from localStorage:', e);
+                        }
+                        
+                        // Remove the product ID from the list
+                        const updatedWishlist = currentWishlist.filter(id => id.toString() !== productId.toString());
+                        
+                        // Update localStorage immediately
+                        localStorage.setItem(wishlistKey, JSON.stringify(updatedWishlist));
+                        
+                        // Send the update to the server
+                        fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                items: updatedWishlist,
+                                user_id: userId
+                            }),
+                            credentials: 'include'
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Server response after removal:', data);
+                            if (data.status === 'success') {
+                                console.log('Item successfully removed from server');
+                                
+                                // Remove item from DOM
+                                setTimeout(() => {
+                                    wishlistItem.remove();
+                                    
+                                    // Check if we need to show empty state
+                                    if (container.children.length === 0) {
+                                        container.style.display = 'none';
+                                        document.getElementById('empty-wishlist').style.display = 'block';
+                                    }
+                                }, 300);
+                    } else {
+                                console.error('Server error removing item:', data.message);
+                                alert('Could not remove item from wishlist: ' + (data.message || 'Unknown error'));
+                                wishlistItem.style.animation = '';
+                    }
+                })
+                .catch(error => {
+                            console.error('Network error removing item:', error);
+                            alert('Network error removing item from wishlist. Please try again.');
+                            wishlistItem.style.animation = '';
+                        });
+                    } else {
+                        // No user ID, just remove locally
+                        setTimeout(() => {
+                            // Update local storage
+                            const storedList = localStorage.getItem('wishlist');
+                            if (storedList) {
+                                let wishlist = JSON.parse(storedList);
+                                wishlist = wishlist.filter(id => id.toString() !== productId.toString());
+                                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                            }
+                            
+                            wishlistItem.remove();
+                            
+                            // Check if we need to show empty state
+                            if (container.children.length === 0) {
+                container.style.display = 'none';
+                document.getElementById('empty-wishlist').style.display = 'block';
+                            }
+                        }, 300);
+                    }
+                });
+            });
+        }
+
+        // Load wishlist items when the page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('DOM loaded - initializing wishlist');
+            try {
+                // Get user ID from localStorage
+                const userId = localStorage.getItem('user_id');
+                console.log('Current user ID:', userId);
+                
+                // If user is logged in, force a sync from server to update the localStorage
+                if (userId) {
+                    console.log('Checking server for up-to-date wishlist data');
+                }
+                
+                // Load wishlist items
+                await loadWishlistItems();
+                console.log('Wishlist initialization complete');
+                
+            } catch (error) {
+                console.error('Error initializing wishlist:', error);
+            }
+        });
+
+        // Function to format image paths
+        function formatImagePath(imagePath, productId) {
+            if (!imagePath) {
+                // Try direct image API path for products without image path
+                return `/ClothLoop/backend/api/products/direct_image.php?product_id=${productId}`;
+            }
+            
+            // Handle full URLs
+            if (imagePath.startsWith('http') || imagePath.startsWith('data:')) {
+                return imagePath;
+            }
+            
+            // Handle paths starting with slash
+            if (imagePath.startsWith('/')) {
+                return imagePath; // Already starts with slash
+            }
+            
+            // For paths like "uploads/products/19/..."
+            if (imagePath.startsWith('uploads/')) {
+                return `/ClothLoop/backend/${imagePath}`;
+            }
+            
+            // Default fallback
+            return `/ClothLoop/backend/uploads/products/${productId}/1.jpg`;
+        }
+        
+        // Function to display fallback items from localStorage
+        function displayFallbackItems(productIds, container) {
+            console.log(`Displaying fallback items for ${productIds.length} products`);
+            
+            // Get items from localStorage
+            productIds.forEach((productId, index) => {
+                try {
+                    const storedInfo = localStorage.getItem(`product_${productId}`);
+                    let product = null;
+                    
+                    if (storedInfo) {
+                        try {
+                            product = JSON.parse(storedInfo);
+                } catch (e) {
+                            console.error(`Error parsing stored product ${productId}:`, e);
+                        }
+                    }
+                    
+                    if (!product) {
+                        // Minimal fallback with just ID
+                        product = {
+                            id: productId,
+                            title: `Product ${productId}`,
+                            price: '0',
+                            seller: 'Unknown Seller',
+                            image: `/ClothLoop/backend/api/products/direct_image.php?product_id=${productId}`
+                        };
+                    }
+                    
+                    // Create wishlist item element
+                const wishlistItem = document.createElement('div');
+                wishlistItem.className = 'wishlist-item';
+                wishlistItem.style.animationDelay = `${0.1 * index}s`;
+                    
+                    // Create URL params for details page
+                    const detailsUrl = `details.html?id=${product.id}`;
+                
+                // Create image element with error handling
+                const imgElement = document.createElement('img');
+                imgElement.className = 'wishlist-img';
+                    imgElement.alt = product.title;
+                imgElement.addEventListener('error', function() {
+                        console.warn(`Failed to load image for product ${product.id}, trying direct API`);
+                        // Try direct API path
+                        this.src = `/ClothLoop/backend/api/products/direct_image.php?product_id=${product.id}`;
+                        
+                        // Add another error handler for the first fallback
+                    this.addEventListener('error', function() {
+                            // Try standard uploads path
+                            console.warn(`Direct API failed for product ${product.id}, trying uploads path`);
+                            this.src = `/ClothLoop/backend/uploads/products/${product.id}/1.jpg`;
+                            
+                            // Final error handler 
+                            this.addEventListener('error', function() {
+                                console.error(`All image paths failed for product ${product.id}`);
+                        this.src = '../../assets/images/placeholder.png';
+                    });
+                });
+                    });
+                    
+                    // Try using image from localStorage or storage
+                    if (product.image && (product.image.startsWith('http') || product.image.startsWith('/ClothLoop'))) {
+                        // Use as is if it's already a full URL or starts with /ClothLoop
+                        imgElement.src = product.image;
+                    } else if (product.image && product.image.startsWith('uploads/')) {
+                        // Add base path for relative paths
+                        imgElement.src = `/ClothLoop/backend/${product.image}`;
+                    } else {
+                        // Use direct API as default first attempt
+                        imgElement.src = `/ClothLoop/backend/api/products/direct_image.php?product_id=${product.id}`;
+                    }
+                
+                // Create details div
+                const detailsDiv = document.createElement('div');
+                detailsDiv.className = 'wishlist-details';
+                detailsDiv.innerHTML = `
+                        <h3 class="wishlist-title">${product.title}</h3>
+                        <p class="wishlist-price">₹${product.price} / day</p>
+                        <p class="wishlist-seller">${product.seller}</p>
+                    <div class="wishlist-actions">
+                            <a href="${detailsUrl}" class="view-btn">View Details</a>
+                            <button class="remove-btn" data-product-id="${product.id}">Remove</button>
+                    </div>
+                `;
+                
+                // Append elements
+                wishlistItem.appendChild(imgElement);
+                wishlistItem.appendChild(detailsDiv);
+                
+                // Add event listener to remove button
+                    wishlistItem.querySelector('.remove-btn').addEventListener('click', function() {
+                        const productId = this.getAttribute('data-product-id');
+                        
+                    // Add animation before removing
+                    wishlistItem.style.animation = 'fadeOut 0.3s forwards';
+                    
+                        // Create a direct server call to remove the item
+            const userId = localStorage.getItem('user_id');
+                        if (userId) {
+                            // Get current wishlist from localStorage
+            const wishlistKey = `wishlist_${userId}`;
+                            let currentWishlist = [];
+                            try {
+                                const storedList = localStorage.getItem(wishlistKey);
+                                if (storedList) {
+                                    currentWishlist = JSON.parse(storedList);
+                                }
+            } catch (e) {
+                                console.error('Error reading wishlist from localStorage:', e);
+                            }
+                            
+                            // Remove the product ID from the list
+                            const updatedWishlist = currentWishlist.filter(id => id.toString() !== productId.toString());
+                            
+                            // Update localStorage immediately
+                            localStorage.setItem(wishlistKey, JSON.stringify(updatedWishlist));
+                            
+                            // Send the update to the server
+                            fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    items: updatedWishlist,
+                                    user_id: userId
+                                }),
+                                credentials: 'include'
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Server response after removal:', data);
+                                if (data.status === 'success') {
+                                    console.log('Item successfully removed from server');
+                                    
+                                    // Remove item from DOM
+                                    setTimeout(() => {
+                                        wishlistItem.remove();
+                                        
+                                        // Check if we need to show empty state
+                                        if (container.children.length === 0) {
+                                            container.style.display = 'none';
+                                            document.getElementById('empty-wishlist').style.display = 'block';
+                                        }
+                                    }, 300);
+                                } else {
+                                    console.error('Server error removing item:', data.message);
+                                    alert('Could not remove item from wishlist: ' + (data.message || 'Unknown error'));
+                                    wishlistItem.style.animation = '';
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Network error removing item:', error);
+                                alert('Network error removing item from wishlist. Please try again.');
+                                wishlistItem.style.animation = '';
+                            });
+                } else {
+                            // No user ID, just remove locally
+                            setTimeout(() => {
+                                // Update local storage
+                                const storedList = localStorage.getItem('wishlist');
+                                if (storedList) {
+                                    let wishlist = JSON.parse(storedList);
+                                    wishlist = wishlist.filter(id => id.toString() !== productId.toString());
+                                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                                }
+                                
+                                wishlistItem.remove();
+                                
+                                // Check if we need to show empty state
+                                if (container.children.length === 0) {
+                                    container.style.display = 'none';
+                                    document.getElementById('empty-wishlist').style.display = 'block';
+                                }
+                            }, 300);
+                        }
+                    });
+                    
+                    // Add to container
+                    container.appendChild(wishlistItem);
+                } catch (error) {
+                    console.error(`Error creating fallback item for product ${productId}:`, error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

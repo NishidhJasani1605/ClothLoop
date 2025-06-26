@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Profile | ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --input-bg: #222222;
+            --input-border: #333333;
+            --hover-bg: #333333;
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #000000;
+            --text-color: #000000;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #f5f5f5;
+            --footer-text: #000000;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --input-bg: #f9f9f9;
+            --input-border: #e0e0e0;
+            --hover-bg: #f0f0f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary-color);
+            min-height: 30vh;
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            margin-top: 73px;
+            position: relative;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .light-theme .hero {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Profile Content */
+        .profile-container {
+            max-width: 800px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .profile-title {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            color: var(--accent-color);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .profile-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            transform: translateX(-50%) skewX(-20deg);
+        }
+
+        .profile-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            font-weight: 400;
+            margin-top: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .form-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--input-border);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .form-input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            padding: 0 15px;
+            font-size: 16px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.1);
+            transform: translateY(-2px) skewX(-2deg);
+        }
+
+        textarea.form-input {
+            height: auto;
+            min-height: 100px;
+            padding: 15px;
+            resize: vertical;
+        }
+
+        .form-input:disabled {
+            background-color: rgba(128, 128, 128, 0.1);
+            cursor: not-allowed;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .btn {
+            height: 50px;
+            padding: 0 30px;
+            border: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(128, 128, 128, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            margin-right: 15px;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(128, 128, 128, 0.2);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .alert-success {
+            background-color: var(--success-color);
+            color: white;
+            border-left: 5px solid #2a9f47;
+        }
+
+        .alert-error {
+            background-color: var(--error-color);
+            color: white;
+            border-left: 5px solid #d62d22;
+        }
+        
+        /* Add more visible alerts */
+        .alert-fixed {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            min-width: 300px;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            font-weight: 500;
+            padding: 15px 20px;
+            text-align: center;
+            animation: slideInFromTop 0.3s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translate(-50%, -50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .password-toggle {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .password-toggle input {
+            margin-right: 10px;
+            accent-color: var(--accent-color);
+        }
+
+        .password-section {
+            margin-top: 20px;
+            border-top: 1px solid var(--input-border);
+            padding-top: 20px;
+            display: none;
+        }
+
+        .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+        
+        .loading-spinner i {
+            margin-right: 10px;
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-container {
+                margin-top: 100px;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .profile-title {
+                font-size: 2rem;
+            }
+            
+            .profile-subtitle {
+                font-size: 1rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-secondary {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .seller-badge {
+            position: absolute;
+            top: -10px;
+            right: -30px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Location styles */
+        .location-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--input-border);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .location-display {
+            margin-bottom: 20px;
+        }
+        
+        .location-value {
+            padding: 15px;
+            background-color: var(--light-bg);
+            border: 1px solid var(--input-border);
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        
+        .location-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .location-btn i, .location-btn-secondary i {
+            margin-right: 10px;
+        }
+        
+        .location-btn-secondary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            width: 100%;
+            height: 50px;
+            border: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .location-btn-secondary:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(128, 128, 128, 0.2);
+        }
+        
+        .location-divider {
+            text-align: center;
+            position: relative;
+            margin: 25px 0;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .location-divider::before,
+        .location-divider::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 1px;
+            background-color: var(--input-border);
+            top: 50%;
+        }
+        
+        .location-divider::before {
+            left: 0;
+        }
+        
+        .location-divider::after {
+            right: 0;
+        }
+        
+        .location-divider span {
+            background-color: var(--card-bg);
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Shop logo upload styles */
+        .shop-logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 30px;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .shop-logo-preview {
+            width: 150px;
+            height: 150px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--accent-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .shop-logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .shop-logo-preview:hover img {
+            transform: scale(1.05);
+        }
+        
+        .shop-logo-controls {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .logo-input {
+            height: auto;
+            padding: 10px 15px;
+        }
+        
+        .logo-help-text {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .logo-remove-btn {
+            background-color: transparent;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            padding: 8px 15px;
+            margin-top: 10px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-remove-btn:hover {
+            background-color: var(--error-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .shop-logo-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .shop-logo-controls {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Custom file input styling */
+        .custom-file-input-container {
+            position: relative;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .custom-file-input {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 46px;
+            padding: 0;
+            border: 2px solid var(--accent-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-input:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.2);
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .file-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border: none;
+            border-right: 2px solid var(--accent-color);
+            height: 100%;
+            padding: 0 15px;
+            margin: 0;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+            flex: 1;
+            padding: 0 15px;
+        }
+
+        .image-preview-container {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed var(--input-border);
+            border-radius: 10px;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .image-preview-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-preview-container img.visible {
+            opacity: 1;
+        }
+        
+        .image-preview-placeholder {
+            color: var(--text-color-light);
+            font-size: 14px;
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .image-preview-container:hover {
+            border-color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+        }
+        
+        .remove-image.visible {
+            display: flex;
+        }
+
+        /* Shop Logo Styles */
+        .logo-preview-container {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            border: 2px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        
+        .logo-preview i {
+            font-size: 40px;
+            color: var(--accent-color);
+        }
+        
+        .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .preview-label {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+        }
+        
+        .logo-preview:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 1rem 0 1rem;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 1rem !important;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem 0;
+            border-top: none;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Login Form Styling */
+        #loginPrompt {
+            max-width: 500px;
+            margin: 40px auto;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        #loginPrompt p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .login-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--input-border);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        #loginForm .form-group {
+            margin-bottom: 20px;
+        }
+        
+        #loginForm .btn {
+            margin-top: 15px;
+        }
+
+        #manualLocationEntry {
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            padding: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .location-help-text {
+            font-size: 13px;
+            font-style: italic;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="seller_dashboard.html" class="logo">
+            <img src="../../assets/images/logo_b.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            <span class="seller-badge">Seller</span>
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="seller_dashboard.html">Dashboard</a></li>
+                <li><a href="product_listings.html">Listings</a></li>
+                <li><a href="seller_reviews.html">Reviews</a></li>
+                <li><a href="seller_profile.html" class="active">Profile</a></li>
+                <li><a href="../about/about_us.html">About</a></li>
+                <li><a href="../account/login.html">Logout</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Seller Profile</h1>
+            <p>Manage your shop and personal information</p>
+        </div>
+    </section>
+
+    <!-- Profile Content -->
+    <main class="profile-container">
+        <div class="alert alert-success" id="successAlert"></div>
+        <div class="alert alert-error" id="errorAlert"></div>
+
+        <!-- Add detailed error display for server errors -->
+        <div id="serverErrorContainer" style="display: none; margin: 20px auto; max-width: 600px; background-color: var(--card-bg); border: 1px solid var(--error-color); padding: 20px; border-radius: 5px; box-shadow: var(--box-shadow); text-align: left;">
+            <h3 style="color: var(--error-color); margin-bottom: 15px;"><i class="fas fa-exclamation-triangle"></i> Server Error</h3>
+            <div id="serverErrorMessage" style="margin-bottom: 15px;"></div>
+            <div id="serverErrorDetails" style="margin-bottom: 15px; background-color: rgba(255,59,48,0.1); padding: 10px; border-left: 3px solid var(--error-color); overflow-x: auto; white-space: pre-wrap; font-family: monospace; font-size: 12px;"></div>
+            <div id="serverErrorSolution" style="margin-bottom: 15px;"></div>
+            <div style="display: flex; justify-content: space-between;">
+                <button id="fixErrorButton" class="btn" style="background-color: var(--primary-color); color: var(--accent-color); border: 1px solid var(--accent-color);">
+                    <i class="fas fa-wrench"></i> Repair
+                </button>
+                <button id="hideErrorButton" class="btn" style="background-color: transparent; color: var(--text-color); border: 1px solid var(--input-border);">
+                    <i class="fas fa-times"></i> Hide
+                </button>
+            </div>
+        </div>
+
+        <div id="loginPrompt" style="display: none;">
+            <p>You need to be logged in to view your profile.</p>
+            
+            <div class="login-box">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" id="loginEmail" name="loginEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" id="loginPassword" name="loginPassword" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+                <div style="margin-top: 15px; text-align: center;">
+                    <a href="../../index.html" style="color: var(--text-color); text-decoration: none; opacity: 0.8; transition: opacity 0.2s;">Return to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div id="profileLoading" class="loading-spinner" style="display: none;">
+                <i class="fas fa-spinner"></i> Loading profile information...
+            </div>
+            
+            <form id="profileForm" style="display: block;">
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user-circle"></i> Personal Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone_no" class="form-label">Phone Number</label>
+                        <input type="tel" id="phone_no" name="phone_no" class="form-input" required>
+                    </div>
+                </div>
+                
+                <!-- Shop Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-store"></i> Shop Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="shopLogo" class="form-label">Shop Logo</label>
+                        <div class="logo-preview-container">
+                            <div class="logo-preview">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <span class="preview-label">Logo Preview</span>
+                        </div>
+                        <div class="custom-file-input">
+                            <input type="file" id="shopLogo" name="shopLogo" accept="image/*">
+                            <div class="file-button"><i class="fas fa-upload"></i> Choose File</div>
+                            <div class="file-name">No file chosen</div>
+                        </div>
+                        <p style="font-size: 12px; margin-top: 8px; color: var(--text-color); opacity: 0.7;">Upload a square image for best results. Max file size: 2MB.</p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="shop_name" class="form-label">Shop Name</label>
+                        <input type="text" id="shop_name" name="shop_name" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="shop_description" class="form-label">Shop Description</label>
+                        <textarea id="shop_description" name="shop_description" class="form-input" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shop_address" class="form-label">Shop Address</label>
+                        <input type="text" id="shop_address" name="shop_address" class="form-input" required>
+                    </div>
+                </div>
+                
+                <!-- Location Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Shop Location</h2>
+                    
+                    <!-- Hidden input to store location for form submission -->
+                    <input type="hidden" id="shop_location" name="shop_location">
+                    
+                    <div class="location-container">
+                        <div class="location-display">
+                            <label class="form-label">Shop Location:</label>
+                            <div class="location-value" id="locationDisplay">Location not set yet</div>
+                        </div>
+                        
+                        <button type="button" class="btn location-btn" id="getCurrentLocation">
+                            <i class="fas fa-map-marker-alt"></i> GET CURRENT LOCATION
+                        </button>
+                        
+                        <div class="location-divider">
+                            <span>OR</span>
+                        </div>
+                        
+                        <button type="button" class="btn location-btn-secondary" id="toggleManualEntry">
+                            <i class="fas fa-pencil-alt"></i> ENTER COORDINATES MANUALLY
+                        </button>
+                        
+                        <!-- Manual location entry - hidden by default -->
+                        <div id="manualLocationEntry" style="display: none;">
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="latitude" class="form-label">Latitude:</label>
+                                <input type="text" id="latitude" name="latitude" class="form-input" placeholder="e.g. 40.7128">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="longitude" class="form-label">Longitude:</label>
+                                <input type="text" id="longitude" name="longitude" class="form-input" placeholder="e.g. -74.0060">
+                            </div>
+                            
+                            <p class="location-help-text">Tip: You can find coordinates for any location by right-clicking on Google Maps and selecting "What's here?"</p>
+                            
+                            <button type="button" class="btn location-btn-secondary" id="setManualLocation">
+                                <i class="fas fa-check"></i> SET MANUAL LOCATION
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="password-toggle">
+                    <input type="checkbox" id="changePassword">
+                    <label for="changePassword">Change Password</label>
+                </div>
+
+                <div id="passwordSection" class="password-section">
+                    <div class="form-group">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" id="current_password" name="current_password" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" id="new_password" name="new_password" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirm New Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Hidden Reset Button (Double-click ClothLoop logo to access) -->
+    <button id="resetButton" style="display: none;">Reset</button>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+    
+    <script>
+        // Function to show alerts
+        function showAlert(message, type) {
+            const alertElement = document.getElementById(type === 'success' ? 'successAlert' : 'errorAlert');
+            alertElement.textContent = message;
+            alertElement.style.display = 'block';
+            
+            // Add fixed class for better visibility
+            alertElement.classList.add('alert-fixed');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+                alertElement.classList.remove('alert-fixed');
+            }, 5000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme switcher functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or use default
+            const savedTheme = localStorage.getItem('clothloop-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                
+                // Update icon
+                if (document.body.classList.contains('light-theme')) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('clothloop-theme', 'light');
+                } else {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('clothloop-theme', 'dark');
+                }
+            });
+            
+            // Password change toggle
+            const changePasswordCheckbox = document.getElementById('changePassword');
+            const passwordSection = document.getElementById('passwordSection');
+            
+            changePasswordCheckbox.addEventListener('change', function() {
+                passwordSection.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Cancel button
+            const cancelBtn = document.getElementById('cancelBtn');
+            cancelBtn.addEventListener('click', function() {
+                window.location.href = 'seller_dashboard.html';
+            });
+            
+            // Form elements
+            const profileForm = document.getElementById('profileForm');
+            const loadingSpinner = document.getElementById('profileLoading');
+            
+            // Form fields
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone_no');
+            const shopNameInput = document.getElementById('shop_name');
+            const shopDescriptionInput = document.getElementById('shop_description');
+            const latitudeInput = document.getElementById('latitude');
+            const longitudeInput = document.getElementById('longitude');
+            const locationDisplay = document.getElementById('locationDisplay');
+            const shopLogoInput = document.getElementById('shopLogo');
+            
+            // Get user ID from session storage or URL parameter
+            let userId = localStorage.getItem('user_id');
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('id')) {
+                userId = urlParams.get('id');
+                localStorage.setItem('user_id', userId);
+            }
+            
+            // If no user ID is available, set a default seller ID
+            if (!userId) {
+                userId = 1; // Use a default seller ID (demo account)
+                localStorage.setItem('user_id', userId);
+                localStorage.setItem('user_role', 'seller');
+            }
+            
+            // Initialize the logo preview from localStorage if available
+            loadProfilePicture();
+            
+            // Fetch seller profile
+            fetchSellerProfile();
+            
+            // Helper function to add a debug message
+            function addDebugMessage(message) {
+                console.log('Debug:', message);
+                if (typeof message === 'object') {
+                    message = JSON.stringify(message, null, 2);
+                }
+                
+                const debugOutput = document.createElement('pre');
+                debugOutput.className = 'debug-output';
+                debugOutput.textContent = message;
+                
+                // Get debug container or create it
+                let debugContainer = document.getElementById('debugContainer');
+                if (!debugContainer) {
+                    debugContainer = document.createElement('div');
+                    debugContainer.id = 'debugContainer';
+                    debugContainer.style.display = 'none';
+                    document.body.appendChild(debugContainer);
+                }
+                
+                debugContainer.appendChild(debugOutput);
+            }
+            
+            // Update the image preview function to be more robust
+            function updateLogoPreview(imagePath) {
+                const logoPreview = document.querySelector('.logo-preview');
+                
+                // Clear any existing content
+                logoPreview.innerHTML = '';
+                
+                if (!imagePath) {
+                    logoPreview.innerHTML = '<i class="fas fa-store"></i>';
+                    return;
+                }
+                
+                // Create new image element
+                const img = document.createElement('img');
+                img.alt = 'Shop Logo';
+                
+                // Log for debugging
+                console.log('Loading shop logo from:', imagePath);
+                
+                // Set up error handling
+                img.onerror = function() {
+                    console.error('Failed to load image from:', imagePath);
+                    
+                    // Try alternative URLs if the primary one fails
+                    const pathParts = imagePath.split('/');
+                    const filename = pathParts[pathParts.length - 1];
+                    
+                    // Build several alternative paths to try
+                    const alternativePaths = [
+                        `/ClothLoop/backend/uploads/profile_photos/${filename}`,
+                        `../../../backend/uploads/profile_photos/${filename}`,
+                        `../../../uploads/profile_photos/${filename}`,
+                        `/ClothLoop/uploads/profile_photos/${filename}`
+                    ];
+                    
+                    // Try loading from alternative paths
+                    tryLoadFromPaths(alternativePaths, 0);
+                };
+                
+                // Function to try loading from multiple paths
+                function tryLoadFromPaths(paths, index) {
+                    if (index >= paths.length) {
+                        // If all paths fail, show default icon
+                        console.error('All image loading attempts failed. Using default icon.');
+                        logoPreview.innerHTML = '<i class="fas fa-store"></i>';
+                        return;
+                    }
+                    
+                    const path = paths[index];
+                    console.log(`Trying alternative path ${index + 1}/${paths.length}: ${path}`);
+                    
+                    const retryImg = document.createElement('img');
+                    retryImg.alt = 'Shop Logo';
+                    
+                    retryImg.onload = function() {
+                        console.log('Image loaded successfully from alternative path:', path);
+                        logoPreview.innerHTML = '';
+                        logoPreview.appendChild(retryImg);
+                    };
+                    
+                    retryImg.onerror = function() {
+                        console.error('Failed to load from alternative path:', path);
+                        // Try next path
+                        tryLoadFromPaths(paths, index + 1);
+                    };
+                    
+                    retryImg.src = path;
+                }
+                
+                // Set onload handler
+                img.onload = function() {
+                    console.log('Image loaded successfully from primary path');
+                };
+                
+                // Set the image source
+                img.src = imagePath;
+                logoPreview.appendChild(img);
+            }
+
+            // Add this function just before the fetchSellerProfile function
+            function loadProfilePicture() {
+                const userId = localStorage.getItem('user_id');
+                if (!userId) return;
+                
+                // Try to load from local storage first
+                const storedPhotoPath = localStorage.getItem(`profile_photo_${userId}`);
+                if (storedPhotoPath) {
+                    updateLogoPreview(storedPhotoPath);
+                }
+            }
+
+            // Modify the fetch profile code to update the logo preview correctly
+            function fetchSellerProfile() {
+                // Get seller ID from localStorage
+                const sellerId = localStorage.getItem('user_id');
+                
+                if (!sellerId) {
+                    showAlert('No seller ID found. Please login again.', 'error');
+                    return;
+                }
+                
+                // Show loading spinner
+                document.querySelector('.loading-spinner').style.display = 'flex';
+                profileForm.style.display = 'none';
+                
+                console.log('Fetching profile for seller ID:', sellerId);
+                
+                // Fetch seller profile data
+                fetch(`../../../backend/api/sellers/get_seller_profile.php?id=${sellerId}`)
+                    .then(response => {
+                        // Log the response status regardless of success/failure
+                        console.log(`Server response status: ${response.status} ${response.statusText}`);
+                        
+                        // First capture the raw response text for debugging
+                        return response.text().then(text => {
+                            if (!response.ok) {
+                                // Log the raw error response for debugging
+                                console.error('Error response text:', text);
+                                throw new Error(`HTTP error ${response.status}: ${text}`);
+                            }
+                            
+                            try {
+                                // Try to parse as JSON
+                                return JSON.parse(text);
+                            } catch (e) {
+                                console.error('Invalid JSON in response:', text);
+                                throw new Error('Invalid JSON response from server');
+                            }
+                        });
+                    })
+                    .then(data => {
+                        // Hide loading spinner
+                        document.querySelector('.loading-spinner').style.display = 'none';
+                        profileForm.style.display = 'block';
+                        
+                        console.log('Seller profile data:', data);
+                        addDebugMessage(data);
+                        
+                        if (data.status === 'success') {
+                            const sellerData = data.data;
+                            
+                            try {
+                                // Populate personal info - try different possible field names
+                                nameInput.value = sellerData.name || sellerData.seller_name || sellerData.user_name || '';
+                                emailInput.value = sellerData.email || sellerData.user_email || '';
+                                phoneInput.value = sellerData.phone || sellerData.phone_no || sellerData.phone_number || '';
+                                
+                                // Populate shop info - try different possible field names
+                                shopNameInput.value = sellerData.shop_name || sellerData.shopName || '';
+                                shopDescriptionInput.value = sellerData.description || sellerData.shop_description || '';
+                                
+                                // Add shop address
+                                const shopAddressInput = document.getElementById('shop_address');
+                                shopAddressInput.value = sellerData.shop_address || sellerData.address || '';
+                                
+                                // Populate location data
+                                if (sellerData.latitude || sellerData.longitude) {
+                                    latitudeInput.value = sellerData.latitude || '';
+                                    longitudeInput.value = sellerData.longitude || '';
+                                    locationDisplay.textContent = `${sellerData.latitude || ''}, ${sellerData.longitude || ''}`;
+                                
+                                    // Store in localStorage
+                                    if (sellerData.latitude) localStorage.setItem('seller_latitude', sellerData.latitude);
+                                    if (sellerData.longitude) localStorage.setItem('seller_longitude', sellerData.longitude);
+                                }
+                                
+                                // Set profile photo if available
+                                if (sellerData.profile_image || sellerData.profile_photo) {
+                                    const photoUrl = sellerData.profile_image || sellerData.profile_photo;
+                                    
+                                    if (photoUrl && photoUrl !== 'null') {
+                                        // Determine correct URL based on what's returned
+                                        let fullPhotoUrl;
+                                        if (photoUrl.startsWith('http')) {
+                                            fullPhotoUrl = photoUrl;
+                                        } else if (photoUrl.startsWith('/')) {
+                                            fullPhotoUrl = photoUrl;
+                                        } else {
+                                            fullPhotoUrl = '../../../backend/uploads/profile_photos/' + photoUrl;
+                                        }
+                                        
+                                        // Store in localStorage
+                                        localStorage.setItem(`profile_photo_${sellerId}`, fullPhotoUrl);
+                                        
+                                        // Call the unified function to update logo preview
+                                        updateLogoPreview(fullPhotoUrl);
+                                    }
+                                }
+                                
+                            } catch (error) {
+                                console.error('Error populating form:', error);
+                                showAlert('Error populating form: ' + error.message, 'error');
+                            }
+                        } else {
+                            showAlert(data.message || 'Failed to load profile data', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        // Hide loading spinner
+                        document.querySelector('.loading-spinner').style.display = 'none';
+                        profileForm.style.display = 'block';
+                        
+                        console.error('Error fetching seller profile:', error);
+                        
+                        // Show detailed error message in the server error container
+                        const serverErrorContainer = document.getElementById('serverErrorContainer');
+                        const serverErrorMessage = document.getElementById('serverErrorMessage');
+                        const serverErrorDetails = document.getElementById('serverErrorDetails');
+                        const serverErrorSolution = document.getElementById('serverErrorSolution');
+                        const fixErrorButton = document.getElementById('fixErrorButton');
+                        
+                        // Show the error container
+                        serverErrorContainer.style.display = 'block';
+                        
+                        // Set error message and details
+                        let errorMsg = `Failed to fetch seller profile`;
+                        let errorDetails = error.message || 'Unknown error';
+                        let errorSolution = '';
+                        
+                        // Check for common error patterns
+                        if (errorDetails.includes('500')) {
+                            errorMsg = 'Server error when fetching profile';
+                            errorSolution = 'This might be due to a database connection issue or a problem with the seller tables. Try the repair button below.';
+                        } else if (errorDetails.includes('404')) {
+                            errorMsg = 'Profile API endpoint not found';
+                            errorSolution = 'The API endpoint for seller profiles could not be found. Please check your installation.';
+                        } else if (errorDetails.includes('403')) {
+                            errorMsg = 'Access forbidden';
+                            errorSolution = 'You do not have permission to access this profile. Please login with the correct credentials.';
+                        } else if (errorDetails.includes('401')) {
+                            errorMsg = 'Authentication required';
+                            errorSolution = 'Please login again to access your profile.';
+                        }
+                        
+                        serverErrorMessage.textContent = errorMsg;
+                        serverErrorDetails.textContent = errorDetails;
+                        serverErrorSolution.textContent = errorSolution;
+                        
+                        // Set up hide button
+                        document.getElementById('hideErrorButton').addEventListener('click', function() {
+                            serverErrorContainer.style.display = 'none';
+                        });
+                        
+                        // Set up fix button functionality
+                        fixErrorButton.addEventListener('click', function() {
+                            // Show that we're checking the issue
+                            fixErrorButton.disabled = true;
+                            fixErrorButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+                            
+                            // Make a request to a diagnostic endpoint
+                            fetch('../../../backend/api/system/diagnose.php')
+                                .then(response => response.json())
+                                .catch(() => {
+                                    // If diagnose endpoint doesn't exist, try a simpler check
+                                    return fetch('../../../backend/api/sellers/get_seller_profile.php?check=1')
+                                        .then(response => response.text())
+                                        .then(text => ({ status: 'basic_check', message: text }))
+                                        .catch(() => ({ status: 'error', message: 'Could not connect to the server' }));
+                                })
+                                .then(data => {
+                                    // Reset button
+                                    fixErrorButton.disabled = false;
+                                    fixErrorButton.innerHTML = '<i class="fas fa-wrench"></i> Repair';
+                                    
+                                    if (data && data.status === 'success') {
+                                        serverErrorSolution.textContent = 'Diagnostic passed. Try refreshing the page or clicking Retry.';
+                                    } else {
+                                        // Add a more specific solution based on the diagnostic
+                                        let solution = 'Could not automatically fix the issue. ';
+                                        
+                                        if (data && data.message) {
+                                            if (data.message.includes('database')) {
+                                                solution += 'There seems to be a database connection issue. Please check your XAMPP control panel and ensure MySQL is running.';
+                                            } else if (data.message.includes('table')) {
+                                                solution += 'There might be missing tables. Try reinstalling or running database setup.';
+                                            } else {
+                                                solution += data.message;
+                                            }
+                                        } else {
+                                            solution += 'Try restarting your XAMPP server or refreshing the page.';
+                                        }
+                                        
+                                        serverErrorSolution.textContent = solution;
+                                    }
+                                    
+                                    // Add retry button
+                                    const retryButton = document.createElement('button');
+                                    retryButton.innerHTML = '<i class="fas fa-sync-alt"></i> Retry';
+                                    retryButton.className = 'btn';
+                                    retryButton.style.marginLeft = '10px';
+                                    retryButton.style.backgroundColor = 'var(--primary-color)';
+                                    retryButton.style.color = 'var(--accent-color)';
+                                    retryButton.style.border = '1px solid var(--accent-color)';
+                                    
+                                    fixErrorButton.parentNode.appendChild(retryButton);
+                                    
+                                    retryButton.addEventListener('click', function() {
+                                        serverErrorContainer.style.display = 'none';
+                                        fetchSellerProfile();
+                                    });
+                                });
+                        });
+                        
+                        // Also show a simple alert for immediate visibility
+                        showAlert('Error fetching profile. See details below.', 'error');
+                    });
+            }
+            
+            // Shop logo upload functionality
+            const logoPreview = document.querySelector('.logo-preview');
+            const fileName = document.querySelector('.file-name');
+            
+            shopLogoInput.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    fileName.textContent = file.name;
+                    console.log(`File selected: ${file.name}, size: ${file.size} bytes, type: ${file.type}`);
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        logoPreview.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        logoPreview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    fileName.textContent = 'No file chosen';
+                    logoPreview.innerHTML = '<i class="fas fa-store"></i>';
+                }
+            });
+            
+            // Form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading state
+                const submitButton = document.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner"></i> Saving...';
+                
+                // Hide any existing messages
+                document.getElementById('errorAlert').style.display = 'none';
+                document.getElementById('successAlert').style.display = 'none';
+                
+                console.log("Preparing form data for submission...");
+                
+                // Create FormData object for handling file uploads
+                const formData = new FormData();
+                
+                // Add basic profile data
+                formData.append('seller_id', userId);
+                formData.append('name', nameInput.value);
+                formData.append('email', emailInput.value);
+                formData.append('phone_no', phoneInput.value);
+                formData.append('shop_name', shopNameInput.value);
+                formData.append('description', shopDescriptionInput.value);
+                formData.append('shop_address', document.getElementById('shop_address').value);
+                
+                // Debug: Log all form values being submitted
+                console.log("Form Values:");
+                console.log("User ID:", userId);
+                console.log("Name:", nameInput.value);
+                console.log("Email:", emailInput.value);
+                console.log("Phone:", phoneInput.value);
+                console.log("Shop Name:", shopNameInput.value);
+                console.log("Description:", shopDescriptionInput.value);
+                console.log("Shop Address:", document.getElementById('shop_address').value);
+                
+                // Add location data if set
+                if (latitudeInput.value && longitudeInput.value) {
+                    formData.append('latitude', latitudeInput.value);
+                    formData.append('longitude', longitudeInput.value);
+                    console.log("Location:", latitudeInput.value, longitudeInput.value);
+                }
+                
+                // Add profile image/logo if selected
+                if (shopLogoInput.files && shopLogoInput.files[0]) {
+                    const file = shopLogoInput.files[0];
+                    formData.append('profile_photo', file);
+                    console.log('Adding profile photo to form data:', file.name, file.size, file.type);
+                    
+                    // Log all form data entries for debugging
+                    console.log("FormData contents:");
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + (pair[1] instanceof File ? 
+                                   `File: ${pair[1].name}, ${pair[1].size} bytes, ${pair[1].type}` : 
+                                   pair[1]));
+                    }
+                }
+                
+                // Add password info if change password checkbox is checked
+                if (changePasswordCheckbox.checked) {
+                    const currentPasswordInput = document.getElementById('current_password');
+                    const newPasswordInput = document.getElementById('new_password');
+                    const confirmPasswordInput = document.getElementById('confirm_password');
+                    
+                    if (newPasswordInput.value !== confirmPasswordInput.value) {
+                        showAlert('New password and confirm password do not match', 'error');
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                        return;
+                    }
+                    
+                    formData.append('current_password', currentPasswordInput.value);
+                    formData.append('new_password', newPasswordInput.value);
+                }
+                
+                console.log(`Submitting profile data for user ID: ${userId}`);
+                
+                // Send data to API
+                fetch('../../../backend/api/sellers/update_seller_profile.php', {
+                    method: 'POST',
+                    body: formData  // No Content-Type header needed, browser sets it automatically with boundary
+                })
+                .then(response => {
+                    console.log(`Response status: ${response.status}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(rawText => {
+                    console.log(`Raw response: ${rawText.substring(0, 500)}`);
+                    try {
+                        return JSON.parse(rawText);
+                    } catch (e) {
+                        console.error(`Failed to parse JSON response: ${e.message}`);
+                        throw new Error("Invalid response: " + rawText);
+                    }
+                })
+                .then(data => {
+                    console.log(`Profile update response:`, data);
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                    
+                    if (data.status === 'success' || data.success === true) {
+                        showAlert('Profile updated successfully!', 'success');
+                        
+                        // Update profile image if it was uploaded and returned in the response
+                        if (data.data && data.data.profile_photo) {
+                            // Check for multiple possible paths from the server
+                            let photoPath = data.data.profile_photo;
+                            let fullPhotoUrl = null;
+                            
+                            console.log("Received profile photo data:", data.data);
+                            
+                            // Try the full URL first if available
+                            if (data.data.profile_photo_full) {
+                                fullPhotoUrl = data.data.profile_photo_full;
+                                console.log("Using full photo URL:", fullPhotoUrl);
+                            } 
+                            // Then try relative paths
+                            else if (data.data.profile_photo_backend) {
+                                fullPhotoUrl = `../../../${data.data.profile_photo_backend}`;
+                                console.log("Using backend relative path:", fullPhotoUrl);
+                            }
+                            else if (data.data.profile_photo_relative) {
+                                fullPhotoUrl = `../../../${data.data.profile_photo_relative}`;
+                                console.log("Using uploads relative path:", fullPhotoUrl);
+                            }
+                            // Fall back to default path construction
+                            else {
+                                fullPhotoUrl = `../../../backend/uploads/profile_photos/${photoPath}`;
+                                console.log("Using constructed path:", fullPhotoUrl);
+                            }
+                            
+                            // Save the path to localStorage
+                            localStorage.setItem(`profile_photo_${userId}`, fullPhotoUrl);
+                            
+                            // Use the unified function to update the preview
+                            updateLogoPreview(fullPhotoUrl);
+                        }
+                        
+                        // Reset password fields if they were changed
+                        if (changePasswordCheckbox.checked) {
+                            document.getElementById('current_password').value = '';
+                            document.getElementById('new_password').value = '';
+                            document.getElementById('confirm_password').value = '';
+                            changePasswordCheckbox.checked = false;
+                            passwordSection.style.display = 'none';
+                        }
+                        
+                        // Reset file input
+                        shopLogoInput.value = '';
+                        document.querySelector('.file-name').textContent = 'No file chosen';
+                        
+                        // Refresh profile data
+                        setTimeout(function() {
+                            fetchSellerProfile();
+                        }, 500);
+                    } else {
+                        showAlert(data.message || 'Failed to update profile', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error(`Profile update error: ${error.message}`);
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                    showAlert('Error updating profile: ' + error.message, 'error');
+                });
+            });
+            
+            // Location features
+            const getCurrentLocationBtn = document.getElementById('getCurrentLocation');
+            const setManualLocationBtn = document.getElementById('setManualLocation');
+            const manualLocationEntry = document.getElementById('manualLocationEntry');
+            const toggleManualEntryBtn = document.getElementById('toggleManualEntry');
+            
+            // Toggle manual location entry
+            toggleManualEntryBtn.addEventListener('click', function() {
+                manualLocationEntry.style.display = manualLocationEntry.style.display === 'none' ? 'block' : 'none';
+                this.innerHTML = manualLocationEntry.style.display === 'none' ? 
+                    '<i class="fas fa-pencil-alt"></i> ENTER COORDINATES MANUALLY' : 
+                    '<i class="fas fa-times"></i> HIDE MANUAL ENTRY';
+            });
+            
+            // Get current location
+            getCurrentLocationBtn.addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    getCurrentLocationBtn.disabled = true;
+                    getCurrentLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GETTING LOCATION...';
+                    
+                    // Hide manual entry section
+                    manualLocationEntry.style.display = 'none';
+                    
+                    navigator.geolocation.getCurrentPosition(
+                        // Success callback
+                        function(position) {
+                            const latitude = position.coords.latitude.toFixed(6);
+                            const longitude = position.coords.longitude.toFixed(6);
+                            
+                            // Update inputs and display
+                            latitudeInput.value = latitude;
+                            longitudeInput.value = longitude;
+                            locationDisplay.textContent = `${latitude}, ${longitude}`;
+                            
+                            // Update hidden shop location input
+                            document.getElementById('shop_location').value = `${latitude}, ${longitude}`;
+                            
+                            // Save to localStorage
+                            localStorage.setItem('seller_latitude', latitude);
+                            localStorage.setItem('seller_longitude', longitude);
+                            
+                            // Reset button
+                            getCurrentLocationBtn.disabled = false;
+                            getCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> GET CURRENT LOCATION';
+                            
+                            showAlert('Shop location updated successfully!', 'success');
+                        },
+                        // Error callback
+                        function(error) {
+                            let errorMessage = 'Error getting location.';
+                            
+                            switch(error.code) {
+                                case error.PERMISSION_DENIED:
+                                    errorMessage = 'Location access denied. Please enable location services.';
+                                    break;
+                                case error.POSITION_UNAVAILABLE:
+                                    errorMessage = 'Location information is unavailable.';
+                                    break;
+                                case error.TIMEOUT:
+                                    errorMessage = 'Location request timed out.';
+                                    break;
+                            }
+                            
+                            showAlert(errorMessage, 'error');
+                            
+                            // Show manual entry section
+                            manualLocationEntry.style.display = 'block';
+                            
+                            // Reset button
+                            getCurrentLocationBtn.disabled = false;
+                            getCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> GET CURRENT LOCATION';
+                        }
+                    );
+                } else {
+                    showAlert('Geolocation is not supported by this browser.', 'error');
+                    // Show manual entry section
+                    manualLocationEntry.style.display = 'block';
+                }
+            });
+            
+            // Set manual location
+            setManualLocationBtn.addEventListener('click', function() {
+                const latitude = latitudeInput.value.trim();
+                const longitude = longitudeInput.value.trim();
+                
+                if (!latitude || !longitude) {
+                    showAlert('Please enter both latitude and longitude.', 'error');
+                    return;
+                }
+                
+                if (!isValidCoordinate(latitude, 'lat') || !isValidCoordinate(longitude, 'lng')) {
+                    showAlert('Please enter valid coordinates.', 'error');
+                    return;
+                }
+                
+                // Update display
+                locationDisplay.textContent = `${latitude}, ${longitude}`;
+                
+                // Update hidden shop location input
+                document.getElementById('shop_location').value = `${latitude}, ${longitude}`;
+                
+                // Save to localStorage
+                localStorage.setItem('seller_latitude', latitude);
+                localStorage.setItem('seller_longitude', longitude);
+                
+                showAlert('Shop location set manually!', 'success');
+            });
+            
+            // Validate coordinates
+            function isValidCoordinate(value, type) {
+                const num = parseFloat(value);
+                if (isNaN(num)) return false;
+                
+                if (type === 'lat') {
+                    return num >= -90 && num <= 90;
+                } else if (type === 'lng') {
+                    return num >= -180 && num <= 180;
+                }
+                
+                return false;
+            }
+        });
+    </script>
+</body>
+</html> 

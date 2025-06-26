@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Product Details | ClothLoop</title>
+  
+  <!-- Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Inline CSS -->
+  <style>
+    /* Theme Variables */
+    :root {
+        /* Dark Theme (Default) */
+        --primary-color: #000000;
+        --secondary-color: #333333;
+        --accent-color: #ffffff;
+        --text-color: #ffffff;
+        --light-bg: #111111;
+        --card-bg: #1a1a1a;
+        --footer-bg: #000000;
+        --footer-text: #cccccc;
+        --border-color: #333333;
+        --hover-bg: #222222;
+        --input-bg: #1a1a1a;
+        --error-color: #FF3B30;
+        --success-color: #34C759;
+        --shadow-sm: 0 5px 10px rgba(0, 0, 0, 0.8);
+        --shadow-md: 0 5px 10px rgba(0, 0, 0, 0.8);
+        --button-primary: #ffffff;
+        --button-text: #000000;
+        --button-hover: #cccccc;
+        --button-secondary: transparent;
+        --button-secondary-text: #ffffff;
+        --header-bg: #000000;
+        --border-radius: 0;
+    }
+
+    /* Light Theme Variables */
+    .light-theme {
+        --primary-color: #ffffff;
+        --secondary-color: #000000;
+        --accent-color: #000000;
+        --text-color: #000000;
+        --light-bg: #f5f5f5;
+        --card-bg: #ffffff;
+        --footer-bg: #f5f5f5;
+        --footer-text: #000000;
+        --border-color: #e0e0e0;
+        --hover-bg: #f0f0f0;
+        --input-bg: #f9f9f9;
+        --error-color: #FF3B30;
+        --success-color: #34C759;
+        --shadow-sm: 0 5px 10px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 5px 10px rgba(0, 0, 0, 0.1);
+        --button-primary: #000000;
+        --button-text: #ffffff;
+        --button-hover: #333333;
+        --button-secondary: transparent;
+        --button-secondary-text: #000000;
+        --header-bg: #ffffff;
+        --border-radius: 0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Apply colors to elements */
+    body {
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        letter-spacing: 0.02em;
+        overflow-x: hidden;
+        line-height: 1.7;
+    }
+
+    /* Theme Switcher */
+    .theme-switcher {
+        background: var(--primary-color);
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        width: 40px;
+        height: 40px;
+        border-radius: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s linear;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    
+    .theme-switcher:hover {
+        transform: skewX(-5deg);
+        box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+    }
+
+    /* Make images responsive */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Main Content */
+    .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 20px;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .content-header {
+        margin-bottom: 20px;
+        display: flex;
+        padding-right: 60px; /* Add space for the fixed theme button */
+    }
+
+    .error-container {
+        text-align: center;
+        padding: 30px;
+        background-color: rgba(255, 59, 48, 0.1);
+        border-radius: var(--border-radius);
+        margin-top: 20px;
+        border: 1px solid var(--error-color);
+        animation: fadeIn 0.5s ease-out;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .error-container p {
+        margin-bottom: 20px;
+        color: var(--error-color);
+        font-size: 16px;
+    }
+
+    /* Product Detail Section */
+    .product-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 20px;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        max-width: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid var(--border-color);
+    }
+
+    .product-detail:hover {
+        transform: translateY(-5px) skewX(-1deg);
+        box-shadow: 5px 5px 0 rgba(128, 128, 128, 0.2);
+    }
+
+    @media (min-width: 992px) {
+        .product-detail {
+            flex-direction: row;
+        }
+    }
+
+    .product-image {
+        flex: 1;
+        max-width: 100%;
+        position: relative;
+        background-color: var(--light-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-radius: var(--border-radius);
+        min-height: 500px;
+    }
+
+    @media (min-width: 992px) {
+        .product-image {
+            max-width: 550px;
+            min-height: 550px;
+        }
+    }
+
+    .product-image img {
+        object-fit: contain;
+        max-width: 100%;
+        max-height: 500px;
+        border-radius: var(--border-radius);
+        width: auto;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .product-image:hover img {
+        transform: scale(1.03);
+    }
+
+    @media (min-width: 992px) {
+        .product-image img {
+            max-height: 530px;
+        }
+    }
+
+    .product-info {
+        flex: 1;
+        padding: 30px;
+    }
+
+    .product-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .product-price {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: var(--accent-color);
+    }
+
+    .product-attributes {
+        margin-bottom: 30px;
+    }
+
+    .product-attribute {
+        display: flex;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .attribute-name {
+        min-width: 100px;
+        font-weight: 500;
+        color: var(--accent-color);
+    }
+
+    .divider {
+        height: 1px;
+        background-color: var(--border-color);
+        margin: 20px 0;
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 40px;
+        height: 2px;
+        background-color: var(--accent-color);
+        transform: skewX(-20deg);
+    }
+
+    .shop-detail {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .shop-detail i {
+        width: 25px;
+        margin-right: 15px;
+        font-size: 18px;
+        color: var(--accent-color);
+    }
+
+    .terms-section {
+        margin-bottom: 30px;
+    }
+
+    .terms-content {
+        padding: 15px;
+        background-color: var(--input-bg);
+        border-radius: var(--border-radius);
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        border: 1px solid var(--border-color);
+    }
+
+    /* Action Buttons */
+    .product-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    @media (max-width: 768px) {
+        .product-actions {
+            flex-direction: column;
+        }
+    }
+
+    .btn {
+        padding: 12px 25px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: var(--button-primary);
+        color: var(--button-text);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--button-hover);
+        transform: translateY(-3px) skewX(-5deg);
+        box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: var(--button-secondary);
+        color: var(--button-secondary-text);
+        border: 1px solid var(--accent-color);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--hover-bg);
+        transform: translateY(-3px) skewX(-5deg);
+        box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+    }
+
+    /* Back Button */
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 14px;
+        margin-bottom: 0;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid transparent;
+    }
+
+    .back-button:hover {
+        color: var(--accent-color);
+        border-bottom: 2px solid var(--accent-color);
+    }
+
+    .back-button i {
+        margin-right: 8px;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+
+    .spinner {
+        border: 4px solid rgba(128, 128, 128, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid var(--accent-color);
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Alert messages */
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: var(--border-radius);
+        display: none;
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    .alert-success {
+        background-color: rgba(52, 199, 89, 0.1);
+        color: var(--success-color);
+        border: 1px solid var(--success-color);
+    }
+
+    .alert-error {
+        background-color: rgba(255, 59, 48, 0.1);
+        color: var(--error-color);
+        border: 1px solid var(--error-color);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+        .product-detail {
+            flex-direction: column;
+        }
+        
+        .product-image {
+            max-width: 100%;
+        }
+        
+        .product-image img {
+            height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header-container {
+            padding: 0 15px;
+        }
+        
+        .product-actions {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+        
+        .main-content {
+            padding: 20px 15px;
+        }
+    }
+
+    /* Additional styling for product details page */
+    .error-container {
+        text-align: center;
+        padding: 30px;
+        background-color: rgba(255, 59, 48, 0.1);
+        border-radius: 4px;
+        margin-top: 20px;
+    }
+    
+    .error-container p {
+        margin-bottom: 20px;
+        color: var(--error-color);
+        font-size: 16px;
+    }
+    
+    .product-detail {
+        padding-bottom: 30px;
+    }
+    
+    .product-image img {
+        object-fit: contain;
+        width: 100%;
+        height: 450px;
+        border-top-left-radius: 5px;
+    }
+
+    /* Image Slider Styles */
+    .image-slider-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-image-container {
+        width: 100%;
+        height: 450px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--light-bg);
+    }
+
+    .main-image {
+        max-width: 100%;
+        max-height: 450px;
+        object-fit: contain;
+        transition: opacity 0.5s ease;
+    }
+
+    .slide-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        border: none;
+        font-size: 18px;
+    }
+
+    .slide-arrow:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .prev-slide {
+        left: 10px;
+    }
+
+    .next-slide {
+        right: 10px;
+    }
+
+    .fade {
+        animation: fadeEffect 0.5s;
+    }
+
+    @keyframes fadeEffect {
+        from {opacity: 0.4}
+        to {opacity: 1}
+    }
+  </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <a href="product_listings.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Listings
+            </a>
+        </div>
+        
+        <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-sun"></i>
+        </button>
+        
+        <div id="alertContainer"></div>
+        
+        <div id="loadingSpinner" class="loading-spinner">
+            <div class="spinner"></div>
+        </div>
+        
+        <div id="errorMessage" class="error-container" style="display: none;">
+            <p></p>
+        </div>
+        
+        <div id="productDetails" class="product-details-container" style="display: none;">
+            <!-- Product details will be inserted here dynamically -->
+        </div>
+    </main>
+
+    <!-- JavaScript code for functionality -->
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Load product data
+            loadProductData();
+            
+            // Check for saved theme preference or use default
+            const savedTheme = localStorage.getItem('clothloop-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                const themeToggle = document.getElementById('theme-toggle');
+                if (themeToggle) {
+                    themeToggle.querySelector('i').classList.remove('fa-sun');
+                    themeToggle.querySelector('i').classList.add('fa-moon');
+                }
+            }
+            
+            // Setup keyboard navigation for image slider
+            document.addEventListener('keydown', function(event) {
+                if (!window.sliderImages) return; // Slider not initialized yet
+                
+                if (event.key === 'ArrowLeft') {
+                    prevSlide();
+                } else if (event.key === 'ArrowRight') {
+                    nextSlide();
+                }
+            });
+        });
+        
+        // Function to setup all event listeners
+        function setupEventListeners() {
+            // Theme toggle functionality 
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('light-theme');
+                    
+                    // Update icon and save preference
+                    const themeIcon = this.querySelector('i');
+                    if (document.body.classList.contains('light-theme')) {
+                        themeIcon.classList.remove('fa-sun');
+                        themeIcon.classList.add('fa-moon');
+                        localStorage.setItem('clothloop-theme', 'light');
+                    } else {
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                        localStorage.setItem('clothloop-theme', 'dark');
+                    }
+                });
+            }
+        }
+        
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        
+        // Function to load product data
+        function loadProductData() {
+            // Get product ID from URL
+            const productId = getUrlParameter('id');
+            
+            if (!productId) {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').innerHTML = '<p>No product ID provided</p>';
+                return;
+            }
+            
+            console.log('Loading product data for ID:', productId);
+            
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'flex';
+            
+            // Add timestamp to prevent caching
+            const timestamp = new Date().getTime();
+            
+            // Fetch product data from backend API
+            const apiUrl = `../../../backend/api/sellers/get_product_details.php?id=${productId}&t=${timestamp}`;
+            console.log('Fetching from:', apiUrl);
+            
+            fetch(apiUrl, {
+                method: 'GET',
+                cache: 'no-store' // Prevent browser caching
+            })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.status);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    console.log('Raw response:', text);
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        console.error('JSON parse error:', e);
+                        throw new Error('Invalid JSON response: ' + text);
+                    }
+                })
+                .then(data => {
+                    // Hide loading spinner
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    console.log('API response:', data);
+                    
+                    if (data.status === 'success' && data.product) {
+                        // Debug shop address details
+                        console.log('Shop address from API:', data.product.shop_address);
+                        console.log('Address field from API:', data.product.address);
+                        
+                        // Update product details
+                        displayProductDetails(data.product);
+                        document.getElementById('productDetails').style.display = 'block';
+                    } else {
+                        document.getElementById('errorMessage').style.display = 'block';
+                        document.getElementById('errorMessage').innerHTML = `
+                            <p>Error: ${data.message || 'Database error occurred. Please try again later.'}</p>
+                            <a href="product_listings.html" class="back-button">
+                                <i class="fas fa-arrow-left"></i> Back to Listings
+                            </a>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching product data:', error);
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('errorMessage').innerHTML = `
+                        <p>Database error occurred: ${error.message}</p>
+                        <a href="product_listings.html" class="back-button">
+                            <i class="fas fa-arrow-left"></i> Back to Listings
+                        </a>`;
+                });
+        }
+        
+        // Function to display product details
+        function displayProductDetails(product) {
+            console.log('Displaying product:', product);
+            const productDetailsContainer = document.getElementById('productDetails');
+            
+            // Update page title
+            document.title = `${product.name} | Product Details | ClothLoop`;
+            
+            // Add timestamp to prevent caching
+            const timestamp = new Date().getTime();
+            
+            // Determine the image URL - prioritize image_path from the database
+            let mainImageUrl;
+            if (product.image_path) {
+                // Create absolute path by prepending the base URL
+                const baseUrl = window.location.origin;
+                const basePath = window.location.pathname.includes('/ClothLoop/') ? '/ClothLoop/' : '/';
+                mainImageUrl = `${baseUrl}${basePath}backend/${product.image_path}?t=${timestamp}`;
+                console.log('Using image path from database:', mainImageUrl);
+            } else {
+                // Fallback to the API route
+                mainImageUrl = `/ClothLoop/backend/api/image_display.php?type=product&id=${product.id}&t=${timestamp}`;
+                console.log('Using API fallback for image:', mainImageUrl);
+            }
+            
+            const initialImages = [mainImageUrl];
+            
+            // Set up global slider images initially with just the main image
+            window.sliderImages = initialImages;
+            
+            // Handle shop address - check different fields
+            let shopAddress = 'No location specified';
+            
+            if (product.shop_address && product.shop_address !== 'null' && product.shop_address.trim() !== '') {
+                shopAddress = product.shop_address;
+            } else if (product.address && product.address !== 'null' && product.address.trim() !== '') {
+                shopAddress = product.address;
+            }
+            
+            console.log('Final shop address to display:', shopAddress);
+            
+            // Create HTML for product details
+            const html = `
+                <div class="product-detail">
+                    <div class="product-image">
+                        <div class="image-slider-container">
+                            <div class="main-image-container">
+                                <button class="slide-arrow prev-slide" onclick="prevSlide()">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <img src="${mainImageUrl}" alt="${product.name || 'Product Image'}" id="mainProductImg" class="main-image fade">
+                                <button class="slide-arrow next-slide" onclick="nextSlide()">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h2 class="product-title">${product.name || 'Product Title'}</h2>
+                        <p class="product-price">₹${product.price_per_day || '0.00'}/day</p>
+                        
+                        <div class="product-attributes">
+                            <div class="product-attribute">
+                                <span class="attribute-name">Size:</span>
+                                <span>${product.size || 'Not specified'}</span>
+                            </div>
+                            <div class="product-attribute">
+                                <span class="attribute-name">Category:</span>
+                                <span>${product.category || 'Not specified'}</span>
+                            </div>
+                            <div class="product-attribute">
+                                <span class="attribute-name">Occasion:</span>
+                                <span>${product.occasion || 'Not specified'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="description-section">
+                            <h3 class="section-title">DESCRIPTION</h3>
+                            <p>${product.description || 'No description available.'}</p>
+                        </div>
+                        
+                        <div class="divider"></div>
+
+                        <div class="shop-info">
+                            <h3 class="section-title">SHOP INFORMATION</h3>
+                            <div class="shop-detail">
+                                <i class="fas fa-store"></i>
+                                <span>${product.shop_name || 'Seller Hub'}</span>
+                            </div>
+                            <div class="shop-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${shopAddress}</span>
+                            </div>
+                            <div class="shop-detail">
+                                <i class="fas fa-phone"></i>
+                                <span>${product.contact_number || '1234567890'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+
+                        <div class="terms-section">
+                            <h3 class="section-title">TERMS & CONDITIONS</h3>
+                            <div class="terms-content">
+                                ${product.terms_and_conditions || 'Standard rental terms apply.'}
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i> EDIT
+                            </button>
+                            <button class="btn btn-secondary" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash"></i> DELETE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Update the container
+            productDetailsContainer.innerHTML = html;
+            console.log('Product details HTML updated');
+            
+            // Initialize image slider
+            setTimeout(() => {
+                initializeImageSlider();
+            }, 100);
+            
+            // Fetch additional images
+            getProductImages(product);
+        }
+        
+        // Function to fetch additional images from the API
+        function getProductImages(product) {
+            console.log('Fetching additional images for product:', product.id);
+            
+            // If we already have the primary image from image_path, don't fetch more images
+            if (product.image_path) {
+                console.log('Using primary image from database, no need to fetch additional images');
+                return;
+            }
+            
+            // Add timestamp to prevent caching
+            const timestamp = new Date().getTime();
+            
+            // Check the product upload directory for additional images
+            const apiUrl = `/ClothLoop/backend/api/get_product_images.php?id=${product.id}&t=${timestamp}`;
+            console.log('Fetching from API:', apiUrl);
+            
+            fetch(apiUrl, {
+                method: 'GET',
+                cache: 'no-store' // Prevent browser caching
+            })
+                .then(response => {
+                    console.log('API Response Status:', response.status);
+                    return response.text();
+                })
+                .then(text => {
+                    console.log('Raw API Response:', text);
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        console.error('JSON parse error:', e);
+                        return { status: 'error', message: 'Invalid JSON response' };
+                    }
+                })
+                .then(data => {
+                    console.log('Parsed API Response:', data);
+                    
+                    if (data.status === 'success' && data.images && data.images.length > 1) {
+                        // We expect the first image to be the main image we already have
+                        // Additional images start from index 1
+                        const additionalImages = data.images.slice(1);
+                        console.log(`Found ${additionalImages.length} additional images`);
+                        
+                        if (additionalImages.length > 0) {
+                            // Get the existing main image URL
+                            const mainImageUrl = window.sliderImages[0];
+                            
+                            // Create a new array with all unique images
+                            const allImages = [mainImageUrl];
+                            
+                            // Add additional images, avoiding duplicates
+                            additionalImages.forEach(imgPath => {
+                                if (!allImages.includes(imgPath)) {
+                                    console.log(`Adding image: ${imgPath}`);
+                                    allImages.push(imgPath);
+                                }
+                            });
+                            
+                            // Update the slider with all images
+                            console.log('Updating image slider with images:', allImages);
+                            updateImageSlider(allImages);
+                        }
+                    } else {
+                        console.log('No additional images found or API error:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching additional images:', error);
+                });
+        }
+        
+        // Initialize image slider
+        function initializeImageSlider() {
+            if (!window.sliderImages || window.sliderImages.length === 0) return;
+            
+            window.currentSlide = 0;
+            window.totalSlides = window.sliderImages.length;
+            
+            // Setup autoplay if needed
+            if (window.autoplayEnabled) {
+                clearInterval(window.autoplayInterval);
+            }
+            
+            window.autoplayEnabled = false; // Set to true to enable autoplay
+            window.autoplayInterval = null;
+            window.autoplayDelay = 5000; // 5 seconds
+            
+            if (window.autoplayEnabled) {
+                startAutoplay();
+            }
+            
+            // Setup touch events for mobile
+            const mainImageContainer = document.querySelector('.main-image-container');
+            if (mainImageContainer) {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                mainImageContainer.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+                
+                mainImageContainer.addEventListener('touchend', function(e) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+                
+                function handleSwipe() {
+                    const swipeThreshold = 50; // Minimum distance for swipe detection
+                    if (touchEndX < touchStartX - swipeThreshold) {
+                        // Swipe left - next slide
+                        nextSlide();
+                    } else if (touchEndX > touchStartX + swipeThreshold) {
+                        // Swipe right - previous slide
+                        prevSlide();
+                    }
+                }
+            }
+            
+            // Preload images
+            preloadImages();
+            
+            updateSliderUI();
+        }
+        
+        function startAutoplay() {
+            if (window.autoplayInterval) {
+                clearInterval(window.autoplayInterval);
+            }
+            
+            window.autoplayInterval = setInterval(() => {
+                nextSlide();
+            }, window.autoplayDelay);
+        }
+        
+        function stopAutoplay() {
+            if (window.autoplayInterval) {
+                clearInterval(window.autoplayInterval);
+                window.autoplayInterval = null;
+            }
+        }
+        
+        function preloadImages() {
+            window.sliderImages.forEach((src) => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+        
+        // Functions for image slider
+        function changeSlide(index) {
+            if (index < 0 || index >= window.totalSlides) return;
+            
+            // Reset autoplay if user interacts
+            if (window.autoplayEnabled) {
+                stopAutoplay();
+                startAutoplay();
+            }
+            
+            window.currentSlide = index;
+            updateSliderUI();
+        }
+        
+        function nextSlide() {
+            window.currentSlide = (window.currentSlide + 1) % window.totalSlides;
+            updateSliderUI();
+        }
+        
+        function prevSlide() {
+            window.currentSlide = (window.currentSlide - 1 + window.totalSlides) % window.totalSlides;
+            updateSliderUI();
+        }
+        
+        function updateSliderUI() {
+            // Update main image
+            const mainImage = document.getElementById('mainProductImg');
+            if (!mainImage) return;
+            
+            mainImage.src = window.sliderImages[window.currentSlide];
+            
+            // Remove fade class and re-add it to restart animation
+            mainImage.classList.remove('fade');
+            void mainImage.offsetWidth; // Trigger reflow
+            mainImage.classList.add('fade');
+        }
+        
+        // Function to navigate to edit product page
+        function editProduct(productId) {
+            window.location.href = `cloth_upload.html?edit=${productId}`;
+        }
+        
+        // Function to delete product
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+            // Show loading spinner
+                document.getElementById('loadingSpinner').style.display = 'flex';
+            
+            // Call delete API
+                fetch(`../../../backend/api/sellers/delete_product.php?id=${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: productId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                    // Hide loading spinner
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                
+                if (data.status === 'success') {
+                        showAlert('Product deleted successfully', 'success');
+                        // Redirect to listings after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'product_listings.html';
+                        }, 1500);
+                } else {
+                        showAlert(data.message || 'Error deleting product', 'error');
+                }
+            })
+            .catch(error => {
+                    // Hide loading spinner
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                console.error('Error:', error);
+                    showAlert('Error deleting product', 'error');
+            });
+            }
+        }
+        
+        // Function to show alerts
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            // Add to container
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                setTimeout(() => {
+                    alertContainer.innerHTML = '';
+                }, 300);
+            }, 3000);
+        }
+
+        // Function to update the slider when new images are added
+        function updateImageSlider(newImages) {
+            if (!newImages || newImages.length === 0) return;
+            
+            // Update global sliderImages variable
+            window.sliderImages = newImages;
+            window.totalSlides = newImages.length;
+            
+            // Update main image if needed
+            updateSliderUI();
+        }
+    </script>
+</body>
+</html> 

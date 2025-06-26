@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClothLoop - Sustainable Fashion Rental</title>
+    
+    <!-- Google Font - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Embedded ClothLoop Theme CSS -->
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #e0e0e0;
+            --accent-color: #000000;
+            --text-color: #333333;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+            --footer-text: #333333;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+        
+        /* Add transition to all elements for smooth theme switching */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--accent-color);
+            transition: all 0.2s linear;
+        }
+
+        a:hover {
+            color: #888888;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s linear;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: #444444;
+        }
+
+        .btn-light {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 0;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: all 0.2s linear;
+            border: 1px solid #333333;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) skewY(1deg);
+            box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Section titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            transform: skewX(-20deg);
+        }
+
+        .section-title.center {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title.center::after {
+            left: 50%;
+            transform: translateX(-50%) skewX(-20deg);
+        }
+
+        /* Containers */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .fade-in-delay-1 {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .fade-in-delay-2 {
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Footer */
+        .footer {
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 5rem !important;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--accent-color) !important;
+        }
+
+        .footer h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 1.5rem 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            .nav-bar {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-links li {
+                margin-left: 0.5rem;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Home page specific styles */
+        .hero-banner {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.8)),
+                        url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            margin-top: 73px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .ad-section {
+            padding: 3rem 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-carousel {
+            width: 100%;
+            position: relative;
+        }
+
+        .ad-carousel img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 0;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+
+        .ad-carousel img:hover {
+            filter: grayscale(70%);
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .arrow:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        #prev-btn {
+            left: 20px;
+            z-index: 10;
+        }
+
+        #next-btn {
+            right: 20px;
+            z-index: 10;
+        }
+
+        .products-section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .view-all {
+            color: var(--accent-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .view-all i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .view-all:hover i {
+            transform: translateX(5px);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .product-info p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search-bar {
+            position: relative;
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .search-bar input {
+            width: 95%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+        }
+
+        /* Category section styling */
+        .categories-section {
+            padding: 4rem 0 0;
+            background-color: var(--light-bg);
+        }
+
+        .category-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .category-card {
+            background-color: var(--card-bg);
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: all 0.2s linear;
+            border: 1px solid #333333;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px) skewX(-3deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .category-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .category-icon i {
+            font-size: 3rem;
+        }
+
+        .category-name {
+            padding: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="home.html" class="nav-logo">
+            <img id="navbar-logo" src="frontend/assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul class="nav-links">
+                <li><a href="frontend/pages/account/login.html">Login</a></li>
+                <li><a href="frontend/pages/account/register.html">Register</a></li>
+                <li><a href="frontend/pages/about/about_us.html">About Us</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1 class="fade-in">Sustainable Fashion Rentals</h1>
+            <p class="fade-in-delay-1">Rent quality clothing at affordable prices and reduce environmental impact</p>
+        </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section class="ad-section">
+        <div class="container">
+            <div class="ad-carousel">
+                <img src="https://images.unsplash.com/photo-1572584642822-6f8de0243c93?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Promotional Banner">
+                <button class="arrow" id="prev-btn" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                <button class="arrow" id="next-btn" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" style="padding-top: 0;">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title center">Browse by Category</h2>
+            <div class="category-cards">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="category-name">Men</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <div class="category-name">Women</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <div class="category-name">Kids</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding: 1rem 0 1rem;">
+        <div class="footer-bottom" style="border-top: none; margin-top: 0;">
+            <div class="footer-logo" style="justify-content: center; margin-bottom: 1rem;">
+                <img id="footer-logo" src="frontend/assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = [
+            "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        ];
+        
+        const carouselImage = document.querySelector('.ad-carousel img');
+        
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            carouselImage.src = slides[currentSlide];
+        });
+        
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            carouselImage.src = slides[currentSlide];
+        });
+        
+        // Auto-rotate slides
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            carouselImage.src = slides[currentSlide];
+        }, 5000);
+        
+        // Function to update logo based on theme
+        function updateLogos(isLightTheme) {
+            const navbarLogo = document.getElementById('navbar-logo');
+            const footerLogo = document.getElementById('footer-logo');
+            
+            if (isLightTheme) {
+                navbarLogo.src = 'frontend/assets/images/logo_b.png';
+                footerLogo.src = 'frontend/assets/images/logo_b.png';
+            } else {
+                navbarLogo.src = 'frontend/assets/images/logo_f.png';
+                footerLogo.src = 'frontend/assets/images/logo_f.png';
+            }
+        }
+        
+        // Theme switcher functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('clothloop-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            updateLogos(true);
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const isLightTheme = document.body.classList.toggle('light-theme');
+            
+            // Update icon
+            if (isLightTheme) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('clothloop-theme', 'light');
+                updateLogos(true);
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('clothloop-theme', 'dark');
+                updateLogos(false);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1083 @@
+{
+    "timestamp": "2025-04-18 17:38:35",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    },
+    "user_id": 1
+}
+
+Transaction started: 2025-04-18 17:38:35
+User Update SQL: UPDATE users SET email = ? WHERE id = ?
+User Params: ["seller@gmail.com",1]
+
+User Update Execution Result: Success
+Rows Affected: 0
+
+Description field check: 
+description set: yes
+shop_description set: no
+
+Seller Update SQL: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE user_id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+
+Transaction rolled back: 2025-04-18 17:38:35
+ERROR: 2025-04-18 17:38:35 - SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'where clause'
+Stack trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(169): PDOStatement->execute(Array)
+#1 {main}
+
+{
+    "timestamp": "2025-04-18 17:43:24",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    }
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+
+{
+    "timestamp": "2025-04-18 17:43:50",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller2",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    }
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller2","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+{
+    "timestamp": "2025-04-18 17:43:59",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    }
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+{
+    "timestamp": "2025-04-18 18:03:32",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    }
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+{
+    "timestamp": "2025-04-18 20:49:16",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    }
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+{
+    "timestamp": "2025-04-18 22:44:34",
+    "received_data": {
+        "seller_id": "1",
+        "name": "Seller",
+        "email": "seller@gmail.com",
+        "phone_no": "1234567890",
+        "shop_name": "Seller Hub",
+        "description": "hi",
+        "latitude": "40.71280000",
+        "longitude": "-74.00600000"
+    }
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Seller",
+    "email": "seller@gmail.com",
+    "phone_no": "1234567890",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "shop_logo.png",
+        "full_path": "shop_logo.png",
+        "type": "image\/png",
+        "tmp_name": "C:\\xampp\\tmp\\php993F.tmp",
+        "error": 0,
+        "size": 63227
+    }
+}
+
+Transaction started
+File uploaded successfully to: uploads/seller_profiles/seller_1_1745009308.png
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890","uploads\/seller_profiles\/seller_1_1745009308.png",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Seller",
+    "email": "seller@gmail.com",
+    "phone_no": "1234567890",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Yash.jpg",
+        "full_path": "Yash.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\phpF26A.tmp",
+        "error": 0,
+        "size": 197409
+    }
+}
+
+Transaction started
+File uploaded successfully to: uploads/seller_profiles/seller_1_1745020407.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890","uploads\/seller_profiles\/seller_1_1745020407.jpg",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aadi",
+    "email": "seller@gmail.com",
+    "phone_no": "1234567890",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Aadi","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Seller",
+    "email": "seller@gmail.com",
+    "phone_no": "1234567890",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","1234567890",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Seller",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Seller",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Nishidh.jpg",
+        "full_path": "Nishidh.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\phpAF2F.tmp",
+        "error": 0,
+        "size": 256756
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_6802e8752da33.jpg as profile_6802e8752da33.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Seller","seller@gmail.com","9825561050","profile_6802e8752da33.jpg",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "hi",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","hi","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Nishidh",
+    "email": "seller@gmail.com",
+    "phone_no": "9825561050",
+    "shop_name": "Seller Hub",
+    "description": "Shop For Traditionals",
+    "latitude": "40.71280000",
+    "longitude": "-74.00600000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Nishidh","seller@gmail.com","9825561050",1]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Seller Hub","Shop For Traditionals","40.71280000","-74.00600000",1]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Rusheez Shop",
+    "description": "Shop for cloth"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Screenshot (53).png",
+        "full_path": "Screenshot (53).png",
+        "type": "image\/png",
+        "tmp_name": "C:\\xampp\\tmp\\phpD3BA.tmp",
+        "error": 0,
+        "size": 466503
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_6803253e0b252.png as profile_6803253e0b252.png
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya","aadi@gmail.com","8160224860","profile_6803253e0b252.png",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hub",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php1BA9.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332a05233c.jpg as profile_680332a05233c.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332a05233c.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hub",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php259D.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332a2d62f2.jpg as profile_680332a2d62f2.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332a2d62f2.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hub",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php2679.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332a318441.jpg as profile_680332a318441.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332a318441.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hub",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php27B2.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332a367814.jpg as profile_680332a367814.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332a367814.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hub",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php2AA1.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332a42615a.jpg as profile_680332a42615a.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332a42615a.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hubs",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php93CD.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332bf12ddb.jpg as profile_680332bf12ddb.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332bf12ddb.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hubs",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php95B2.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332bf8afb9.jpg as profile_680332bf8afb9.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332bf8afb9.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "1",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hubs",
+    "description": "shop",
+    "latitude": "23.052288",
+    "longitude": "72.581120"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php972A.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680332bfeab11.jpg as profile_680332bfeab11.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680332bfeab11.jpg",1]
+Transaction rolled back
+ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'aadi@gmail.com' for key 'email'
+Stack Trace: #0 C:\xampp\htdocs\ClothLoop\backend\api\sellers\update_seller_profile.php(122): PDOStatement->execute(Array)
+#1 {main}
+
+Received POST data: {
+    "seller_id": "8",
+    "name": "Aaditya Desai",
+    "email": "aadi@gmail.com",
+    "phone_no": "8160224860",
+    "shop_name": "Aadi Hub",
+    "description": "buy"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "Aaryan.jpg",
+        "full_path": "Aaryan.jpg",
+        "type": "image\/jpeg",
+        "tmp_name": "C:\\xampp\\tmp\\php3463.tmp",
+        "error": 0,
+        "size": 356529
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_680334b2e3422.jpg as profile_680334b2e3422.jpg
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Aaditya Desai","aadi@gmail.com","8160224860","profile_680334b2e3422.jpg",8]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ? WHERE id = ?
+Seller Params: ["Aadi Hub","buy",8]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "4",
+    "name": "Lorem Ipsum",
+    "email": "seller2@gmail.com",
+    "phone_no": "7896541230",
+    "shop_name": "Lorem Ipsum",
+    "description": "Rental shop"
+}
+
+Received FILES data: {
+    "profile_photo": {
+        "name": "download (1).png",
+        "full_path": "download (1).png",
+        "type": "image\/png",
+        "tmp_name": "C:\\xampp\\tmp\\phpD333.tmp",
+        "error": 0,
+        "size": 2965
+    }
+}
+
+Transaction started
+File uploaded successfully to: C:\xampp\htdocs\ClothLoop\backend\api\sellers/../../uploads/profile_photos/profile_68033734d339b.png as profile_68033734d339b.png
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ?, profile_photo = ? WHERE id = ?
+User Params: ["Lorem Ipsum","seller2@gmail.com","7896541230","profile_68033734d339b.png",4]
+User Update Result: Success
+User Rows Affected: 1
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ? WHERE id = ?
+Seller Params: ["Lorem Ipsum","Rental shop",4]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "4",
+    "name": "Lorem Ipsum",
+    "email": "seller2@gmail.com",
+    "phone_no": "7896541230",
+    "shop_name": "Lorem Ipsum",
+    "description": "Rental shop",
+    "latitude": "21.1447217",
+    "longitude": "72.7717735"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Lorem Ipsum","seller2@gmail.com","7896541230",4]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Lorem Ipsum","Rental shop","21.1447217","72.7717735",4]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "4",
+    "name": "Lorem Ipsum",
+    "email": "seller2@gmail.com",
+    "phone_no": "7896541230",
+    "shop_name": "Lorem Ipsum",
+    "description": "Rental shop",
+    "latitude": "21.14472170",
+    "longitude": "72.77177350"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Lorem Ipsum","seller2@gmail.com","7896541230",4]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Lorem Ipsum","Rental shop","21.14472170","72.77177350",4]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "4",
+    "name": "Lorem Ipsum",
+    "email": "seller2@gmail.com",
+    "phone_no": "7896541230",
+    "shop_name": "Lorem Ipsum",
+    "description": "Rental shop",
+    "latitude": "23.035793",
+    "longitude": "72.437650"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Lorem Ipsum","seller2@gmail.com","7896541230",4]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Lorem Ipsum","Rental shop","23.035793","72.437650",4]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "4",
+    "name": "Lorem Ipsum",
+    "email": "seller2@gmail.com",
+    "phone_no": "7896541230",
+    "shop_name": "Lorem Ipsum",
+    "description": "Rental shop",
+    "shop_address": "Kapodara",
+    "latitude": "23.03579300",
+    "longitude": "72.43765000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Lorem Ipsum","seller2@gmail.com","7896541230",4]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Lorem Ipsum","Rental shop","23.03579300","72.43765000",4]
+Seller Update Result: Success
+Seller Rows Affected: 0
+
+Transaction committed successfully
+
+Received POST data: {
+    "seller_id": "4",
+    "name": "Lorem Ipsum",
+    "email": "seller2@gmail.com",
+    "phone_no": "7896541230",
+    "shop_name": "Lorem Ipsum",
+    "description": "Rental shop",
+    "shop_address": "Kapodara",
+    "latitude": "23.03579300",
+    "longitude": "72.43765000"
+}
+
+Transaction started
+User Update Query: UPDATE users SET name = ?, email = ?, phone_no = ? WHERE id = ?
+User Params: ["Lorem Ipsum","seller2@gmail.com","7896541230",4]
+User Update Result: Success
+User Rows Affected: 0
+
+Seller Update Query: UPDATE sellers SET shop_name = ?, description = ?, address = ?, latitude = ?, longitude = ? WHERE id = ?
+Seller Params: ["Lorem Ipsum","Rental shop","Kapodara","23.03579300","72.43765000",4]
+Seller Update Result: Success
+Seller Rows Affected: 1
+
+Transaction committed successfully
+

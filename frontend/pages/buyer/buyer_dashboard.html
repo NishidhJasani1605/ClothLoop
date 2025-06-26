@@ -1,0 +1,3746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard - ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            --border-color: #333333;
+            --hover-bg: #222222;
+            --input-bg: #333333;
+            --input-text: #ffffff;
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --btn-highlight: #ff3e6c;  /* Added for button highlighting */
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #000000;
+            --text-color: #000000;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #f5f5f5;
+            --footer-text: #000000;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            --border-color: #e0e0e0;
+            --hover-bg: #e0e0e0;
+            --input-bg: #f0f0f0;
+            --input-text: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 0;
+            padding: 0;
+            background-color: transparent;
+            border-bottom: none;
+            height: 100%;
+        }
+
+        .categories ul {
+            display: flex;
+            list-style: none;
+            height: 100%;
+            align-items: center;
+        }
+
+        .categories ul li {
+            margin: 0 1rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .categories ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0 0.5rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s linear;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .categories ul li a:hover, .categories ul li a.active {
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        /* Enhanced styles for active category */
+        .categories ul li a.active {
+            border-bottom: 3px solid var(--accent-color);
+            font-weight: 700;
+            color: var(--accent-color);
+            position: relative;
+            transform: translateY(-2px);
+        }
+        
+        .categories ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+        }
+
+        /* Search Bar */
+        .search-section {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .search-container {
+            position: relative;
+            width: 600px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            border-radius: 0;
+            font-family: 'Poppins', sans-serif;
+            height: 40px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+        }
+
+        /* Sort Button */
+        .sort-button {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s linear;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+            height: 40px;
+            margin-right: 2rem;
+            position: relative;
+            z-index: 250;
+        }
+        
+        .sort-button i {
+            margin-right: 10px;
+        }
+        
+        .sort-button:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .sort-button:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Clear Filters Button */
+        .clear-filters-btn {
+            background-color: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s linear;
+            display: none;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+            height: 40px;
+            margin-right: 1rem;
+            position: relative;
+            z-index: 250;
+        }
+        
+        /* Add a highlight class for when sorting is active */
+        .clear-filters-btn.highlight {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            animation: pulse 1s infinite;
+        }
+        
+        .clear-filters-btn.visible {
+            display: flex;
+        }
+        
+        .clear-filters-btn i {
+            margin-right: 10px;
+        }
+        
+        .clear-filters-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .light-theme .clear-filters-btn:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        /* Sort Dropdown */
+        .sort-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+            min-width: 200px;
+            z-index: 251;
+            display: none;
+            margin-top: 5px;
+        }
+        
+        .sort-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .sort-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .sort-option:last-child {
+            border-bottom: none;
+        }
+        
+        .sort-option:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .sort-option i {
+            margin-right: 10px;
+            width: 15px;
+            text-align: center;
+        }
+        
+        /* Submenu styles */
+        .sort-option.has-submenu {
+            position: relative;
+        }
+        
+        .submenu-icon {
+            margin-left: auto !important;
+            margin-right: 0 !important;
+            font-size: 0.8rem;
+            transform: rotate(180deg); /* Rotate chevron to point left */
+        }
+        
+        .submenu {
+            position: absolute;
+            top: 0;
+            left: -200px; /* Position to the left instead of right */
+            width: 200px;
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+            display: none;
+            z-index: 252;
+        }
+        
+        .submenu-header {
+            padding: 12px 15px;
+            font-weight: bold;
+            color: var(--accent-color);
+            background-color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .submenu-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .submenu-option:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .submenu-option.active {
+            background-color: var(--hover-bg);
+            font-weight: bold;
+        }
+        
+        /* Show submenu on hover */
+        .sort-option.has-submenu:hover .submenu {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Navigation bar with categories, search and sort */
+        .navigation-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            margin-top: 70px;
+            background-color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            height: 85px;
+            position: relative;
+            z-index: 150;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            width: 100%;
+            animation: fadeInStaggered 1.5s ease-out;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+        
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        .product-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        
+        .product-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+        
+        .product-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+        
+        .product-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-card:hover::after {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) skewX(-3deg);
+            box-shadow: 12px 12px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        .light-theme .product-card:hover {
+            box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Special styles for nearby listings */
+        .nearby-listing {
+            position: relative;
+            border-color: rgba(255, 62, 108, 0.2);
+        }
+        
+        .nearby-listing:hover {
+            transform: translateY(-20px) skewX(-3deg) !important;
+            box-shadow: 15px 15px 0 rgba(255, 62, 108, 0.3) !important;
+        }
+        
+        .nearby-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff3e6c;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-details {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--accent-color);
+        }
+
+        .product-seller {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-details-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        /* Dark theme button style (default theme) */
+        body:not(.light-theme) .view-details-btn {
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+
+        .view-details-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+            z-index: -1;
+        }
+        
+        /* Dark theme button hover */
+        body:not(.light-theme) .view-details-btn::before {
+            background-color: #ffffff;
+        }
+
+        .view-details-btn:hover::before {
+            left: 0;
+        }
+
+        .view-details-btn:hover {
+            color: #ffffff;
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Dark theme button hover text color */
+        body:not(.light-theme) .view-details-btn:hover {
+            color: #000000;
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .wishlist-btn {
+            background-color: transparent;
+            border: 1px solid transparent;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 10;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            padding: 0;
+            margin: 0;
+            touch-action: manipulation;
+            text-decoration: none;
+        }
+        
+        .wishlist-btn:hover, .wishlist-btn:active, .wishlist-btn:focus {
+            text-decoration: none;
+            outline: none;
+        }
+        
+        /* Light theme heart color */
+        .light-theme .wishlist-btn i {
+            color: #000000;
+            pointer-events: none;
+        }
+        
+        /* Dark theme heart color */
+        body:not(.light-theme) .wishlist-btn i {
+            color: #ffffff;
+            pointer-events: none;
+        }
+
+        .wishlist-btn i {
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+            font-size: 1.6rem;
+            display: block;
+            pointer-events: none;
+        }
+
+        .wishlist-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .light-theme .wishlist-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .wishlist-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Active state for light theme */
+        .light-theme .wishlist-btn.active i {
+            color: #ff3e6c;
+            animation: heartBeat 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Active state for dark theme */
+        body:not(.light-theme) .wishlist-btn.active i {
+            color: #ff3e6c;
+            animation: heartBeat 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* User Actions */
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 1rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .action-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--accent-color);
+        }
+
+        .action-item span {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: -50%;
+            width: 200px;
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+            padding: 1rem 0;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .profile-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .profile-dropdown a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .profile-dropdown a:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .profile-dropdown a i {
+            margin-right: 0.8rem;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .profile-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0.5rem 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 1rem 0 1rem;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 1rem !important;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem 0;
+            border-top: none;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--accent-color) !important;
+        }
+
+        /* No products message */
+        .no-products {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .search-container {
+                width: 450px;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+            
+            .navigation-bar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .categories ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .categories ul li a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .search-section {
+                width: 100%;
+                margin: 1rem 0;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 0 15px;
+            }
+            
+            /* Button group responsiveness */
+            .button-group {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin: 0.5rem 0;
+            }
+            
+            .sort-button {
+                width: auto;
+                margin: 0;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .user-actions {
+                margin-left: auto;
+            }
+            
+            .action-item {
+                margin: 0 0.5rem;
+            }
+            
+            .action-item span {
+                display: none;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .view-details-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Add animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInStaggered {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Welcome Section Styles */
+        .welcome-section {
+            background-color: var(--card-bg);
+            border-radius: 0;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slideInFromTop 1.2s ease-out;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.8s ease, opacity 0.8s ease, margin-bottom 0.8s ease, padding 0.8s ease, height 0.8s ease;
+            height: auto;
+            opacity: 1;
+            z-index: 100;
+        }
+        
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        .welcome-section.hide {
+            transform: translateY(-100%);
+            opacity: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            height: 0;
+        }
+        
+        @keyframes slideOutUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+                margin-bottom: 30px;
+                padding: 30px;
+                height: auto;
+            }
+            100% {
+                transform: translateY(-100%);
+                opacity: 0;
+                margin-bottom: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                height: 0;
+            }
+        }
+        
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            transition: all 0.5s ease;
+            background-color: var(--secondary-color);
+        }
+        
+        .light-theme .user-avatar {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #f0f0f0;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 40px;
+        }
+        
+        .welcome-section:hover .user-avatar {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .welcome-text {
+            width: 100%;
+            max-width: 700px;
+        }
+        
+        .welcome-text h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        
+        .welcome-text p {
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 576px) {
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .welcome-text h2 {
+                font-size: 24px;
+            }
+            
+            .welcome-text p {
+                font-size: 14px;
+            }
+        }
+
+        /* Separator with animated line */
+        .animated-separator {
+            width: 100%;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-separator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            animation: moveLeftToRight 3s infinite;
+        }
+        
+        @keyframes moveLeftToRight {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Ripple effect for buttons */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        /* Active state for dark theme */
+        body:not(.light-theme) .wishlist-btn.active i {
+            color: #ff3e6c;
+            animation: heartBeat 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes heartBeat {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.3);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Button Group */
+        .button-group {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+            position: relative;
+            z-index: 250;
+        }
+        
+        /* Button group should have margin for proper positioning */
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../../../home.html" class="logo">
+            <img id="navbar-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="buyer_dashboard.html" class="active">Listings</a></li>
+                <li><a href="wish.html">Wishlist</a></li>
+                <li><a href="buyer_profile.html">Profile</a></li>
+                <li><a href="../about/about_us.html">About</a></li>
+                <li><a href="../../../home.html" id="logout-link">Logout</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Category and Search Section Combined -->
+    <div class="navigation-bar">
+        <div class="categories">
+            <ul>
+                <li><a href="#" id="menCategory">Men</a></li>
+                <li><a href="#" id="womenCategory">Women</a></li>
+                <li><a href="#" id="kidsCategory">Kids</a></li>
+            </ul>
+        </div>
+        
+        <section class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search for products..." id="searchInput">
+            </div>
+        </section>
+        
+        <div class="button-group">
+            <button class="sort-button" id="sortButton">
+                <i class="fas fa-sort"></i> Sort
+                <div class="sort-dropdown" id="sortDropdown">
+                    <div class="sort-option" data-sort="price-low-high">
+                        <i class="fas fa-arrow-up"></i> Price: Low to High
+                    </div>
+                    <div class="sort-option" data-sort="price-high-low">
+                        <i class="fas fa-arrow-down"></i> Price: High to Low
+                    </div>
+                    <div class="sort-option" data-sort="nearby">
+                        <i class="fas fa-map-marker-alt"></i> Nearby Listings
+                    </div>
+                    <div class="sort-option has-submenu" data-sort="occasion" id="occasionOption">
+                        <i class="fas fa-tshirt"></i> Occasion
+                        <i class="fas fa-chevron-right submenu-icon"></i>
+                        <div class="submenu" id="occasionSubmenu">
+                            <div class="submenu-header">Select Occasion</div>
+                            <div class="submenu-option" data-occasion="formal">Formal</div>
+                            <div class="submenu-option" data-occasion="casual">Casual</div>
+                            <div class="submenu-option" data-occasion="wedding">Wedding</div>
+                            <div class="submenu-option" data-occasion="traditional">Traditional</div>
+                            <div class="submenu-option" data-occasion="ethnic">Ethnic</div>
+                            <div class="submenu-option" data-occasion="western">Western</div>
+                            <div class="submenu-option" data-occasion="other">Other</div>
+                        </div>
+                    </div>
+                    <div class="sort-option" data-sort="clear">
+                        <i class="fas fa-times"></i> Clear Filters
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Animated separator line -->
+    <div class="animated-separator"></div>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div class="user-avatar" id="userAvatar">
+            <div class="user-avatar-placeholder">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+        <div class="welcome-text">
+            <h2>Hello, <span id="userName">Fashion Enthusiast</span>!</h2>
+            <p>Discover the latest fashion available for rent. Find the perfect outfit for your next occasion.</p>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+        <!-- Products will be loaded dynamically -->
+        <div class="loading-spinner" style="grid-column: 1/-1; text-align: center; padding: 50px;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--text-color);"></i>
+            <p style="margin-top: 20px;">Loading products...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Product Template -->
+    <template id="product-template">
+        <div class="product-card">
+            <img class="product-image" src="../../assets/images/placeholder.png" alt="Product Image" loading="lazy" 
+                 onerror="this.onerror=null; this.src='../../assets/images/placeholder.png';">
+            <div class="product-details">
+                <h3 class="product-title">Product Title</h3>
+                <div class="product-price">₹0/day</div>
+                <div class="product-seller">Seller Name</div>
+                <div class="product-actions">
+                    <a href="#" class="view-details-btn">View Details</a>
+                    <a href="javascript:void(0);" class="wishlist-btn" title="Add to Wishlist"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+    
+    <script>
+        // Global function for toggling wishlist state directly from HTML
+        function toggleWishlist(button, event) {
+            if (!button) {
+                console.error('Toggle wishlist called with null button');
+                return false;
+            }
+            
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            try {
+                const productCard = button.closest('.product-card');
+                if (!productCard) {
+                    console.error('Could not find parent product card');
+                    return false;
+                }
+                
+                // Get product ID either from data attribute or URL
+                let productId;
+                if (productCard.hasAttribute('data-product-id')) {
+                    productId = productCard.getAttribute('data-product-id');
+                } else {
+                    const detailsLink = productCard.querySelector('.view-details-btn');
+                    if (!detailsLink || !detailsLink.href) {
+                        console.error('Missing details link or href');
+                        return false;
+                    }
+                    
+                    const productIdMatch = detailsLink.href.match(/id=(\d+)/);
+                    productId = productIdMatch ? productIdMatch[1] : null;
+                }
+                
+                if (!productId) {
+                    console.error('Could not determine product ID');
+                    return false;
+                }
+                
+                console.log('ToggleWishlist called for product ID:', productId);
+                
+                const heartIcon = button.querySelector('i');
+                if (!heartIcon) {
+                    console.error('Heart icon not found in wishlist button');
+                    return false;
+                }
+                
+                // Toggle heart icon
+                if (heartIcon.classList.contains('far')) {
+                    // Change to filled heart
+                    heartIcon.className = 'fas fa-heart';
+                    button.classList.add('active');
+                    
+                    // Get product info - safely check for element existence
+                    const title = productCard.querySelector('.product-title');
+                    const price = productCard.querySelector('.product-price');
+                    const seller = productCard.querySelector('.product-seller');
+                    const image = productCard.querySelector('.product-image');
+                    
+                    // Construct product object with null checks
+                    const productObj = {
+                        id: productId,
+                        title: title && title.textContent ? title.textContent : 'Product',
+                        price: price && price.textContent ? price.textContent.replace('₹', '').replace('/day', '').trim() : '0',
+                        seller: seller && seller.textContent ? seller.textContent : 'Seller'
+                    };
+                    
+                    // Always use the direct image API for reliable image access
+                    const imageUrl = `/ClothLoop/backend/api/products/direct_image.php?product_id=${productId}`;
+                    productObj.image = imageUrl;
+                    
+                    // Add to wishlist
+                    addToWishlist(productId, productObj);
+                    showNotification('Added to wishlist!');
+                } else {
+                    // Change to outline heart
+                    heartIcon.className = 'far fa-heart';
+                    button.classList.remove('active');
+                    
+                    // Make a direct server call to remove the item if user is logged in
+                    const userId = localStorage.getItem('user_id');
+                    if (userId && userId !== 'guest') {
+                        console.log(`Making direct server call to remove product ${productId} for user ${userId}`);
+                        
+                        // Get current wishlist from localStorage
+                        const wishlistKey = `wishlist_${userId}`;
+                        let currentWishlist = [];
+                        try {
+                            const storedWishlist = localStorage.getItem(wishlistKey);
+                            if (storedWishlist) {
+                                currentWishlist = JSON.parse(storedWishlist);
+                                
+                                // Ensure it's an array
+                                if (!Array.isArray(currentWishlist)) {
+                                    console.error('Invalid wishlist format in localStorage');
+                                    currentWishlist = [];
+                                }
+                            }
+                        } catch (e) {
+                            console.error('Error reading localStorage wishlist:', e);
+                        }
+                        
+                        // Remove the item from the wishlist array
+                        const updatedWishlist = currentWishlist.filter(id => id.toString() !== productId.toString());
+                        
+                        // Update localStorage immediately
+                        localStorage.setItem(wishlistKey, JSON.stringify(updatedWishlist));
+                        
+                        // Send directly to server
+                        fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                items: updatedWishlist,
+                                user_id: userId
+                            }),
+                            credentials: 'include'
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Server response after removing item:', data);
+                            if (data.status === 'success') {
+                                console.log('Item successfully removed from server wishlist');
+                            } else {
+                                console.error('Server error removing wishlist item:', data.message);
+                                // Re-fetch the wishlist from server to ensure we're in sync
+                                fetchWishlistFromServer();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Network error removing wishlist item:', error);
+                            // Re-fetch the wishlist from server to ensure we're in sync
+                            fetchWishlistFromServer();
+                        });
+                    } else {
+                        // For guest users, just update localStorage
+                        removeFromWishlist(productId);
+                    }
+                    
+                    showNotification('Removed from wishlist');
+                }
+            } catch (error) {
+                console.error('Error in toggleWishlist:', error);
+                showNotification('Could not update wishlist');
+            }
+            
+            return false;
+        }
+
+        // Theme switcher functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Wishlist helper functions
+        function addToWishlist(productId, productInfo) {
+            try {
+                const userId = localStorage.getItem('user_id') || 'guest';
+                const wishlistKey = userId !== 'guest' ? `wishlist_${userId}` : 'wishlist';
+                
+                let wishlist = [];
+                try {
+                    const storedWishlist = localStorage.getItem(wishlistKey);
+                    if (storedWishlist) {
+                        wishlist = JSON.parse(storedWishlist);
+                        // Validate that it's an array
+                        if (!Array.isArray(wishlist)) {
+                            console.error('Invalid wishlist format in localStorage. Resetting.');
+                            wishlist = [];
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing wishlist:', e);
+                    wishlist = [];
+                }
+                
+                // Convert productId to string for consistency
+                const productIdStr = productId.toString();
+                
+                // Check if product is already in wishlist using string comparison
+                const isAlreadyInWishlist = wishlist.some(id => id.toString() === productIdStr);
+                
+                if (!isAlreadyInWishlist) {
+                    wishlist.push(productIdStr);
+                    
+                    // Save product info
+                    if (productInfo) {
+                        localStorage.setItem(`product_${productIdStr}`, JSON.stringify(productInfo));
+                    }
+                    
+                    // Save updated wishlist
+                    localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+                    
+                    // If user is logged in, sync with server
+                    if (userId !== 'guest') {
+                        syncWishlistWithServer(wishlist)
+                            .then(() => {
+                                console.log('Wishlist synced with server after adding item');
+                            })
+                            .catch(err => {
+                                console.error('Error syncing with server after adding item:', err);
+                                // Still consider add successful since local storage was updated
+                            });
+                    }
+                    
+                    return true;
+                } else {
+                    // Item is already in wishlist
+                    return false;
+                }
+            } catch (e) {
+                console.error('Error adding to wishlist:', e);
+                return false;
+            }
+        }
+        
+        function removeFromWishlist(productId) {
+            try {
+                const userId = localStorage.getItem('user_id') || 'guest';
+                const wishlistKey = userId !== 'guest' ? `wishlist_${userId}` : 'wishlist';
+                
+                console.log(`removeFromWishlist: Removing product ${productId} from wishlist for user ${userId}`);
+                
+                let wishlist = [];
+                try {
+                    const storedWishlist = localStorage.getItem(wishlistKey);
+                    if (storedWishlist) {
+                        wishlist = JSON.parse(storedWishlist);
+                        // Validate that it's an array
+                        if (!Array.isArray(wishlist)) {
+                            console.error('Invalid wishlist format in localStorage. Resetting.');
+                            wishlist = [];
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing wishlist:', e);
+                    wishlist = [];
+                }
+                
+                // Convert productId to string for consistency
+                const productIdStr = productId.toString();
+                
+                // Make a copy of the wishlist for comparison
+                const originalWishlist = [...wishlist];
+                
+                // Filter out the product using strict string comparison
+                wishlist = wishlist.filter(id => id.toString() !== productIdStr);
+                
+                // Check if anything was actually removed
+                const wasRemoved = originalWishlist.length > wishlist.length;
+                console.log(`Item removal status: ${wasRemoved ? 'Removed' : 'Not found in wishlist'}`);
+                
+                // Update localStorage even if nothing changed
+                localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+                
+                // If user is logged in, sync with server directly
+                if (userId !== 'guest') {
+                    console.log(`Syncing updated wishlist with server (${wishlist.length} items)`);
+                    
+                    // Make a direct server call to ensure synchronization
+                    fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            items: wishlist,
+                            user_id: userId
+                        }),
+                        credentials: 'include'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Server responded with status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Server response after removal:', data);
+                        if (data.status === 'success') {
+                            console.log('Item successfully removed from server');
+                            
+                            // Update localStorage with server's version if provided
+                            if (data.data && Array.isArray(data.data.ids)) {
+                                localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                                console.log('Updated localStorage with server wishlist data');
+                            }
+                        } else {
+                            console.error('Server error removing item:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Network error removing item from wishlist:', error);
+                        
+                        // Make a fallback GET request to at least get the current state
+                        fetch(`/ClothLoop/backend/api/buyers/sync_wishlist.php?user_id=${userId}`, {
+                            method: 'GET',
+                            credentials: 'include'
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success' && data.data && data.data.ids) {
+                                localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                                console.log('Recovered wishlist state from server after error');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Failed to recover wishlist state:', err);
+                        });
+                    });
+                }
+                
+                return wasRemoved; // Return whether an item was actually removed
+            } catch (e) {
+                console.error('Error removing from wishlist:', e);
+                return false;
+            }
+        }
+        
+        function isInWishlist(productId) {
+            try {
+                const userId = localStorage.getItem('user_id') || 'guest';
+                const wishlistKey = userId !== 'guest' ? `wishlist_${userId}` : 'wishlist';
+                
+                let wishlist = [];
+                try {
+                    const storedWishlist = localStorage.getItem(wishlistKey);
+                    if (storedWishlist) {
+                        wishlist = JSON.parse(storedWishlist);
+                        // Validate that it's an array
+                        if (!Array.isArray(wishlist)) {
+                            console.error('Invalid wishlist format in localStorage. Resetting.');
+                            return false;
+                        }
+                    }
+                } catch (e) {
+                    wishlist = [];
+                }
+                
+                // Convert productId to string for consistency
+                const productIdStr = productId.toString();
+                
+                // Log detailed debug info about this check
+                const isIncluded = wishlist.some(id => id.toString() === productIdStr);
+                console.log(`IsInWishlist check for product ${productIdStr} (${typeof productId}): `, {
+                    userId: userId,
+                    wishlistKey: wishlistKey,
+                    wishlistItems: wishlist.map(id => typeof id === 'object' ? JSON.stringify(id) : id.toString()),
+                    productIdType: typeof productId,
+                    isInWishlist: isIncluded,
+                    matchMethod: 'strict string comparison'
+                });
+                
+                return isIncluded;
+            } catch (e) {
+                console.error('Error checking wishlist:', e);
+                return false;
+            }
+        }
+        
+        // New function to fetch wishlist data from server
+        async function fetchWishlistFromServer() {
+            try {
+                const userId = localStorage.getItem('user_id');
+                if (!userId || userId === 'guest') {
+                    console.log('Not fetching wishlist - user not logged in');
+                    return [];
+                }
+                
+                console.log(`Fetching wishlist for user ${userId} from server`);
+                
+                // Get wishlist from server with user_id in URL params
+                const response = await fetch(`/ClothLoop/backend/api/buyers/sync_wishlist.php?user_id=${userId}`, {
+                    method: 'GET',
+                    credentials: 'include' // Include cookies for session
+                });
+                
+                if (!response.ok) {
+                    console.error(`Server responded with ${response.status}: ${response.statusText}`);
+                    return [];
+                }
+                
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.data && data.data.ids) {
+                    console.log('Wishlist fetched from server successfully:', data.data.ids);
+                    
+                    // Update localStorage with the ids from server
+                    const wishlistKey = `wishlist_${userId}`;
+                    localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                    
+                    // Store each product's details if available
+                    if (data.data.items && Array.isArray(data.data.items)) {
+                        data.data.items.forEach(item => {
+                            if (item.product_id) {
+                                const productInfo = {
+                                    id: item.product_id,
+                                    title: item.title || 'Product',
+                                    price: item.rental_price || '0',
+                                    seller: item.seller_name || 'ClothLoop Seller',
+                                    image: item.image_path || ''
+                                };
+                                localStorage.setItem(`product_${item.product_id}`, JSON.stringify(productInfo));
+                            }
+                        });
+                    }
+                    
+                    return data.data.ids;
+                } else {
+                    console.error('Error fetching wishlist from server:', data.message || 'Unknown error');
+                    return [];
+                }
+            } catch (error) {
+                console.error('Error in fetchWishlistFromServer:', error);
+                return [];
+            }
+        }
+        
+        // Fix wishlist button functionality by adding direct click handlers
+        function initializeWishlistButtons() {
+            console.log('Initializing wishlist buttons...');
+            
+            // Get all wishlist buttons on the page
+            const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+            console.log(`Found ${wishlistButtons.length} wishlist buttons to initialize`);
+            
+            // Add click handler to each button
+            wishlistButtons.forEach((button, index) => {
+                // First, set the initial state
+                const productCard = button.closest('.product-card');
+                const detailsLink = productCard.querySelector('.view-details-btn');
+                
+                // Get product ID
+                let productId = null;
+                
+                // Try to get from data attribute first
+                if (productCard.hasAttribute('data-product-id')) {
+                    productId = productCard.getAttribute('data-product-id');
+                } 
+                // Fall back to URL parsing
+                else if (detailsLink && detailsLink.href) {
+                    const productIdMatch = detailsLink.href.match(/id=(\d+)/);
+                    productId = productIdMatch ? productIdMatch[1] : null;
+                }
+                
+                if (!productId) {
+                    console.error(`Button ${index}: Could not determine product ID`, button);
+                    return;
+                }
+                
+                const heartIcon = button.querySelector('i');
+                
+                console.log(`Button ${index}: Checking wishlist state for product ${productId}`);
+                
+                // Set initial state
+                const inWishlist = isInWishlist(productId);
+                console.log(`Button ${index}: Product ${productId} in wishlist: ${inWishlist}`);
+                
+                if (inWishlist) {
+                    heartIcon.className = 'fas fa-heart';
+                    button.classList.add('active');
+                    console.log(`Button ${index}: Set filled heart for product ${productId}`);
+                } else {
+                    heartIcon.className = 'far fa-heart';
+                    button.classList.remove('active');
+                    console.log(`Button ${index}: Set empty heart for product ${productId}`);
+                }
+                
+                // Clear existing event listeners by creating a new handler
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Get all references
+                    const heartIcon = this.querySelector('i');
+                    const productCard = this.closest('.product-card');
+                    
+                    // Try data attribute first
+                    let productId = null;
+                    if (productCard.hasAttribute('data-product-id')) {
+                        productId = productCard.getAttribute('data-product-id');
+                    } else {
+                        const detailsLink = productCard.querySelector('.view-details-btn');
+                        const productIdMatch = detailsLink && detailsLink.href ? 
+                            detailsLink.href.match(/id=(\d+)/) : null;
+                        productId = productIdMatch ? productIdMatch[1] : null;
+                    }
+                    
+                    if (!productId) {
+                        console.error('Could not determine product ID for click handler');
+                        return false;
+                    }
+                    
+                    console.log('Wishlist button clicked for product:', productId);
+                    
+                    // Get user ID
+                    const userId = localStorage.getItem('user_id') || 'guest';
+                    const isLoggedIn = userId !== 'guest';
+                    
+                    // Toggle heart icon
+                    if (heartIcon.classList.contains('far')) {
+                        // ADDING TO WISHLIST
+                        
+                        // Change to filled heart
+                        heartIcon.className = 'fas fa-heart';
+                        this.classList.add('active');
+                        
+                        // Get product info with null checks
+                        const titleElement = productCard.querySelector('.product-title');
+                        const priceElement = productCard.querySelector('.product-price');
+                        const sellerName = productCard.getAttribute('data-seller-name');
+                        const imageElement = productCard.querySelector('.product-image');
+                        
+                        const productInfo = {
+                            id: productId,
+                            title: titleElement && titleElement.textContent ? titleElement.textContent : 'Product',
+                            price: priceElement && priceElement.textContent ? priceElement.textContent.replace('₹', '').replace('/day', '').trim() : '0',
+                            seller: sellerName || 'ClothLoop Seller',
+                            image: imageElement && imageElement.src ? imageElement.src : ''
+                        };
+                        
+                        // If user is logged in, send wishlist update directly to server
+                        if (isLoggedIn) {
+                            // Get current wishlist
+                            let currentWishlist = [];
+                            const wishlistKey = `wishlist_${userId}`;
+                            
+                            try {
+                                const storedWishlist = localStorage.getItem(wishlistKey);
+                                if (storedWishlist) {
+                                    currentWishlist = JSON.parse(storedWishlist);
+                                }
+                            } catch (e) {
+                                console.error('Error reading localStorage wishlist:', e);
+                            }
+                            
+                            // Make sure it's an array
+                            if (!Array.isArray(currentWishlist)) {
+                                currentWishlist = [];
+                            }
+                            
+                            // Add the item if it's not already in the list
+                            if (!currentWishlist.includes(productId.toString())) {
+                                currentWishlist.push(productId.toString());
+                                
+                                // Update localStorage
+                                localStorage.setItem(wishlistKey, JSON.stringify(currentWishlist));
+                                localStorage.setItem(`product_${productId}`, JSON.stringify(productInfo));
+                                
+                                // Send direct server request
+                                fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        items: currentWishlist,
+                                        user_id: userId
+                                    }),
+                                    credentials: 'include'
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Server response after adding to wishlist:', data);
+                                    if (data.status !== 'success') {
+                                        console.error('Server error adding to wishlist:', data.message);
+                                        showNotification('Server error: ' + (data.message || 'Unknown error'));
+                                        // Reset visual state to reflect server state
+                                        heartIcon.className = 'far fa-heart';
+                                        this.classList.remove('active');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Network error adding to wishlist:', error);
+                                    showNotification('Network error, please try again');
+                                    // Reset visual state
+                                    heartIcon.className = 'far fa-heart';
+                                    this.classList.remove('active');
+                                });
+                            }
+                        } else {
+                            // For non-logged in users, just update localStorage
+                            addToWishlist(productId, productInfo);
+                        }
+                        
+                        showNotification('Added to wishlist!');
+                    } else {
+                        // REMOVING FROM WISHLIST
+                        
+                        // Change to outline heart
+                        heartIcon.className = 'far fa-heart';
+                        this.classList.remove('active');
+                        
+                        // If user is logged in, update server directly
+                        if (isLoggedIn) {
+                            // Get current wishlist
+                            let currentWishlist = [];
+                            const wishlistKey = `wishlist_${userId}`;
+                            
+                            try {
+                                const storedWishlist = localStorage.getItem(wishlistKey);
+                                if (storedWishlist) {
+                                    currentWishlist = JSON.parse(storedWishlist);
+                                }
+                            } catch (e) {
+                                console.error('Error reading localStorage wishlist:', e);
+                            }
+                            
+                            // Make sure it's an array
+                            if (!Array.isArray(currentWishlist)) {
+                                currentWishlist = [];
+                            }
+                            
+                            // Remove the item
+                            const updatedWishlist = currentWishlist.filter(id => id.toString() !== productId.toString());
+                            
+                            // Update localStorage immediately
+                            localStorage.setItem(wishlistKey, JSON.stringify(updatedWishlist));
+                            
+                            // Send direct server request
+                            fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    items: updatedWishlist,
+                                    user_id: userId
+                                }),
+                                credentials: 'include'
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Server response after removing from wishlist:', data);
+                                if (data.status !== 'success') {
+                                    console.error('Server error removing from wishlist:', data.message);
+                                    showNotification('Server error: ' + (data.message || 'Unknown error'));
+                                    // Reset visual state to reflect server state
+                                    heartIcon.className = 'fas fa-heart';
+                                    this.classList.add('active');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Network error removing from wishlist:', error);
+                                showNotification('Network error, please try again');
+                                // Reset visual state
+                                heartIcon.className = 'fas fa-heart';
+                                this.classList.add('active');
+                            });
+                        } else {
+                            // For non-logged in users, just update localStorage
+                            removeFromWishlist(productId);
+                        }
+                        
+                        showNotification('Removed from wishlist');
+                    }
+                    
+                    return false;
+                };
+            });
+        }
+        
+        // Function to show a temporary notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '120px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '4px';
+            notification.style.zIndex = '1000';
+            notification.style.textAlign = 'center';
+            notification.style.maxWidth = '80%';
+            notification.textContent = message;
+            
+            // Add to body
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+        
+        // Function to update logo based on theme
+        function updateLogo(isLightTheme) {
+            const navbarLogo = document.getElementById('navbar-logo');
+            
+            if (isLightTheme) {
+                navbarLogo.src = '../../assets/images/logo_b.png';
+            } else {
+                navbarLogo.src = '../../assets/images/logo_f.png';
+            }
+        }
+
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem('clothloop-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            updateLogo(true);
+        }
+
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const isLightTheme = document.body.classList.toggle('light-theme');
+            
+            // Update icon
+            if (isLightTheme) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('clothloop-theme', 'light');
+                updateLogo(true);
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('clothloop-theme', 'dark');
+                updateLogo(false);
+            }
+        });
+        
+        // Function to fetch user profile data from API
+        async function fetchUserProfile() {
+            try {
+                const response = await fetch('/ClothLoop/backend/api/buyers/get_buyer_profile.php', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include' // For cookies/session
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch profile: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.data && data.data.buyer) {
+                    // Set user data in localStorage for convenience
+                    localStorage.setItem('user_id', data.data.buyer.id);
+                    localStorage.setItem('user_name', data.data.buyer.name);
+                    
+                    // Update DOM with user data
+                    const userName = document.getElementById('userName');
+                    if (userName) {
+                        userName.textContent = data.data.buyer.name || 'Fashion Enthusiast';
+                    }
+                    
+                    // Set profile photo if available
+                    if (data.data.buyer.profile_photo) {
+                        const userAvatar = document.getElementById('userAvatar');
+                        if (userAvatar) {
+                            userAvatar.innerHTML = `<img src="/ClothLoop/backend/uploads/profile_photos/${data.data.buyer.profile_photo}" alt="User Profile">`;
+                            localStorage.setItem('buyer_profile_photo', `/ClothLoop/backend/uploads/profile_photos/${data.data.buyer.profile_photo}`);
+                        }
+                    }
+                    
+                    return data.data.buyer;
+                } else {
+                    console.error('No user data found:', data);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                // Fallback to local storage if available
+                loadProfilePicture();
+                return null;
+            }
+        }
+        
+        // Load profile picture if available
+        const loadProfilePicture = () => {
+            const userAvatar = document.getElementById('userAvatar');
+            const savedPhoto = localStorage.getItem('buyer_profile_photo');
+            
+            if (savedPhoto) {
+                userAvatar.innerHTML = `<img src="${savedPhoto}" alt="User Profile">`;
+            }
+            
+            // Set user name if available
+            const userName = document.getElementById('userName');
+            const savedName = localStorage.getItem('user_name');
+            if (savedName) {
+                userName.textContent = savedName;
+            }
+        };
+        
+        // Function to apply occasion filter
+        function applyOccasionFilter(occasionType) {
+            console.log('Applying occasion filter:', occasionType);
+            showNotification(`Filtering products for ${occasionType} occasions`);
+            
+            // Get current active category if any
+            const activeCategory = document.querySelector('.categories a.active');
+            const category = activeCategory ? activeCategory.textContent.trim().toLowerCase() : null;
+            console.log('Current active category:', category);
+            
+            // Get current search term (if any)
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput && searchInput.value ? searchInput.value.trim() : null;
+            
+            // Call fetchProducts with occasion parameter and other current filters
+            fetchProducts(category, searchTerm, null, occasionType);
+            
+            // Visually highlight the active occasion in submenu
+            const occasionOptions = document.querySelectorAll('.submenu-option');
+            occasionOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-occasion') === occasionType) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Add a visual indicator to the sort button showing an active filter
+            const sortButton = document.getElementById('sortButton');
+            if (sortButton) {
+                // First save the dropdown to preserve it
+                const sortDropdown = document.getElementById('sortDropdown');
+                
+                // Detach dropdown if it exists
+                if (sortDropdown && sortDropdown.parentNode) {
+                    sortDropdown.parentNode.removeChild(sortDropdown);
+                }
+                
+                // Update button text
+                sortButton.innerHTML = `<i class="fas fa-filter"></i> ${occasionType}`;
+                
+                // Re-attach the dropdown
+                if (sortDropdown) {
+                    sortButton.appendChild(sortDropdown);
+                } else {
+                    // Rebuild if missing
+                    console.log('Dropdown missing during occasion filter, rebuilding');
+                    rebuildSortDropdown(sortButton);
+                }
+                
+                // Apply styling
+                sortButton.style.backgroundColor = 'var(--accent-color)';
+                sortButton.style.color = 'var(--primary-color)';
+            }
+        }
+
+                    // Extended fetchProducts function to include sorting and occasion filters
+        async function fetchProducts(category = null, searchTerm = null, sortBy = null, occasion = null) {
+            try {
+                // Log active filters for debugging
+                if (category || searchTerm || sortBy || occasion) {
+                    console.log('Active filters:', { category, searchTerm, sortBy, occasion });
+                }
+            
+                // Show loading indicator
+                const productGrid = document.getElementById('productGrid');
+                productGrid.innerHTML = '<div class="loading-spinner" style="grid-column: 1/-1; text-align: center; padding: 50px;"><i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--text-color);"></i><p style="margin-top: 20px;">Loading products...</p></div>';
+                
+                // Fetch wishlist from server before loading products if user is logged in
+                const userId = localStorage.getItem('user_id');
+                if (userId && userId !== 'guest') {
+                    try {
+                        console.log('Refreshing wishlist data from server before loading products');
+                        await fetchWishlistFromServer();
+                    } catch (error) {
+                        console.error('Error refreshing wishlist:', error);
+                        // Continue with product loading even if wishlist refresh fails
+                    }
+                }
+                
+                // Construct the URL for the API endpoint
+                let url = '/ClothLoop/backend/api/products/get_products.php?limit=20';
+                
+                // Add timestamp to prevent caching
+                url += `&_t=${new Date().getTime()}`;
+                
+                if (category) {
+                    // Map category names to IDs based on the correct database values
+                    const categoryMap = {
+                        'men': 17,
+                        'women': 18,
+                        'kids': 19
+                    };
+                    
+                    const categoryId = categoryMap[category.toLowerCase()] || category;
+                    url += `&category=${categoryId}`;
+                    console.log(`Filtering by category: ${category} (ID: ${categoryId})`);
+                }
+                
+                if (searchTerm) {
+                    url += `&search=${encodeURIComponent(searchTerm)}`;
+                }
+                
+                // Handle 'nearby' sorting by requesting user location first if needed
+                if (sortBy === 'nearby') {
+                    // We'll sort by distance on the client side after receiving data
+                    console.log('Processing nearby sort request');
+                    
+                    // Check if we have location data
+                    let userLat = parseFloat(localStorage.getItem('user_latitude'));
+                    let userLng = parseFloat(localStorage.getItem('user_longitude'));
+                    
+                    if (!userLat || !userLng || isNaN(userLat) || isNaN(userLng)) {
+                        try {
+                            showNotification('Getting your location for nearby listings...');
+                            const location = await getUserLocation();
+                            userLat = parseFloat(location.latitude);
+                            userLng = parseFloat(location.longitude);
+                            console.log(`Location obtained: ${userLat}, ${userLng}`);
+                        } catch (error) {
+                            console.error('Error getting location:', error);
+                            showNotification('Using default location for nearby sorting');
+                            // Default values should now be in localStorage from getUserLocation
+                            userLat = parseFloat(localStorage.getItem('user_latitude'));
+                            userLng = parseFloat(localStorage.getItem('user_longitude'));
+                        }
+                    }
+                    
+                    // Add location parameters to the request if they're available
+                    if (userLat && userLng && !isNaN(userLat) && !isNaN(userLng)) {
+                        url += `&latitude=${userLat}&longitude=${userLng}`;
+                        // Some APIs expect a sorting parameter
+                        url += `&sort_by=distance`;
+                        console.log(`Adding location params to URL: ${userLat}, ${userLng}`);
+                    }
+                } else if (sortBy && sortBy !== 'nearby') {
+                    // For other sort options
+                    url += `&sort_by=${sortBy}`;
+                }
+                
+                if (occasion) {
+                    url += `&occasion=${encodeURIComponent(occasion)}`;
+                    console.log(`Filtering by occasion: ${occasion}`);
+                }
+                
+                console.log('Fetching products from:', url);
+                
+                // Debug API request
+                try {
+                    const debugResponse = await fetch(url);
+                    console.log('Response status:', debugResponse.status);
+                    const debugData = await debugResponse.clone().text();
+                    console.log('Raw API response:', debugData.substring(0, 500) + '...');
+                } catch (e) {
+                    console.error('Debug request failed:', e);
+                }
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch products: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API response data:', data);
+                
+                // Check for success response and if products data exists
+                if (data && data.status === 'success') {
+                    let products = [];
+                    
+                    // Handle different response structures
+                    if (data.data && Array.isArray(data.data.products)) {
+                        // Standard response format
+                        products = data.data.products;
+                    } else if (data.data && typeof data.data === 'object') {
+                        // Alternative format - data might be the products array directly
+                        products = data.data;
+                    } else if (Array.isArray(data.products)) {
+                        // Older API format
+                        products = data.products;
+                    }
+                    
+                    console.log('Parsed products:', products);
+                    
+                    // Handle nearby sorting if requested and if we didn't already sort on the server
+                    if (sortBy === 'nearby' && products.length > 0) {
+                        // Get user's location from localStorage again (in case it was just set)
+                        const userLat = parseFloat(localStorage.getItem('user_latitude'));
+                        const userLng = parseFloat(localStorage.getItem('user_longitude'));
+                        
+                        if (userLat && userLng && !isNaN(userLat) && !isNaN(userLng)) {
+                            console.log(`Client-side sorting by distance using: ${userLat}, ${userLng}`);
+                            products = sortProductsByDistance(products, userLat, userLng);
+                            showNotification('Showing nearby listings based on your location');
+                        }
+                        
+                        // Limit to 20 closest results for better performance and relevance
+                        if (products.length > 20) {
+                            console.log(`Limiting from ${products.length} to 20 closest products`);
+                            products = products.slice(0, 20);
+                        }
+                    }
+                    
+                    if (products.length > 0) {
+                        renderProducts(products);
+                    } else {
+                        renderNoProducts(category, occasion, sortBy);
+                    }
+                } else {
+                    console.error('Error in API response:', data);
+                    renderNoProducts(category, occasion, sortBy);
+                }
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                
+                // Show error message in the product grid
+                const productGrid = document.getElementById('productGrid');
+                productGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--error-color); margin-bottom: 20px;"></i>
+                        <h3>Error Loading Products</h3>
+                        <p>${error.message || 'Could not connect to the server'}</p>
+                        <button onclick="location.reload()" class="view-details-btn" style="margin-top: 20px;">Try Again</button>
+                    </div>
+                `;
+                
+                showNotification('Error loading products. Please check console for details.');
+            }
+        }
+        
+        // Function to get user's current location
+        function getUserLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error('Geolocation is not supported by your browser'));
+                    return;
+                }
+                
+                showNotification('Getting your location...');
+                
+                navigator.geolocation.getCurrentPosition(
+                    // Success callback
+                    function(position) {
+                        const latitude = position.coords.latitude.toFixed(6);
+                        const longitude = position.coords.longitude.toFixed(6);
+                        
+                        // Save to localStorage
+                        localStorage.setItem('user_latitude', latitude);
+                        localStorage.setItem('user_longitude', longitude);
+                        
+                        console.log(`User location: ${latitude}, ${longitude}`);
+                        showNotification('Location updated successfully!');
+                        resolve({latitude, longitude});
+                    },
+                    // Error callback
+                    function(error) {
+                        console.error('Error getting location:', error);
+                        let errorMessage = 'Could not get your location';
+                        
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = 'You denied the request for location';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = 'Location information is unavailable';
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = 'The request to get your location timed out';
+                                break;
+                        }
+                        
+                        // Try to use last known location from localStorage as fallback
+                        const savedLat = localStorage.getItem('user_latitude');
+                        const savedLng = localStorage.getItem('user_longitude');
+                        
+                        if (savedLat && savedLng && !isNaN(parseFloat(savedLat)) && !isNaN(parseFloat(savedLng))) {
+                            showNotification('Using your last known location');
+                            resolve({latitude: savedLat, longitude: savedLng});
+                        } else {
+                            // If no fallback location, try to use IP geolocation or a default location
+                            // For demo, we'll use a fallback location of Mumbai
+                            localStorage.setItem('user_latitude', '19.076090');
+                            localStorage.setItem('user_longitude', '72.877426');
+                            showNotification('Using default location (Mumbai) for nearby sorting');
+                            resolve({latitude: '19.076090', longitude: '72.877426'});
+                        }
+                    },
+                    // Options
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000 // Accept cached positions up to 1 minute old
+                    }
+                );
+            });
+        }
+        
+        // Function to calculate distance between two coordinates using Haversine formula
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            if (!lat1 || !lon1 || !lat2 || !lon2 || 
+                isNaN(lat1) || isNaN(lon1) || isNaN(lat2) || isNaN(lon2)) {
+                return Number.MAX_VALUE; // Return a large value if coordinates are invalid
+            }
+            
+            // Convert latitude and longitude from degrees to radians
+            const radLat1 = (Math.PI * lat1) / 180;
+            const radLon1 = (Math.PI * lon1) / 180;
+            const radLat2 = (Math.PI * lat2) / 180;
+            const radLon2 = (Math.PI * lon2) / 180;
+            
+            // Haversine formula
+            const dLat = radLat2 - radLat1;
+            const dLon = radLon2 - radLon1;
+            
+            const a = 
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(radLat1) * Math.cos(radLat2) * 
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            
+            // Earth radius in kilometers
+            const earthRadius = 6371;
+            const distance = earthRadius * c;
+            
+            return distance;
+        }
+        
+        // Function to sort products by distance from user
+        function sortProductsByDistance(products, userLat, userLng) {
+            console.log(`Sorting products by distance from user location: ${userLat}, ${userLng}`);
+            
+            // Function to extract coordinates from various product fields
+            function extractCoordinates(product) {
+                let sellerLat = null, sellerLng = null, source = 'none';
+                
+                // Try different possible coordinate properties and formats
+                if (product.latitude && product.longitude) {
+                    sellerLat = parseFloat(product.latitude);
+                    sellerLng = parseFloat(product.longitude);
+                    source = 'product coords';
+                } else if (product.seller_latitude && product.seller_longitude) {
+                    sellerLat = parseFloat(product.seller_latitude);
+                    sellerLng = parseFloat(product.seller_longitude);
+                    source = 'seller coords';
+                } else if (product.shop_latitude && product.shop_longitude) {
+                    sellerLat = parseFloat(product.shop_latitude);
+                    sellerLng = parseFloat(product.shop_longitude);
+                    source = 'shop coords';
+                } else if (product.shop_location && typeof product.shop_location === 'string') {
+                    // Try to parse coordinates from shop_location string (could be "lat,lng" format)
+                    try {
+                        const parts = product.shop_location.split(',');
+                        if (parts.length >= 2) {
+                            const lat = parseFloat(parts[0].trim());
+                            const lng = parseFloat(parts[1].trim());
+                            if (!isNaN(lat) && !isNaN(lng)) {
+                                sellerLat = lat;
+                                sellerLng = lng;
+                                source = 'shop_location string';
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Error parsing shop location string:', e);
+                    }
+                } else if (product.location && typeof product.location === 'string') {
+                    // Try to parse coordinates from location string
+                    try {
+                        const parts = product.location.split(',');
+                        if (parts.length >= 2) {
+                            const lat = parseFloat(parts[0].trim());
+                            const lng = parseFloat(parts[1].trim());
+                            if (!isNaN(lat) && !isNaN(lng)) {
+                                sellerLat = lat;
+                                sellerLng = lng;
+                                source = 'location string';
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Error parsing location string:', e);
+                    }
+                } else if (product.seller_address || product.shop_address) {
+                    // For testing - use a random location around Mumbai
+                    // This should be replaced with proper geocoding in production
+                    sellerLat = 19.07 + (Math.random() * 0.1);
+                    sellerLng = 72.87 + (Math.random() * 0.1);
+                    source = 'fallback random coords for demo';
+                    console.log(`Using demo coordinates for ${product.title || product.name}: ${sellerLat}, ${sellerLng}`);
+                }
+                
+                return { lat: sellerLat, lng: sellerLng, source };
+            }
+            
+            // Generate mock coordinates for any missing locations (FOR DEMO ONLY)
+            // In production, use a geocoding service to convert addresses to coordinates
+            function ensureCoordinates(products) {
+                const productCount = products.length;
+                let missingCoords = 0;
+                
+                products.forEach((product, index) => {
+                    // Extract coordinates using the helper function
+                    const coords = extractCoordinates(product);
+                    
+                    // If no coordinates were found, generate mock ones
+                    if (!coords.lat || !coords.lng || isNaN(coords.lat) || isNaN(coords.lng)) {
+                        // For demo: generate random coordinates around Mumbai (19.07, 72.87)
+                        // Spread them in a radius to simulate different distances
+                        const randomAngle = (index / productCount) * 2 * Math.PI; // Spread points in a circle
+                        const randomDistance = 0.01 + (Math.random() * 0.1); // 1-10km approximately
+                        
+                        coords.lat = 19.076090 + (randomDistance * Math.cos(randomAngle));
+                        coords.lng = 72.877426 + (randomDistance * Math.sin(randomAngle));
+                        coords.source = 'mock coordinates for demo';
+                        missingCoords++;
+                    }
+                    
+                    // Store the coordinates in the product object
+                    product.coords = coords;
+                });
+                
+                if (missingCoords > 0) {
+                    console.log(`Generated mock coordinates for ${missingCoords} products with missing location data`);
+                }
+                
+                return products;
+            }
+            
+            // Ensure all products have coordinates (for demo purposes)
+            products = ensureCoordinates(products);
+            
+            // Calculate and add distance property to each product
+            products.forEach(product => {
+                // Calculate distance if we have valid coordinates
+                const coords = product.coords;
+                if (coords && coords.lat && coords.lng && !isNaN(coords.lat) && !isNaN(coords.lng)) {
+                    product.distance = calculateDistance(userLat, userLng, coords.lat, coords.lng);
+                    console.log(`Distance to ${product.title || product.name}: ${product.distance.toFixed(2)} km (source: ${coords.source})`);
+                } else {
+                    // This should never happen after ensureCoordinates, but just in case
+                    product.distance = Number.MAX_VALUE;
+                    console.log(`No valid coordinates for ${product.title || product.name} even after fallbacks`);
+                }
+                
+                // Save formatted address for display, prioritizing the most specific field
+                if (product.shop_address) {
+                    product.formattedAddress = product.shop_address;
+                } else if (product.seller_address) {
+                    product.formattedAddress = product.seller_address;
+                } else if (product.address) {
+                    product.formattedAddress = product.address;
+                } else if (product.location_name) {
+                    product.formattedAddress = product.location_name;
+                } else {
+                    // Create a simple address if we have coordinates
+                    if (coords.lat && coords.lng) {
+                        product.formattedAddress = `${coords.lat.toFixed(4)}, ${coords.lng.toFixed(4)}`;
+                    } else {
+                        product.formattedAddress = 'Address not available';
+                    }
+                }
+                
+                // Add a distance label to each product
+                if (product.distance && product.distance !== Number.MAX_VALUE) {
+                    if (product.distance < 1) {
+                        product.distanceLabel = `${(product.distance * 1000).toFixed(0)} m away`;
+                    } else {
+                        product.distanceLabel = `${product.distance.toFixed(1)} km away`;
+                    }
+                    
+                    // Add a "nearby" flag for very close locations
+                    product.isNearby = product.distance < 5;
+                    product.isVeryNearby = product.distance < 2;
+                }
+            });
+            
+            // Sort products by distance (closest first)
+            const sortedProducts = products.sort((a, b) => {
+                // Make sure products with distance info come first
+                if (a.distance === Number.MAX_VALUE && b.distance !== Number.MAX_VALUE) {
+                    return 1;
+                }
+                if (a.distance !== Number.MAX_VALUE && b.distance === Number.MAX_VALUE) {
+                    return -1;
+                }
+                // Regular distance comparison
+                return a.distance - b.distance;
+            });
+            
+            console.log(`Sorted ${sortedProducts.length} products by distance, closest first`);
+            
+            return sortedProducts;
+        }
+        
+        // Function to handle category selection
+        function setupCategoryFilters() {
+            const menCategory = document.getElementById('menCategory');
+            const womenCategory = document.getElementById('womenCategory');
+            const kidsCategory = document.getElementById('kidsCategory');
+            
+            // Verify that we found the category elements
+            console.log('Category elements found:', { 
+                men: menCategory, 
+                women: womenCategory, 
+                kids: kidsCategory 
+            });
+            
+            if (!menCategory || !womenCategory || !kidsCategory) {
+                console.error('Some category elements could not be found');
+                return;
+            }
+            
+            const categories = [menCategory, womenCategory, kidsCategory];
+            
+            categories.forEach(category => {
+                category.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Category clicked:', this.textContent, this);
+                    
+                    // Check if the clicked category already has the active class
+                    const wasActive = this.classList.contains('active');
+                    console.log('Was active before:', wasActive);
+                    
+                    // Remove active class from all categories
+                    categories.forEach(cat => {
+                        cat.classList.remove('active');
+                        console.log('Removed active class from:', cat.textContent);
+                    });
+                    
+                    // Only add active class if this wasn't already active
+                    if (!wasActive) {
+                        this.classList.add('active');
+                        console.log('Added active class to:', this.textContent);
+                        
+                        // Filter products based on category
+                        const selectedCategory = this.textContent.trim().toLowerCase();
+                        console.log('Selected category:', selectedCategory);
+                        
+                        // Show clear filters button when category is selected
+                        const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+                        if (clearFiltersBtn) {
+                            clearFiltersBtn.style.display = 'flex';
+                            // Add pulse animation to make it noticeable
+                            clearFiltersBtn.style.animation = 'pulse 1s 3';
+                        }
+                        
+                        fetchProducts(selectedCategory);
+                        showNotification(`Showing ${selectedCategory}'s clothing`);
+                    } else {
+                        // If it was active and now deselected, show all products
+                        console.log('Deselected category, showing all products');
+                        fetchProducts();
+                        showNotification('Showing all products');
+                    }
+                });
+            });
+            
+            // Try to set initial category if present in URL
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const initialCategory = urlParams.get('category');
+                if (initialCategory) {
+                    console.log('Initial category from URL:', initialCategory);
+                    
+                    // Find matching category
+                    const categoryMap = {
+                        'men': menCategory,
+                        'women': womenCategory,
+                        'kids': kidsCategory
+                    };
+                    
+                    const categoryElement = categoryMap[initialCategory.toLowerCase()];
+                    if (categoryElement) {
+                        // Trigger click on this category
+                        console.log('Triggering click on initial category:', initialCategory);
+                        categoryElement.click();
+                    }
+                }
+            } catch (e) {
+                console.error('Error setting initial category:', e);
+            }
+        }
+        
+        // Function to handle search
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            let searchTimeout;
+            
+            // Search on each keystroke with debouncing
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.trim();
+                
+                // Clear any pending timeout
+                clearTimeout(searchTimeout);
+                
+                // Set a timeout to prevent excessive API calls while typing
+                searchTimeout = setTimeout(() => {
+                    // Log search term if any
+                    if (searchTerm) {
+                        console.log('Searching for:', searchTerm);
+                    }
+                    
+                    // Get current active category if any
+                    const activeCategory = document.querySelector('.categories a.active');
+                    const category = activeCategory ? activeCategory.textContent.trim().toLowerCase() : null;
+                    
+                    // Fetch products with search term
+                    fetchProducts(category, searchTerm);
+                }, 300); // Wait 300ms after user stops typing
+            });
+            
+            // Also keep the Enter key functionality for immediate search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    clearTimeout(searchTimeout);
+                    const searchTerm = this.value.trim();
+                    
+                    // Get current active category if any
+                    const activeCategory = document.querySelector('.categories a.active');
+                    const category = activeCategory ? activeCategory.textContent.trim().toLowerCase() : null;
+                    
+                    fetchProducts(category, searchTerm);
+                    
+                    // Log when search is performed with Enter key
+                    if (searchTerm) {
+                        console.log('Enter key search for:', searchTerm);
+                    }
+                }
+            });
+        }
+        
+        // Function to handle sorting options
+        function setupSorting() {
+            const sortButton = document.getElementById('sortButton');
+            const sortDropdown = document.getElementById('sortDropdown');
+            const sortOptions = document.querySelectorAll('.sort-option');
+            let activeSort = null;
+            let activeOccasion = null;
+            
+            // Show/hide dropdown when Sort button is clicked
+            sortButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Re-check for the sort dropdown element every time to handle DOM updates
+                const sortDropdown = document.getElementById('sortDropdown');
+                if (!sortDropdown) {
+                    console.error('Sort dropdown not found in DOM');
+                    return;
+                }
+                
+                // Always toggle the active class correctly
+                sortDropdown.classList.toggle('active');
+                
+                // Log active filters when dropdown is opened
+                const hasFilters = document.querySelector('.categories a.active') || 
+                                  (document.getElementById('searchInput') && document.getElementById('searchInput').value.trim()) ||
+                                  activeSort || activeOccasion;
+                                  
+                if (hasFilters) {
+                    console.log('Active filters when opening dropdown:', {
+                        category: document.querySelector('.categories a.active')?.textContent || 'none',
+                        search: document.getElementById('searchInput')?.value || 'none',
+                        sort: activeSort || 'none',
+                        occasion: activeOccasion || 'none'
+                    });
+                }
+            });
+            
+            // Set up the "Clear Filters" option in dropdown menu
+            const clearFilterOption = document.querySelector('.sort-option[data-sort="clear"]');
+            if (clearFilterOption) {
+                clearFilterOption.addEventListener('click', function() {
+                    // Clear the search input
+                    const searchInput = document.getElementById('searchInput');
+                    if (searchInput) {
+                        searchInput.value = '';
+                    }
+                    
+                    // Reset the category selection
+                    const categories = document.querySelectorAll('.categories a');
+                    categories.forEach(cat => cat.classList.remove('active'));
+                    
+                    // Reset sort button
+                    resetSortButton();
+                    
+                    // Reset active state on all submenu options
+                    const occasionOptions = document.querySelectorAll('.submenu-option');
+                    occasionOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Fetch all products with no filters
+                    fetchProducts();
+                    
+                    // Show notification
+                    showNotification('All filters cleared');
+                });
+            }
+            
+            // Handle sort options click
+            sortOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    // Don't close dropdown if clicking occasion (submenu will open)
+                    if (this.getAttribute('data-sort') === 'occasion') {
+                        e.stopPropagation();
+                        return;
+                    }
+                    
+                    e.stopPropagation();
+                    const sortType = this.getAttribute('data-sort');
+                    
+                    // Clear filters if clear option selected
+                    if (sortType === 'clear') {
+                        sortOptions.forEach(opt => opt.classList.remove('active'));
+                        activeSort = null;
+                        activeOccasion = null;
+                        
+                        // Reset sort button to default state
+                        resetSortButton();
+                        
+                        // Reset all products (using current category if any)
+                        const activeCategory = document.querySelector('.categories a.active');
+                        const category = activeCategory ? activeCategory.textContent.trim().toLowerCase() : null;
+                        fetchProducts(category);
+                        
+                        // Hide dropdown
+                        sortDropdown.classList.remove('active');
+                        return;
+                    }
+                    
+                    // Remove active class from all options
+                    sortOptions.forEach(opt => {
+                        if (opt.getAttribute('data-sort') !== 'occasion' || sortType !== 'occasion') {
+                            opt.classList.remove('active');
+                        }
+                    });
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    activeSort = sortType;
+                    
+                    // Apply the selected sort option
+                    applySorting(sortType);
+                    
+                    // Log when a sort type is applied
+                    if (sortType !== 'clear' && sortType !== 'occasion') {
+                        console.log('Applied sorting:', sortType);
+                    }
+                    
+                    // Hide dropdown unless it's the occasion option
+                    if (sortType !== 'occasion') {
+                        sortDropdown.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Handle occasion submenu options
+            const occasionOptions = document.querySelectorAll('.submenu-option');
+            occasionOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Remove active class from all occasion options
+                    occasionOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Get occasion type and apply filter
+                    const occasionType = this.getAttribute('data-occasion');
+                    activeOccasion = occasionType;
+                    
+                    // Apply the selected occasion filter
+                    applyOccasionFilter(occasionType);
+                    
+                    // Hide dropdown
+                    sortDropdown.classList.remove('active');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                sortDropdown.classList.remove('active');
+            });
+            
+            // Prevent dropdown from closing when clicking inside it
+            sortDropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+        
+        // Function to reset the sort button to its default state
+        function resetSortButton() {
+            const sortButton = document.getElementById('sortButton');
+            if (sortButton) {
+                // Store the dropdown if it exists
+                const sortDropdown = document.getElementById('sortDropdown');
+                
+                // Save the dropdown element before changing innerHTML
+                // This ensures we don't lose the event listeners attached to the dropdown
+                if (sortDropdown) {
+                    // Detach the dropdown from DOM temporarily
+                    if (sortDropdown.parentNode) {
+                        sortDropdown.parentNode.removeChild(sortDropdown);
+                    }
+                    
+                    // Reset the text and icon (without the dropdown)
+                    sortButton.innerHTML = '<i class="fas fa-sort"></i> Sort';
+                    
+                    // Re-attach the dropdown
+                    sortButton.appendChild(sortDropdown);
+                } else {
+                    // If dropdown is not found for some reason, rebuild it
+                    sortButton.innerHTML = '<i class="fas fa-sort"></i> Sort';
+                    
+                    // Recreate dropdown if missing
+                    const newDropdown = document.getElementById('sortDropdown');
+                    if (!newDropdown) {
+                        console.log('Dropdown missing, recreating from template');
+                        rebuildSortDropdown(sortButton);
+                    }
+                }
+                
+                // Reset styles
+                sortButton.style.backgroundColor = '';
+                sortButton.style.color = '';
+            }
+        }
+        
+        // Helper function to rebuild dropdown if it gets lost
+        function rebuildSortDropdown(sortButton) {
+            // Create new dropdown
+            const dropdown = document.createElement('div');
+            dropdown.id = 'sortDropdown';
+            dropdown.className = 'sort-dropdown';
+            
+            // Add sort options
+            dropdown.innerHTML = `
+                <div class="sort-option" data-sort="price-low-high">
+                    <i class="fas fa-arrow-up"></i> Price: Low to High
+                </div>
+                <div class="sort-option" data-sort="price-high-low">
+                    <i class="fas fa-arrow-down"></i> Price: High to Low
+                </div>
+                <div class="sort-option" data-sort="nearby">
+                    <i class="fas fa-map-marker-alt"></i> Nearby Listings
+                </div>
+                <div class="sort-option has-submenu" data-sort="occasion" id="occasionOption">
+                    <i class="fas fa-tshirt"></i> Occasion
+                    <i class="fas fa-chevron-right submenu-icon"></i>
+                    <div class="submenu" id="occasionSubmenu">
+                        <div class="submenu-header">Select Occasion</div>
+                        <div class="submenu-option" data-occasion="formal">Formal</div>
+                        <div class="submenu-option" data-occasion="casual">Casual</div>
+                        <div class="submenu-option" data-occasion="wedding">Wedding</div>
+                        <div class="submenu-option" data-occasion="traditional">Traditional</div>
+                        <div class="submenu-option" data-occasion="ethnic">Ethnic</div>
+                        <div class="submenu-option" data-occasion="western">Western</div>
+                        <div class="submenu-option" data-occasion="other">Other</div>
+                    </div>
+                </div>
+                <div class="sort-option" data-sort="clear">
+                    <i class="fas fa-times"></i> Clear Filters
+                </div>
+            `;
+            
+            // Add dropdown to button
+            sortButton.appendChild(dropdown);
+            
+            // Reattach event listeners
+            setupSorting();
+        }
+
+        // Function to apply sorting logic
+        function applySorting(sortType) {
+            // Get products grid
+            const productGrid = document.getElementById('productGrid');
+            const products = Array.from(productGrid.getElementsByClassName('product-card'));
+            
+            // Log when sort is applied
+            if (sortType !== 'clear') {
+                console.log('Applying sort type:', sortType);
+            }
+            
+            switch (sortType) {
+                case 'price-low-high':
+                    showNotification('Sorting products by price: Low to High');
+                    // Sort products by price (low to high)
+                    products.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('₹', '').split('/')[0].trim());
+                        const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('₹', '').split('/')[0].trim());
+                        return priceA - priceB;
+                    });
+                    break;
+                
+                case 'price-high-low':
+                    showNotification('Sorting products by price: High to Low');
+                    // Sort products by price (high to low)
+                    products.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('₹', '').split('/')[0].trim());
+                        const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('₹', '').split('/')[0].trim());
+                        return priceB - priceA;
+                    });
+                    break;
+                
+                case 'nearby':
+                    showNotification('Processing nearby listings...');
+                    
+                    // Update sort button to show active state
+                    const sortButton = document.getElementById('sortButton');
+                    if (sortButton) {
+                        // Make sure we preserve the dropdown markup
+                        const sortDropdown = document.getElementById('sortDropdown');
+                        
+                        // First detach dropdown if it exists to preserve event listeners
+                        if (sortDropdown && sortDropdown.parentNode) {
+                            sortDropdown.parentNode.removeChild(sortDropdown);
+                        }
+                        
+                        // Update button text without dropdown
+                        sortButton.innerHTML = '<i class="fas fa-map-marker-alt"></i> Nearby';
+                        
+                        // Re-attach the dropdown
+                        if (sortDropdown) {
+                            sortButton.appendChild(sortDropdown);
+                        } else {
+                            // If dropdown is missing for some reason, rebuild it
+                            console.log('Dropdown missing during nearby sort, attempting to rebuild');
+                            rebuildSortDropdown(sortButton);
+                        }
+                        
+                        // Apply styling
+                        sortButton.style.backgroundColor = 'var(--accent-color)';
+                        sortButton.style.color = 'var(--primary-color)';
+                    }
+                    
+                    // Get the current active category (if any)
+                    const activeCategory = document.querySelector('.categories a.active');
+                    const categoryName = activeCategory ? activeCategory.textContent.trim().toLowerCase() : null;
+                    
+                    // Get current search term (if any)
+                    const searchInput = document.getElementById('searchInput');
+                    const searchTerm = searchInput && searchInput.value ? searchInput.value.trim() : null;
+                    
+                    // Check if we already have user location in localStorage
+                    const userLat = parseFloat(localStorage.getItem('user_latitude'));
+                    const userLng = parseFloat(localStorage.getItem('user_longitude'));
+                    
+                    if (userLat && userLng && !isNaN(userLat) && !isNaN(userLng)) {
+                        console.log(`Using existing location (${userLat}, ${userLng}) for nearby sorting`);
+                        // We have location, fetch products with nearby sorting
+                        fetchProducts(categoryName, searchTerm, 'nearby');
+                    } else {
+                        // We need to get location first
+                        showNotification('Getting your location for nearby sorting...');
+                        getUserLocation()
+                            .then(({latitude, longitude}) => {
+                                console.log(`Location obtained (${latitude}, ${longitude}), fetching nearby products`);
+                                fetchProducts(categoryName, searchTerm, 'nearby');
+                            })
+                            .catch(error => {
+                                console.error('Error getting location for nearby sorting:', error);
+                                showNotification('Could not access your location. Using default location instead.');
+                                fetchProducts(categoryName, searchTerm, 'nearby');
+                            });
+                    }
+                    return; // Return early as we're fetching new data
+                
+                case 'occasion':
+                    // This is handled by the occasion filter
+                    return;
+                
+                case 'clear':
+                    showNotification('Clearing all filters');
+                    // Reset the category selection
+                    const categories = document.querySelectorAll('.categories a');
+                    categories.forEach(cat => cat.classList.remove('active'));
+                    
+                    // Clear the search input
+                    const searchBox = document.getElementById('searchInput');
+                    if (searchBox) searchBox.value = '';
+                    
+                    // Reset sort button
+                    resetSortButton();
+                    
+                    // Reset active state on all submenu options
+                    const occasionOptions = document.querySelectorAll('.submenu-option');
+                    occasionOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Fetch all products with no filters
+                    fetchProducts();
+                    return; // Return early as we're fetching new data
+                
+                default:
+                    return;
+            }
+            
+            // Reorder products in the DOM
+            // Clear grid first
+            productGrid.innerHTML = '';
+            
+            // Append sorted products
+            products.forEach(product => {
+                productGrid.appendChild(product);
+            });
+        }
+        
+        // Helper function to show "no products" message
+        function renderNoProducts(category, occasion, sortBy) {
+            const productGrid = document.getElementById('productGrid');
+            
+            // Create message based on filters
+            let message = 'No products found';
+            if (category) {
+                message += ` in the ${category} category`;
+            }
+            if (occasion) {
+                message += ` for ${occasion} occasions`;
+            }
+            if (sortBy === 'nearby') {
+                message += ' in your area';
+            }
+            
+            // Show no products message
+            productGrid.innerHTML = `
+                <div class="no-products" style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                    <i class="fas fa-search" style="font-size: 3rem; opacity: 0.5; margin-bottom: 20px;"></i>
+                    <h3>No Products Found</h3>
+                    <p>${message}.</p>
+                    <button onclick="fetchProducts()" class="view-details-btn" style="margin-top: 20px;">Show All Products</button>
+                </div>
+            `;
+            
+            showNotification(message);
+        }
+        
+        // Function to render products in grid
+        function renderProducts(products) {
+            const productGrid = document.getElementById('productGrid');
+            
+            // Debug the products array
+            console.log(`Rendering ${products.length} products:`, products);
+            
+            // Clear existing products
+            productGrid.innerHTML = '';
+            
+            // Show no products message if no products found
+            if (!products || products.length === 0) {
+                renderNoProducts();
+                return;
+            }
+            
+            const template = document.getElementById('product-template');
+            
+            // Force a fetch of wishlist data from server if user is logged in
+            const userId = localStorage.getItem('user_id');
+            if (userId && userId !== 'guest') {
+                console.log('Updating wishlist data before rendering product hearts');
+                fetchWishlistFromServer()
+                    .then(wishlistIds => {
+                        console.log('Fetched updated wishlist from server:', wishlistIds);
+                        // Now render products after we have the updated wishlist
+                        renderProductItems(products, template, productGrid);
+                    })
+                    .catch(err => {
+                        console.error('Error fetching wishlist before rendering:', err);
+                        // Continue with rendering even if wishlist fetch fails
+                        renderProductItems(products, template, productGrid);
+                    });
+            } else {
+                // If not logged in, render products immediately
+                renderProductItems(products, template, productGrid);
+            }
+        }
+
+        // Helper function to render the actual product items
+        function renderProductItems(products, template, productGrid) {
+            // Process each product
+            products.forEach((product, index) => {
+                try {
+                    // Verify product data
+                    if (!product || typeof product !== 'object') {
+                        console.error('Invalid product data at index', index, product);
+                        return; // Skip this product
+                    }
+                    
+                    // Clone the template
+                    const productNode = document.importNode(template.content, true);
+                    const productCard = productNode.querySelector('.product-card');
+                    
+                    // Ensure product card has position:relative for absolute positioning of badges
+                    productCard.style.position = 'relative';
+                    
+                    // Get references to elements
+                    const image = productNode.querySelector('.product-image');
+                    const title = productNode.querySelector('.product-title');
+                    const price = productNode.querySelector('.product-price');
+                    const seller = productNode.querySelector('.product-seller');
+                    const detailsLink = productNode.querySelector('.view-details-btn');
+                    const wishlistBtn = productNode.querySelector('.wishlist-btn');
+                    
+                    // IMPORTANT: Add a data attribute for the product ID - ensure this is a string
+                    const productId = typeof product.id === 'string' ? product.id : String(product.id);
+                    productCard.setAttribute('data-product-id', productId);
+                    console.log(`Set data-product-id=${productId} on product card ${index}`);
+                    
+                    // Check if product is in wishlist and set heart icon immediately
+                    const inWishlist = isInWishlist(productId);
+                    const heartIcon = wishlistBtn.querySelector('i');
+                    if (inWishlist) {
+                        heartIcon.className = 'fas fa-heart';
+                        wishlistBtn.classList.add('active');
+                        console.log(`Product ${productId} is in wishlist - set filled heart`);
+                    } else {
+                        heartIcon.className = 'far fa-heart';
+                        wishlistBtn.classList.remove('active');
+                        console.log(`Product ${productId} is NOT in wishlist - set empty heart`);
+                    }
+                    
+                    // Add data attribute for occasion if available
+                    if (product.occasion) {
+                        productCard.setAttribute('data-occasion', product.occasion.toLowerCase());
+                        
+                        // Add a subtle occasion badge
+                        const occasionBadge = document.createElement('div');
+                        occasionBadge.className = 'occasion-badge';
+                        occasionBadge.innerHTML = `<i class="fas fa-tag"></i> ${product.occasion}`;
+                        occasionBadge.style.position = 'absolute';
+                        occasionBadge.style.top = '10px';
+                        occasionBadge.style.left = '10px';
+                        occasionBadge.style.backgroundColor = 'var(--accent-color)';
+                        occasionBadge.style.color = 'var(--primary-color)';
+                        occasionBadge.style.padding = '5px 10px';
+                        occasionBadge.style.fontSize = '0.8rem';
+                        occasionBadge.style.fontWeight = 'bold';
+                        occasionBadge.style.zIndex = '10';
+                        occasionBadge.style.textTransform = 'capitalize';
+                        productCard.style.position = 'relative';
+                        productCard.appendChild(occasionBadge);
+                    }
+                    
+                    // Make sure wishlist button has the correct onclick handler
+                    wishlistBtn.setAttribute('onclick', 'toggleWishlist(this, event); return false;');
+                    
+                    // Set product details - handle potential missing fields safely
+                    title.textContent = product.title || product.name || 'Unnamed Product';
+                    
+                    // Format price properly
+                    const rentalPrice = product.rental_price || product.price || 0;
+                    price.textContent = `₹${rentalPrice}/day`;
+                    
+                    // Create shop info container with map icon and address
+                    const shopInfoContainer = document.createElement('div');
+                    shopInfoContainer.style.marginBottom = '0.7rem';
+                    
+                    // Shop name
+                    const shopNameElem = document.createElement('div');
+                    shopNameElem.className = 'shop-name';
+                    shopNameElem.style.fontSize = '0.9rem';
+                    shopNameElem.style.marginBottom = '0.3rem';
+                    shopNameElem.style.fontWeight = 'bold';
+                    shopNameElem.style.color = 'var(--accent-color)';
+                    
+                    const shopIcon = document.createElement('i');
+                    shopIcon.className = 'fas fa-store';
+                    shopIcon.style.marginRight = '5px';
+                    
+                    shopNameElem.appendChild(shopIcon);
+                    shopNameElem.appendChild(document.createTextNode(product.shop_name || product.seller_name || 'ClothLoop Seller'));
+                    shopInfoContainer.appendChild(shopNameElem);
+                    
+                    // Shop address with map icon
+                    const addressElem = document.createElement('div');
+                    addressElem.className = 'shop-address';
+                    addressElem.style.fontSize = '0.8rem';
+                    addressElem.style.display = 'flex';
+                    addressElem.style.alignItems = 'flex-start';
+                    addressElem.style.opacity = '0.8';
+                    
+                    const mapIcon = document.createElement('i');
+                    mapIcon.className = 'fas fa-map-marker-alt';
+                    mapIcon.style.marginRight = '5px';
+                    mapIcon.style.marginTop = '4px';
+                    mapIcon.style.color = 'var(--accent-color)';
+                    mapIcon.style.minWidth = '12px';
+                    
+                    const addressText = document.createElement('span');
+                    addressText.style.flexGrow = '1';
+                    addressText.textContent = product.formattedAddress || 'Location not available';
+                    addressText.dataset.sellerId = product.seller_id; // Store seller ID for dynamic fetch
+                    
+                    // Fetch seller address dynamically if it's not available
+                    if ((!product.formattedAddress || product.formattedAddress === 'Location not available') && product.seller_id) {
+                        // Fetch seller data asynchronously
+                        fetchSellerAddress(product.seller_id).then(address => {
+                            if (address) {
+                                addressText.textContent = address;
+                                product.formattedAddress = address;
+                            }
+                        }).catch(err => console.error('Error fetching seller address:', err));
+                    }
+                    
+                    addressElem.appendChild(mapIcon);
+                    addressElem.appendChild(addressText);
+                    shopInfoContainer.appendChild(addressElem);
+                    
+                    // Add distance badge if available
+                    if (product.distance && product.distance !== Number.MAX_VALUE) {
+                        // Distance badge in shop info container
+                        const distanceElem = document.createElement('div');
+                        distanceElem.className = 'distance-info';
+                        distanceElem.style.fontSize = '0.85rem';
+                        distanceElem.style.marginTop = '0.3rem';
+                        distanceElem.style.color = 'var(--accent-color)';
+                        distanceElem.style.fontWeight = 'bold';
+                        distanceElem.style.display = 'flex';
+                        distanceElem.style.alignItems = 'center';
+                        
+                        // Use distance label if available, otherwise format distance ourselves
+                        const distanceText = product.distanceLabel || 
+                            (product.distance < 1 
+                                ? `${(product.distance * 1000).toFixed(0)} m away` 
+                                : `${product.distance.toFixed(1)} km away`);
+                        
+                        // Add a directional arrow
+                        const directionIcon = document.createElement('i');
+                        directionIcon.className = 'fas fa-location-arrow';
+                        directionIcon.style.marginRight = '8px';
+                        directionIcon.style.transform = 'rotate(-45deg)';
+                        
+                        distanceElem.appendChild(directionIcon);
+                        distanceElem.appendChild(document.createTextNode(distanceText));
+                        shopInfoContainer.appendChild(distanceElem);
+                        
+                        // Add distance as data attribute for reference
+                        productCard.setAttribute('data-distance', product.distance.toFixed(2));
+                        
+                        // Add a special class for nearby listings
+                        if (product.isNearby) {
+                            productCard.classList.add('nearby-listing');
+                            
+                            // Add visual indicator for very close locations
+                            if (product.isVeryNearby) {
+                                // More prominent badge for very nearby items
+                                const nearbyBadge = document.createElement('div');
+                                nearbyBadge.className = 'nearby-badge';
+                                nearbyBadge.innerHTML = '<i class="fas fa-map-marker-alt"></i> Nearby';
+                                nearbyBadge.style.position = 'absolute';
+                                nearbyBadge.style.top = '10px';
+                                nearbyBadge.style.right = '10px';
+                                nearbyBadge.style.backgroundColor = '#ff3e6c';
+                                nearbyBadge.style.color = 'white';
+                                nearbyBadge.style.padding = '5px 10px';
+                                nearbyBadge.style.fontSize = '0.8rem';
+                                nearbyBadge.style.fontWeight = 'bold';
+                                nearbyBadge.style.zIndex = '10';
+                                nearbyBadge.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                                productCard.appendChild(nearbyBadge);
+                                
+                                // Add a subtle glow effect to highlight nearby items
+                                productCard.style.boxShadow = '0 5px 15px rgba(255, 62, 108, 0.2)';
+                                productCard.style.borderColor = '#ff3e6c50';
+                            }
+                        }
+                    }
+                    
+                    // Replace the original seller element with our new shop info container
+                    seller.replaceWith(shopInfoContainer);
+                    
+                    // Also store the seller name as a data attribute for wishlist functionality
+                    productCard.setAttribute('data-seller-name', product.shop_name || product.seller_name || 'ClothLoop Seller');
+                    
+                    // Set link to details page
+                    detailsLink.href = `details.html?id=${product.id}`;
+                    
+                    // Set image using our helper function
+                    image.src = getProductImageUrl(product);
+                    console.log(`Setting image for product ${product.id} to ${image.src}`);
+                    
+                    // Add error handling for image loading with fallback
+                    image.onerror = function() {
+                        console.error('Failed to load image from API, trying fallback');
+                        
+                        // First try legacy API
+                        this.onerror = function() {
+                            console.error('Legacy API failed, trying direct path');
+                            
+                            // Try direct path to uploads folder
+                            this.onerror = function() {
+                                console.error('All fallbacks failed, using placeholder');
+                                this.src = '../../assets/images/placeholder.png';
+                                this.onerror = null; // Prevent further errors
+                            };
+                            
+                            // Try conventional image path
+                            this.src = `/ClothLoop/backend/uploads/products/${product.id}/${product.id}.jpg`;
+                        };
+                        
+                        // Try legacy endpoint as fallback
+                        this.src = `/ClothLoop/backend/api/getimage.php?id=${product.id}`;
+                    };
+                    
+                    // Add the product card to the grid
+                    productGrid.appendChild(productNode);
+                    
+                } catch (error) {
+                    console.error(`Error rendering product ${index}:`, error);
+                }
+            });
+            
+            // Initialize wishlist buttons with a small delay to ensure local storage is updated
+            setTimeout(() => {
+                console.log('Initializing wishlist buttons after render with delay');
+                initializeWishlistButtons();
+                
+                // Apply staggered animation to the cards
+                const cards = productGrid.querySelectorAll('.product-card');
+                if (cards && cards.length > 0) {
+                    cards.forEach((card, index) => {
+                        if (card) {
+                            // Ensure card exists before manipulating it
+                            try {
+                                // Start with opacity 0
+                                card.style.opacity = '0';
+                                card.style.transform = 'translateY(20px)';
+                                
+                                // Animate in with a delay based on index
+                                setTimeout(() => {
+                                    if (card && card.style) {
+                                        card.style.opacity = '1';
+                                        card.style.transform = 'translateY(0)';
+                                    }
+                                }, 100 * index);
+                            } catch (err) {
+                                console.error('Error animating card:', err);
+                            }
+                        }
+                    });
+                }
+            }, 300);
+        }
+        
+        // Initialize page on load
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('DOM Content Loaded - Initializing buyer dashboard');
+            
+            // Configure event listeners for error handling
+            window.addEventListener('error', function(e) {
+                console.error('Global error caught:', e.message);
+                const errorSource = e.filename || 'unknown source';
+                const errorLine = e.lineno || 'unknown line';
+                showNotification(`Error occurred: ${e.message}`);
+            });
+            
+            // First load profile from localStorage as fallback
+            loadProfilePicture();
+            
+            // Set up UI elements and event handlers
+            setupCategoryFilters();
+            setupSearch();
+            setupSorting();
+            
+            // Fetch user's wishlist from server first if logged in
+            try {
+                const userId = localStorage.getItem('user_id');
+                if (userId && userId !== 'guest') {
+                    console.log('Fetching wishlist data from server on page load...');
+                    const wishlistData = await fetchWishlistFromServer();
+                    console.log('Initial wishlist data from server:', wishlistData);
+                    
+                    // Force another sync if data looks unusual
+                    if (!Array.isArray(wishlistData) || wishlistData.length === 0) {
+                        console.log('Empty or invalid wishlist data, trying direct server lookup...');
+                        try {
+                            // Try a direct API call to check what's in the wishlist
+                            const response = await fetch(`/ClothLoop/backend/api/buyers/sync_wishlist.php?user_id=${userId}`, {
+                                method: 'GET',
+                                credentials: 'include'
+                            });
+                            
+                            const responseText = await response.text();
+                            console.log('Direct server response:', responseText.substring(0, 500));
+                            
+                            try {
+                                const data = JSON.parse(responseText);
+                                if (data.status === 'success' && data.data && data.data.ids) {
+                                    console.log('Successfully got wishlist directly:', data.data.ids);
+                                    
+                                    // Update localStorage
+                                    const wishlistKey = `wishlist_${userId}`;
+                                    localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                                }
+                            } catch (e) {
+                                console.error('Error parsing direct server response:', e);
+                            }
+                        } catch (e) {
+                            console.error('Error making direct server request:', e);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching wishlist data:', error);
+            }
+            
+            // Initialize wishlist buttons for any that might be in the initial HTML
+            initializeWishlistButtons();
+            
+            // Add initial animations
+            setTimeout(() => {
+                animateNumbers();
+            }, 300);
+            
+            // Hide welcome section after 4 seconds
+            setTimeout(() => {
+                const welcomeSection = document.querySelector('.welcome-section');
+                if (welcomeSection) {
+                    welcomeSection.classList.add('hide');
+                }
+            }, 4000);
+            
+            // Fetch user profile data
+            try {
+                console.log('Fetching user profile data...');
+                await fetchUserProfile();
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                // Fallback already handled by loadProfilePicture above
+            }
+            
+            // Immediately fetch products without delay
+            try {
+                console.log('Fetching product listings...');
+                await fetchProducts();
+            } catch (error) {
+                console.error('Error initializing product fetch:', error);
+                
+                // Show specific error message based on error type
+                const errorMsg = error.message || 'Unknown error';
+                const productGrid = document.getElementById('productGrid');
+                
+                productGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--error-color); margin-bottom: 20px;"></i>
+                        <h3>Error Loading Products</h3>
+                        <p>${errorMsg}</p>
+                        <button onclick="location.reload()" class="view-details-btn" style="margin-top: 20px;">Try Again</button>
+                    </div>
+                `;
+                
+                showNotification('Error loading products. Please check console for details.');
+            }
+        });
+
+        // Helper function to animate elements with error handling
+        function animateNumbers() {
+            try {
+                const items = document.querySelectorAll('.product-card');
+                if (!items || items.length === 0) {
+                    console.log('No product cards to animate');
+                    return;
+                }
+                
+                console.log(`Animating ${items.length} product cards`);
+                
+                items.forEach((item, index) => {
+                    if (item && item.style) {
+                        try {
+                            setTimeout(() => {
+                                if (item && item.style) {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'translateY(0)';
+                                }
+                            }, 100 * index);
+                        } catch (err) {
+                            console.error('Error animating item:', err);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error in animateNumbers:', error);
+            }
+        }
+
+        // Helper function to get product image URL - USING THE EXACT SAME IMPLEMENTATION AS IN DETAILS.HTML
+        function getProductImageUrl(product) {
+            if (!product) return '../../assets/images/placeholder.png';
+            
+            // Use the direct image API as primary source if we have an ID
+            if (product.id) {
+                // Ensure ID is a string to avoid any type issues
+                const productId = typeof product.id === 'string' ? product.id : String(product.id);
+                return `/ClothLoop/backend/api/products/direct_image.php?product_id=${productId}`;
+            }
+            
+            // Try standard image fields
+            if (product.primary_image) {
+                return product.primary_image.startsWith('/') || product.primary_image.startsWith('http') 
+                    ? product.primary_image 
+                    : `/ClothLoop/backend/${product.primary_image}`;
+            }
+            
+            if (product.image_path) {
+                return product.image_path.startsWith('/') || product.image_path.startsWith('http') 
+                    ? product.image_path 
+                    : `/ClothLoop/backend/${product.image_path}`;
+            }
+            
+            if (product.image_url || product.image) {
+                const imagePath = product.image_url || product.image;
+                if (typeof imagePath === 'string') {
+                    if (imagePath.startsWith('data:')) {
+                        return imagePath;
+                    }
+                    return imagePath.startsWith('/') || imagePath.startsWith('http') 
+                        ? imagePath 
+                        : `/ClothLoop/backend/${imagePath}`;
+                }
+            }
+            
+            // Final fallback to placeholder
+            return '../../assets/images/placeholder.png';
+        }
+
+        // Function to fetch seller address dynamically
+        async function fetchSellerAddress(sellerId) {
+            try {
+                const response = await fetch(`/ClothLoop/backend/api/getshop.php?id=${sellerId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch seller data: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Fetched seller data:', data);
+                
+                if (data.status === 'success' && data.data) {
+                    return data.data.address || 'Location not available';
+                }
+                
+                return null;
+            } catch (error) {
+                console.error('Error fetching seller address:', error);
+                return null;
+            }
+        }
+
+        // Sync wishlist with server
+        async function syncWishlistWithServer(wishlist) {
+            try {
+                const userId = localStorage.getItem('user_id');
+                if (!userId || userId === 'guest') {
+                    console.log('Not syncing wishlist - user not logged in');
+                    return Promise.resolve(); // Return resolved promise
+                }
+                
+                // Ensure wishlist is an array of strings
+                if (!Array.isArray(wishlist)) {
+                    console.error('Invalid wishlist format for sync:', wishlist);
+                    return Promise.reject(new Error('Invalid wishlist format')); 
+                }
+                
+                console.log(`Syncing wishlist for user ${userId} with server. Items: ${wishlist.length}`);
+                
+                // Send wishlist to server
+                const response = await fetch('/ClothLoop/backend/api/buyers/sync_wishlist.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        items: wishlist,
+                        user_id: userId  // Explicitly include user_id in the request
+                    }),
+                    credentials: 'include' // Include cookies for session
+                });
+                
+                const responseText = await response.text();
+                console.log('Server response:', responseText);
+                
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (e) {
+                    console.error('Error parsing server response:', e);
+                    showNotification('Error syncing wishlist with server');
+                    return Promise.reject(new Error('Invalid server response')); 
+                }
+                
+                if (!response.ok) {
+                    console.error(`Server responded with ${response.status}: ${response.statusText}`);
+                    showNotification('Error syncing wishlist with server');
+                    return Promise.reject(new Error(`Server error: ${response.status}`));
+                }
+                
+                if (data.status === 'success') {
+                    console.log('Wishlist synced with server successfully');
+                    // Update localStorage with server data if available
+                    if (data.data && data.data.ids) {
+                        const wishlistKey = `wishlist_${userId}`;
+                        localStorage.setItem(wishlistKey, JSON.stringify(data.data.ids));
+                        console.log(`Updated localStorage wishlist with ${data.data.ids.length} items from server`);
+                    }
+                    return Promise.resolve(data); // Return the data
+                } else {
+                    console.error('Error syncing wishlist with server:', data.message);
+                    showNotification('Error syncing wishlist with server: ' + data.message);
+                    return Promise.reject(new Error(data.message));
+                }
+            } catch (error) {
+                console.error('Error in syncWishlistWithServer:', error);
+                showNotification('Network error syncing wishlist with server');
+                return Promise.reject(error); // Re-throw the error for the caller to handle
+            }
+        }
+
+
+    </script>
+</body>
+</html>
+

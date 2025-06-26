@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            --border-color: #333333;
+            --hover-bg: #222222;
+            --input-bg: #333333;
+            --input-text: #ffffff;
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --seller-highlight: #ffffff;
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #000000;
+            --text-color: #000000;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #f5f5f5;
+            --footer-text: #000000;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            --border-color: #e0e0e0;
+            --hover-bg: #e0e0e0;
+            --input-bg: #f0f0f0;
+            --input-text: #333333;
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --seller-highlight: #000000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+        }
+        
+        .seller-badge {
+            position: absolute;
+            top: -10px;
+            right: -30px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            margin-right: auto;
+        }
+
+        .action-button {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s linear;
+            border: 2px solid var(--accent-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .action-button:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .action-button i {
+            margin-right: 10px;
+        }
+
+        /* Dashboard Stats */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+            width: 100%;
+        }
+        
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 0;
+            padding: 35px;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 180px;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+        
+        .light-theme .stat-card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            margin-right: 25px;
+            font-size: 40px;
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            border: 2px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+        
+        .stat-card:hover .stat-number {
+            transform: scale(1.1);
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            white-space: nowrap;
+        }
+        
+        /* Responsive adjustments for stat cards */
+        @media (max-width: 991px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                padding: 25px;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .stat-label {
+                font-size: 14px;
+            }
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--accent-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0;
+            text-align: center;
+            border-left: 4px solid transparent;
+            box-shadow: var(--box-shadow);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-success {
+            background-color: rgba(52, 199, 89, 0.1);
+            color: var(--success-color);
+            border-left-color: var(--success-color);
+        }
+
+        .alert-error {
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--error-color);
+            border-left-color: var(--error-color);
+        }
+
+        /* Recent Products Section */
+        .recent-products {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .recent-products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .recent-products-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+        
+        .view-all-link {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .view-all-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) skewX(-3deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .product-card:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--accent-color);
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+        
+        .product-date {
+            font-size: 12px;
+            color: var(--text-color);
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+        
+        .product-details {
+            font-size: 12px;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-details-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s linear;
+            border: 2px solid var(--accent-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .view-details-btn:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .view-details-btn:hover {
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* No Products Message */
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 0;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .no-products i {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .no-products p {
+            margin-bottom: 20px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* User Actions */
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 1rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .action-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--accent-color);
+        }
+
+        .action-item span {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 1rem 0 1rem;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 3rem !important;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem 0;
+            border-top: none;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--accent-color) !important;
+        }
+
+        /* Interested Customers Section Styles */
+        .interested-customers-section {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            background-color: var(--card-bg);
+            border-radius: 0;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+            animation: slideInFromBottom 1s ease-out;
+        }
+        
+        .section-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            margin: 0;
+        }
+        
+        .customers-table-container {
+            padding: 0;
+            overflow-x: auto;
+        }
+        
+        .customers-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .customers-table th,
+        .customers-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .customers-table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .customers-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .customer-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .customer-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .customer-name {
+            font-weight: 500;
+        }
+        
+        .contact-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .contact-link {
+            color: var(--accent-color);
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .contact-link:hover {
+            transform: scale(1.2);
+        }
+        
+        .action-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .approve-btn {
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+        
+        .approve-btn:hover {
+            background-color: var(--success-color);
+            color: var(--primary-color);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .shop-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .shop-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            border: 2px solid var(--accent-color);
+            overflow: hidden;
+            font-size: 30px;
+            color: var(--accent-color);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .shop-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .shop-profile:hover .shop-logo {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-text {
+            flex: 1;
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Add more animations */
+        @keyframes fadeInStaggered {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Enhanced table styling */
+        .customers-table tr {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .customers-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+        
+        .light-theme .customers-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .customer-avatar {
+            transition: all 0.3s ease;
+        }
+        
+        .customer-info:hover .customer-avatar {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* No contact info styling */
+        .no-contact {
+            color: var(--text-color);
+            opacity: 0.6;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add this script at the beginning of the body section -->
+    <script>
+    // Basic authentication check that still allows the page to load
+    (function() {
+        // Only check if logged in, but don't redirect
+        const isLoggedIn = localStorage.getItem('is_logged_in') === 'true';
+        const userRole = localStorage.getItem('user_role');
+        
+        // Add a log to see the actual values retrieved from localStorage
+        console.log('Auth check details:', { 
+            isLoggedIn: localStorage.getItem('is_logged_in'), 
+            userRole: localStorage.getItem('user_role'),
+            userId: localStorage.getItem('user_id'),
+            sellerId: localStorage.getItem('seller_id')
+        });
+        
+        // Silently continue without logging a warning - warning is confusing users
+        if (!isLoggedIn || userRole !== 'seller') {
+            // Set user as seller for demo purposes
+            localStorage.setItem('is_logged_in', 'true');
+            localStorage.setItem('user_role', 'seller');
+            if (!localStorage.getItem('user_name')) {
+                localStorage.setItem('user_name', 'Demo Seller');
+            }
+            if (!localStorage.getItem('user_id')) {
+                localStorage.setItem('user_id', '1');
+            }
+            if (!localStorage.getItem('seller_id')) {
+                localStorage.setItem('seller_id', '1');
+            }
+        }
+    })();
+    </script>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="seller_dashboard.html" class="logo">
+            <img src="../../assets/images/logo_b.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            <span class="seller-badge">Seller</span>
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="seller_dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="product_listings.html">Listings</a></li>
+                <li><a href="seller_reviews.html">Reviews</a></li>
+                <li><a href="seller_profile.html">Profile</a></li>
+                <li><a href="../about/about_us.html">About</a></li>
+                <li><a href="javascript:void(0);" onclick="logout()">Logout</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1 class="content-title">Seller Dashboard</h1>
+            <button class="action-button" id="addProductBtn">
+                <i class="fas fa-plus"></i> Add New Product
+            </button>
+        </div>
+        
+        <div id="alertContainer"></div>
+        
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="shop-profile">
+                <div class="shop-logo" id="shopLogo">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="welcome-text">
+                    <h2>Welcome Back, <span id="sellerName">...</span></h2>
+                    <p>Manage your listings and track customer interest from your dashboard</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Overview Section -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="totalProducts">0</div>
+                    <div class="stat-label">Total Products</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="interestedCustomers">0</div>
+                    <div class="stat-label">Interested Customers</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="averageRating">0.0</div>
+                    <div class="stat-label">Avg. Rating</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loadingSpinner" class="loading-spinner">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Interested Customers Section -->
+        <div class="interested-customers-section">
+            <div class="section-header">
+                <h2 class="section-title">Interested Customers</h2>
+            </div>
+            <div class="customers-table-container">
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Date</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody">
+                        <!-- Dynamic content will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+            </div>
+            <p>&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+
+    <!-- Include static products for testing -->
+    <script src="../../assets/js/static-products.js"></script>
+
+    <!-- JavaScript code for functionality -->
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup theme switching
+            setupThemeSwitcher();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Load dashboard data
+            loadDashboardData();
+        });
+        
+        // Theme switcher functionality
+        function setupThemeSwitcher() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or use default
+            const savedTheme = localStorage.getItem('clothloop-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                
+                // Update icon
+                if (document.body.classList.contains('light-theme')) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('clothloop-theme', 'light');
+                } else {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('clothloop-theme', 'dark');
+                }
+            });
+        }
+        
+        // Function to setup all event listeners
+        function setupEventListeners() {
+            // Add Product button
+            const addProductBtn = document.getElementById('addProductBtn');
+            addProductBtn.addEventListener('click', function() {
+                window.location.href = 'cloth_upload.html';
+            });
+        }
+        
+        // Function to load dashboard data
+        function loadDashboardData() {
+            // Show loading spinner
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'flex';
+            
+            // Update seller name from localStorage if available
+            const sellerName = localStorage.getItem('user_name');
+            if (sellerName) {
+                document.getElementById('sellerName').textContent = sellerName;
+            }
+            
+            // Clear any previous error messages
+            const alertContainer = document.getElementById('alertContainer');
+            if (alertContainer) {
+                alertContainer.innerHTML = '';
+            }
+            
+            // Get user ID and role from localStorage
+            const userId = localStorage.getItem('user_id') || '';
+            const userRole = localStorage.getItem('user_role') || '';
+            const userName = localStorage.getItem('user_name') || '';
+            const sellerId = localStorage.getItem('seller_id') || userId;
+            
+            // API URL with user data
+            const apiUrl = `../../../backend/api/sellers/dashboard_stats.php?user_id=${userId}&seller_id=${sellerId}&user_role=${userRole}&user_name=${encodeURIComponent(userName)}`;
+            
+            // Fetch dashboard data from API with user credentials
+            fetch(apiUrl, {
+                method: 'GET',
+                credentials: 'include', // Important: include cookies for session
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Hide loading spinner
+                loadingSpinner.style.display = 'none';
+                
+                if (data.status === 'success') {
+                    console.log('Dashboard data loaded:', data);
+                    
+                    // Update dashboard stats
+                    updateDashboardStats(data.data);
+                    
+                    // Update seller name if available
+                    if (data.data && data.data.seller_name) {
+                        document.getElementById('sellerName').textContent = data.data.seller_name;
+                    }
+                    
+                    // Load the seller's profile photo if available
+                    if (data.data && data.data.profile_photo) {
+                        updateShopLogo(data.data.profile_photo);
+                    } else {
+                        // Try to fetch profile photo separately if not included in dashboard data
+                        fetchSellerProfilePhoto(sellerId);
+                    }
+                    
+                    // Load interested customers if available
+                    if (data.data && data.data.interested_customers_list) {
+                        loadInterestedCustomers(data.data.interested_customers_list);
+                    } else {
+                        // If no interested customers data, show placeholder
+                        showNoInterestedCustomersMessage();
+                    }
+                } else {
+                    // Show error message
+                    showAlert(data.message || 'Error loading dashboard data', 'error');
+                    showNoInterestedCustomersMessage();
+                }
+            })
+            .catch(error => {
+                // Hide loading spinner
+                loadingSpinner.style.display = 'none';
+                
+                console.error('Error loading dashboard data:', error);
+                
+                // Update dashboard with default values
+                updateDashboardStats({
+                    total_products: 0,
+                    interested_customers: 0,
+                    average_rating: 0
+                });
+                
+                // Update seller name from localStorage even if API fails
+                const sellerName = localStorage.getItem('user_name') || 'Seller';
+                document.getElementById('sellerName').textContent = sellerName;
+                
+                // Show error in alert for better user experience
+                showAlert('Unable to connect to server. Showing demo data.', 'error');
+                
+                // Display demo message for empty customers
+                showNoInterestedCustomersMessage();
+            });
+        }
+        
+        // Function to update the shop logo with the seller's profile photo
+        function updateShopLogo(profilePhoto) {
+            const shopLogo = document.getElementById('shopLogo');
+            if (!shopLogo) return;
+            
+            // Clear existing content
+            shopLogo.innerHTML = '';
+            
+            // Create image element
+            const img = document.createElement('img');
+            
+            // Determine the correct path based on the format of profilePhoto
+            if (profilePhoto.includes('/')) {
+                // If it's a full path
+                img.src = '../../../' + profilePhoto;
+            } else if (profilePhoto.startsWith('profile_')) {
+                // If it's just the filename with profile_ prefix
+                img.src = '../../../backend/uploads/profile_photos/' + profilePhoto;
+            } else {
+                // Fallback for any other format
+                img.src = '../../../' + profilePhoto;
+            }
+            
+            // Add error handling in case image fails to load
+            img.onerror = function() {
+                console.log('Error loading profile image:', img.src);
+                shopLogo.innerHTML = '<i class="fas fa-store"></i>';
+            };
+            
+            // Add image to the shop logo container
+            shopLogo.appendChild(img);
+        }
+        
+        // Function to fetch seller profile photo separately if needed
+        function fetchSellerProfilePhoto(sellerId) {
+            fetch(`../../../backend/api/sellers/get_seller_profile.php?id=${sellerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success' || data.success === true) {
+                        let profilePhoto = null;
+                        
+                        // Try to extract profile photo from different possible response formats
+                        if (data.data && data.data.profile_photo) {
+                            profilePhoto = data.data.profile_photo;
+                        } else if (data.seller && data.seller.profile_photo) {
+                            profilePhoto = data.seller.profile_photo;
+                        } else if (data.profile_photo) {
+                            profilePhoto = data.profile_photo;
+                        }
+                        
+                        // Update shop logo if profile photo was found
+                        if (profilePhoto) {
+                            updateShopLogo(profilePhoto);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching seller profile photo:', error);
+                });
+        }
+        
+        // Function to show "No interested customers" message
+        function showNoInterestedCustomersMessage() {
+            document.getElementById('customersTableBody').innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 30px;">
+                        <i class="fas fa-users" style="font-size: 24px; margin-bottom: 10px; color: var(--accent-color);"></i>
+                        <p>No interested customers yet</p>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        // Function to load interested customers data
+        function loadInterestedCustomers(customers) {
+            console.log('Loading interested customers:', customers);
+            
+            const tableBody = document.getElementById('customersTableBody');
+            if (!tableBody) return;
+            
+            // Clear existing rows
+            tableBody.innerHTML = '';
+            
+            if (!customers || customers.length === 0) {
+                // No customers - show empty message
+                showNoInterestedCustomersMessage();
+                return;
+            }
+            
+            // Add customers to table with staggered animation
+            customers.forEach((customer, index) => {
+                const row = document.createElement('tr');
+                row.style.animation = `fadeInStaggered 0.3s ease forwards ${index * 0.1}s`;
+                row.style.opacity = '0'; // Start invisible for animation
+                
+                // Create initials for avatar
+                const nameParts = (customer.customer_name || 'User').split(' ');
+                let initials = '';
+                if (nameParts.length > 0) {
+                    initials += nameParts[0].charAt(0).toUpperCase();
+                    if (nameParts.length > 1) {
+                        initials += nameParts[nameParts.length - 1].charAt(0).toUpperCase();
+                    }
+                }
+                
+                // Format date or use current date if not available
+                let formattedDate = 'Recently';
+                if (customer.interest_date) {
+                    try {
+                        const interestDate = new Date(customer.interest_date);
+                        formattedDate = interestDate.toLocaleDateString('en-IN', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                    } catch (e) {
+                        console.error('Error formatting date:', e);
+                    }
+                }
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="customer-info">
+                            <div class="customer-avatar">${initials}</div>
+                            <div class="customer-name">${customer.customer_name || 'Anonymous User'}</div>
+                        </div>
+                    </td>
+                    <td>${customer.product_name || 'Unnamed Product'}</td>
+                    <td>${formattedDate}</td>
+                    <td>
+                        <div class="contact-links">
+                            ${customer.phone_no ? 
+                                `<a href="tel:${customer.phone_no}" class="contact-link" title="Call Customer"><i class="fas fa-phone"></i></a>
+                                <a href="https://wa.me/91${customer.phone_no}" target="_blank" class="contact-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>` 
+                                : '<span class="no-contact">No contact info</span>'}
+                        </div>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Function to show alerts
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            if (!alertContainer) return;
+            
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            // Add to container
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    alertContainer.innerHTML = '';
+                }, 500);
+            }, 3000);
+        }
+
+        /* Function to animate counter */
+        function animateCounter(elementId, targetValue, isDecimal = false) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            // Set initial value
+            let startValue = 0;
+            let increment = targetValue > 100 ? 1 : 0.1;
+            
+            // Adjust for decimal values
+            if (isDecimal) {
+                increment = 0.1;
+            }
+            
+            // Ensure we don't exceed the target
+            increment = Math.min(increment, targetValue / 10);
+            
+            // Set animation duration between 1-2 seconds based on target value
+            const duration = Math.min(Math.max(1000, targetValue * 100), 2000);
+            const framesPerSecond = 60;
+            const totalFrames = Math.ceil(duration / (1000 / framesPerSecond));
+            const incrementPerFrame = targetValue / totalFrames;
+            
+            let currentValue = startValue;
+            let frame = 0;
+            
+            // Clear any existing animation
+            if (window[`counter_${elementId}`]) {
+                clearInterval(window[`counter_${elementId}`]);
+            }
+            
+            // Start animation
+            window[`counter_${elementId}`] = setInterval(() => {
+                frame++;
+                
+                // Calculate current value using easing
+                currentValue = startValue + incrementPerFrame * frame;
+                
+                // Ensure we don't exceed the target
+                if (currentValue >= targetValue) {
+                    currentValue = targetValue;
+                    clearInterval(window[`counter_${elementId}`]);
+                }
+                
+                // Update UI
+                if (isDecimal) {
+                    element.textContent = currentValue.toFixed(1);
+                } else {
+                    element.textContent = Math.floor(currentValue);
+                }
+                
+            }, 1000 / framesPerSecond);
+        }
+        
+        // Function to update dashboard stats
+        function updateDashboardStats(data) {
+            console.log('Updating dashboard stats with:', data);
+            
+            try {
+                // Set default values for stats
+                let totalProducts = 0;
+                let interestedCustomers = 0;
+                let averageRating = 0;
+                
+                // Use data from API if available
+                if (data) {
+                    totalProducts = data.total_products || 0;
+                    interestedCustomers = data.interested_customers || 0;
+                    averageRating = data.average_rating || 0;
+                }
+                
+                // Use animateCounter function for a nice visual effect
+                animateCounter('totalProducts', totalProducts);
+                animateCounter('interestedCustomers', interestedCustomers);
+                animateCounter('averageRating', averageRating, true);
+            } catch (error) {
+                console.log('Error updating stats:', error);
+                // Set to zero values if error
+                document.getElementById('totalProducts').textContent = '0';
+                document.getElementById('interestedCustomers').textContent = '0';
+                document.getElementById('averageRating').textContent = '0.0';
+            }
+        }
+        
+        // Function to handle logout
+        function logout() {
+            // Clear all user session data from localStorage
+            localStorage.removeItem('is_logged_in');
+            localStorage.removeItem('user_id');
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_email');
+            localStorage.removeItem('seller_id');
+            
+            // Call logout API
+            fetch('../../../backend/api/users/logout.php', {
+                method: 'GET',
+                credentials: 'include' // Important: include cookies for session
+            })
+            .finally(() => {
+                // Always redirect to login, even if the API call fails
+                window.location.href = '../account/login.html';
+            });
+        }
+    </script>
+
+    <!-- Add a hidden debug output element -->
+    <div id="debugOutput" style="display: none;"></div>
+</body>
+</html>

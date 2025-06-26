@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | ClothLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+            --light-bg: #111111;
+            --card-bg: #1a1a1a;
+            --footer-bg: #000000;
+            --footer-text: #cccccc;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --input-bg: #222222;
+            --input-border: #333333;
+            --hover-bg: #333333;
+        }
+
+        /* Light Theme Variables */
+        .light-theme {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #000000;
+            --text-color: #000000;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --footer-bg: #f5f5f5;
+            --footer-text: #000000;
+            --border-radius: 0;
+            --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            --error-color: #FF3B30;
+            --success-color: #34C759;
+            --input-bg: #f9f9f9;
+            --input-border: #e0e0e0;
+            --hover-bg: #f0f0f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s linear;
+        }
+        
+        .theme-switcher:hover {
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+            transition: all 0.2s linear;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary-color);
+            min-height: 30vh;
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            margin-top: 73px;
+            position: relative;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .light-theme .hero {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            transform: skewX(-20deg);
+        }
+
+        /* Profile Content */
+        .profile-container {
+            width: 70%;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .profile-title {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            color: var(--accent-color);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .profile-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            transform: translateX(-50%) skewX(-20deg);
+        }
+
+        .profile-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            font-weight: 400;
+            margin-top: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Profile photo upload styles */
+        .profile-photo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 30px;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .profile-photo-preview {
+            width: 150px;
+            height: 150px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--accent-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .profile-photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-photo-preview:hover img {
+            transform: scale(1.05);
+        }
+        
+        .profile-photo-controls {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .photo-input {
+            height: auto;
+            padding: 10px 15px;
+        }
+        
+        /* Custom file input styling */
+        .custom-file-input-container {
+            position: relative;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .custom-file-input {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 46px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            padding: 0;
+        }
+        
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 3;
+        }
+        
+        .file-button {
+            flex: 0 0 auto;
+            display: inline-block;
+            background-color: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 12px;
+            min-width: 110px;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            margin: -1px 10px -1px 0;
+            height: calc(100% + 2px);
+            position: relative;
+            z-index: 4;
+        }
+        
+        .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+            flex: 1;
+            padding-left: 5px;
+        }
+        
+        .photo-help-text {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .photo-remove-btn {
+            background-color: transparent;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            padding: 8px 15px;
+            margin-top: 10px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-remove-btn:hover {
+            background-color: var(--error-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-photo-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile-photo-controls {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .form-container {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--input-border);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 2s ease-out;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .form-input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            padding: 0 15px;
+            font-size: 16px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 3px 3px 0 rgba(128, 128, 128, 0.1);
+            transform: translateY(-2px) skewX(-2deg);
+        }
+
+        .form-input:disabled {
+            background-color: rgba(128, 128, 128, 0.1);
+            cursor: not-allowed;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .btn {
+            height: 50px;
+            padding: 0 30px;
+            border: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(128, 128, 128, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            margin-right: 15px;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px) skewX(-5deg);
+            box-shadow: 5px 5px 0 rgba(128, 128, 128, 0.2);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .alert-success {
+            background-color: var(--success-color);
+            color: white;
+            border-left: 5px solid #2a9f47;
+        }
+
+        .alert-error {
+            background-color: var(--error-color);
+            color: white;
+            border-left: 5px solid #d62d22;
+        }
+
+        .password-toggle {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .password-toggle input {
+            margin-right: 10px;
+            accent-color: var(--accent-color);
+        }
+
+        .password-section {
+            margin-top: 20px;
+            border-top: 1px solid var(--input-border);
+            padding-top: 20px;
+            display: none;
+        }
+
+        #loginPrompt {
+            text-align: center;
+            margin: 30px auto;
+            animation: fadeIn 1s ease-out;
+        }
+
+        #loginPrompt p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        #loginPrompt .login-box {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 40px;
+            border: 1px solid var(--input-border);
+            background-color: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #loginPrompt .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+        
+        .loading-spinner i {
+            margin-right: 10px;
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Location styles */
+        .location-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--input-border);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .location-display {
+            margin-bottom: 20px;
+        }
+        
+        .location-value {
+            padding: 15px;
+            background-color: var(--light-bg);
+            border: 1px solid var(--input-border);
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        
+        .location-btn {
+            width: 100%;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s linear;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .location-btn i {
+            margin-right: 10px;
+        }
+        
+        .location-btn:hover {
+            background-color: var(--hover-bg);
+            transform: translateY(-3px);
+        }
+        
+        .location-btn.secondary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .location-divider {
+            text-align: center;
+            position: relative;
+            margin: 25px 0;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .location-divider::before,
+        .location-divider::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 1px;
+            background-color: var(--input-border);
+            top: 50%;
+        }
+        
+        .location-divider::before {
+            left: 0;
+        }
+        
+        .location-divider::after {
+            right: 0;
+        }
+        
+        .location-divider span {
+            background-color: var(--card-bg);
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .profile-container {
+                width: 85%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                width: 95%;
+                margin-top: 100px;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .profile-title {
+                font-size: 2rem;
+            }
+            
+            .profile-subtitle {
+                font-size: 1rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-secondary {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Login link a:hover::after */
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .fade-in-delay-1 {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .fade-in-delay-2 {
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 1.5rem 0 1rem;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            padding-top: 3rem !important;
+            margin-top: auto;
+            width: 100%;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                width: 90%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../../../home.html" class="logo">
+            <img id="navbar-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px;"> ClothLoop
+        </a>
+        <div style="display: flex; align-items: center;">
+            <ul>
+                <li><a href="buyer_dashboard.html">Listings</a></li>
+                <li><a href="wish.html">Wishlist</a></li>
+                <li><a href="buyer_profile.html" class="active">Profile</a></li>
+                <li><a href="../about/about_us.html">About</a></li>
+                <li><a href="../../../home.html" id="logout-link">Logout</a></li>
+            </ul>
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>My Profile</h1>
+            <p>Manage your personal information</p>
+        </div>
+    </section>
+
+    <!-- Profile Content -->
+    <main class="profile-container">
+        <div class="alert alert-success" id="successAlert"></div>
+        <div class="alert alert-error" id="errorAlert"></div>
+
+        <div id="loginPrompt" style="display: none;">
+            <p>You need to be logged in to view your profile.</p>
+            
+            <div class="login-box">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" id="loginEmail" name="loginEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" id="loginPassword" name="loginPassword" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+                <div style="margin-top: 15px; text-align: center;">
+                    <p style="font-size: 0.85rem; margin-bottom: 10px; color: var(--accent-color); opacity: 0.8;">
+                        Test Account: buyer@clothloop.com / password
+                    </p>
+                    <a href="../../index.html" style="color: var(--text-color); text-decoration: none; opacity: 0.8; transition: opacity 0.2s;">Return to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div id="profileLoading" class="loading-spinner" style="display: none;">
+                <i class="fas fa-spinner"></i> Loading profile information...
+            </div>
+            <div id="updateError" class="alert alert-error" style="display: none; margin-bottom: 20px;">
+                Error updating profile. Please try again.
+            </div>
+            <form id="profileForm" style="display: none;">
+                <!-- Profile Photo Section -->
+                <div class="profile-photo-container">
+                    <div class="profile-photo-preview" id="photoPreview">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-photo-controls">
+                        <div class="form-group">
+                            <label for="profile_photo" class="form-label">PROFILE PHOTO</label>
+                            <div class="custom-file-input-container">
+                                <div class="custom-file-input">
+                                    <input type="file" id="profile_photo" name="profile_photo" accept="image/*">
+                                    <div class="file-button">Choose File</div>
+                                    <div class="file-name">No file chosen</div>
+                                </div>
+                            </div>
+                            <div class="photo-help-text">Upload a square image for best results</div>
+                        </div>
+                        <button type="button" class="btn photo-remove-btn" id="removePhoto" style="display: none;">
+                            <i class="fas fa-trash"></i> Remove Photo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_no" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone_no" name="phone_no" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="created_at" class="form-label">Account Created</label>
+                    <input type="text" id="created_at" name="created_at" class="form-input" disabled>
+                </div>
+
+                <!-- Location Information Section -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Location Information</h3>
+                    
+                    <div class="location-container">
+                        <div class="location-display">
+                            <label class="form-label">Your Location:</label>
+                            <div class="location-value" id="locationDisplay">Location not set yet</div>
+                        </div>
+                        
+                        <button type="button" class="location-btn" id="getCurrentLocation">
+                            <i class="fas fa-map-marker-alt"></i> GET CURRENT LOCATION
+                        </button>
+                        
+                        <div class="location-divider">
+                            <span>OR</span>
+                        </div>
+                        
+                        <button type="button" class="location-btn" id="toggleManualLocation">
+                            <i class="fas fa-edit"></i> ENTER LOCATION MANUALLY
+                        </button>
+                        
+                        <!-- Manual location entry - hidden by default -->
+                        <div id="manualLocationEntry" style="display: none;">                            
+                            <div class="form-group">
+                                <label for="latitude" class="form-label">Latitude:</label>
+                                <input type="text" id="latitude" name="latitude" class="form-input" placeholder="e.g. 40.7128">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="longitude" class="form-label">Longitude:</label>
+                                <input type="text" id="longitude" name="longitude" class="form-input" placeholder="e.g. -74.0060">
+                            </div>
+                            
+                            <button type="button" class="location-btn secondary" id="setManualLocation">
+                                <i class="fas fa-check"></i> SET MANUAL LOCATION
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="password-toggle">
+                    <input type="checkbox" id="changePassword">
+                    <label for="changePassword">Change Password</label>
+                </div>
+
+                <div id="passwordSection" class="password-section">
+                    <div class="form-group">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" id="password" name="password" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirm New Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+        <div style="margin-bottom: 80px;"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img id="footer-logo" src="../../assets/images/logo_f.png" alt="ClothLoop Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;"> 
+                <span style="vertical-align: middle;">ClothLoop</span>
+            </div>
+            <p style="margin-top: 10px;">&copy; 2024 ClothLoop. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Footer Logo Theme Fixer -->
+    <script src="../../assets/js/footer_fixer.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme switcher functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Function to update logo based on theme
+            function updateLogo(isLightTheme) {
+                const navbarLogo = document.getElementById('navbar-logo');
+                
+                if (isLightTheme) {
+                    navbarLogo.src = '../../assets/images/logo_b.png';
+                } else {
+                    navbarLogo.src = '../../assets/images/logo_f.png';
+                }
+            }
+
+            // Check for saved theme preference or use default
+            const savedTheme = localStorage.getItem('clothloop-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                updateLogo(true);
+                
+                // Update footer logo for light theme
+                const footerLogo = document.getElementById('footer-logo');
+                if (footerLogo) {
+                    const currentSrc = footerLogo.getAttribute('src');
+                    const basePath = currentSrc.substring(0, currentSrc.lastIndexOf('/') + 1);
+                    footerLogo.setAttribute('src', basePath + 'logo_b.png');
+                }
+            }
+            
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                const isLightTheme = document.body.classList.toggle('light-theme');
+                
+                // Update icon
+                if (isLightTheme) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('clothloop-theme', 'light');
+                    updateLogo(true);
+                    // Also update footer logo
+                    const footerLogo = document.getElementById('footer-logo');
+                    if (footerLogo) {
+                        const currentSrc = footerLogo.getAttribute('src');
+                        const basePath = currentSrc.substring(0, currentSrc.lastIndexOf('/') + 1);
+                        footerLogo.setAttribute('src', basePath + 'logo_b.png');
+                    }
+                } else {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('clothloop-theme', 'dark');
+                    updateLogo(false);
+                    // Also update footer logo
+                    const footerLogo = document.getElementById('footer-logo');
+                    if (footerLogo) {
+                        const currentSrc = footerLogo.getAttribute('src');
+                        const basePath = currentSrc.substring(0, currentSrc.lastIndexOf('/') + 1);
+                        footerLogo.setAttribute('src', basePath + 'logo_f.png');
+                    }
+                }
+            });
+
+            // Handle logout
+            const logoutBtn = document.getElementById('logout-link');
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Show confirmation if needed
+                if (confirm('Are you sure you want to log out?')) {
+                    // Call logout API
+                    fetch('../../../backend/api/users/logout.php', {
+                        method: 'GET',
+                        credentials: 'include'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Redirect to login page regardless of result
+                        window.location.href = '../account/login.html';
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                        // Redirect anyway even if there's an error
+                        window.location.href = '../account/login.html';
+                    });
+                }
+            });
+
+            // Check if user is logged in
+            checkSession();
+            
+            // Initialize location features
+            initLocationFeatures();
+            
+            // Password change toggle
+            const changePasswordCheckbox = document.getElementById('changePassword');
+            const passwordSection = document.getElementById('passwordSection');
+            
+            changePasswordCheckbox.addEventListener('change', function() {
+                passwordSection.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Cancel button
+            const cancelBtn = document.getElementById('cancelBtn');
+            
+            cancelBtn.addEventListener('click', function() {
+                window.location.href = 'buyer_dashboard.html';
+            });
+            
+            // Form submission
+            const profileForm = document.getElementById('profileForm');
+            
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading spinner
+                const submitBtn = document.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+                submitBtn.disabled = true;
+                
+                // Get form data
+                const formData = new FormData();
+                formData.append('name', document.getElementById('name').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('phone_no', document.getElementById('phone_no').value);
+                
+                // Add latitude and longitude if available
+                const latitude = document.getElementById('latitude').value;
+                const longitude = document.getElementById('longitude').value;
+                if (latitude && longitude) {
+                    formData.append('latitude', latitude);
+                    formData.append('longitude', longitude);
+                }
+                
+                // Add password if password change is checked
+                if (document.getElementById('changePassword').checked) {
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirm_password').value;
+                    
+                    if (password !== confirmPassword) {
+                        showError('Passwords do not match');
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        return;
+                    }
+                    
+                    if (password) {
+                        formData.append('password', password);
+                    }
+                }
+                
+                // Add photo file if selected
+                if (photoFile) {
+                    formData.append('profile_photo', photoFile);
+                }
+                
+                // Send data to server
+                fetch('../../../backend/api/buyers/update_profile.php', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Reset button
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    if (data.status === 'success') {
+                        showSuccess('Profile updated successfully');
+                        
+                        // Update session data
+                        sessionStorage.setItem('buyer_name', document.getElementById('name').value);
+                        
+                        // If profile photo URL is returned, update it
+                        if (data.profile_photo_url) {
+                            // Update the preview with the new URL from server
+                            photoPreview.innerHTML = '';
+                            const img = new Image();
+                            img.onload = function() {
+                                photoPreview.appendChild(img);
+                                removePhotoBtn.style.display = 'block';
+                            };
+                            img.onerror = function() {
+                                console.error("Failed to load profile image:", data.profile_photo_url);
+                                photoPreview.innerHTML = '<i class="fas fa-user"></i>';
+                                removePhotoBtn.style.display = 'none';
+                            };
+                            img.src = data.profile_photo_url;
+                            img.alt = "Profile Photo";
+                            img.style.width = "100%";
+                            img.style.height = "100%";
+                            img.style.objectFit = "cover";
+                        }
+                    } else {
+                        showError(data.message || 'Failed to update profile');
+                    }
+                })
+                .catch(error => {
+                    // Reset button
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    console.error('Error updating profile:', error);
+                    
+                    // Display a more specific error message
+                    const updateError = document.getElementById('updateError');
+                    updateError.textContent = 'Error updating profile: ' + error.message;
+                    updateError.style.display = 'block';
+                    
+                    // Scroll to the error message
+                    updateError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Hide after 5 seconds
+                    setTimeout(function() {
+                        updateError.style.display = 'none';
+                    }, 5000);
+                });
+            });
+            
+            // Profile photo upload functionality
+            const photoInput = document.getElementById('profile_photo');
+            const photoPreview = document.getElementById('photoPreview');
+            const removePhotoBtn = document.getElementById('removePhoto');
+            const fileNameDisplay = document.querySelector('.file-name');
+            let photoFile = null; // Store the file for later upload
+            
+            // Handle photo file selection
+            photoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    photoFile = file; // Store the file for later upload
+                    
+                    // Update file name display
+                    fileNameDisplay.textContent = file.name;
+                    
+                    // Check file type and size
+                    const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                    if (!validImageTypes.includes(file.type)) {
+                        showError('Please select a valid image file (JPEG, PNG, GIF)');
+                        return;
+                    }
+                    
+                    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                        showError('Image size should be less than 5MB');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        const imgSrc = event.target.result;
+                        photoPreview.innerHTML = '';
+                        const img = new Image();
+                        img.onload = function() {
+                            photoPreview.appendChild(img);
+                            removePhotoBtn.style.display = 'block';
+                        };
+                        img.onerror = function() {
+                            console.error("Failed to load profile image:", imgSrc);
+                            photoPreview.innerHTML = '<i class="fas fa-user"></i>';
+                            removePhotoBtn.style.display = 'none';
+                        };
+                        img.src = imgSrc;
+                        img.alt = "Profile Photo";
+                        img.style.width = "100%";
+                        img.style.height = "100%";
+                        img.style.objectFit = "cover";
+                    };
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+            
+            // Handle remove photo button
+            removePhotoBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to remove your profile photo?')) {
+                    // Reset preview
+                    photoPreview.innerHTML = '<i class="fas fa-user"></i>';
+                    
+                    // Clear file input
+                    photoInput.value = '';
+                    photoFile = null;
+                    
+                    // Update file name display
+                    fileNameDisplay.textContent = 'No file chosen';
+                    
+                    // Hide remove button
+                    this.style.display = 'none';
+                    
+                    // Send API request to remove the photo
+                    removeProfilePhoto();
+                }
+            });
+            
+            // Function to remove profile photo via API
+            function removeProfilePhoto() {
+                fetch('../../../backend/api/buyers/remove_profile_photo.php', {
+                    method: 'POST',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showSuccess('Profile photo removed successfully');
+                    } else {
+                        showError(data.message || 'Failed to remove profile photo');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error removing profile photo:', error);
+                    showError('An error occurred while removing profile photo');
+                });
+            }
+            
+            function checkSession() {
+                // Show loading state
+                document.getElementById('errorAlert').style.display = 'none';
+                document.getElementById('profileLoading').style.display = 'flex';
+                document.getElementById('profileForm').style.display = 'none';
+                document.getElementById('loginPrompt').style.display = 'none';
+                
+                // Try to load profile data from the database
+                loadProfileData();
+            }
+            
+            function loadProfileData() {
+                // Show loading state
+                document.getElementById('profileLoading').style.display = 'flex';
+                document.getElementById('profileForm').style.display = 'none';
+                document.getElementById('loginPrompt').style.display = 'none';
+                document.getElementById('errorAlert').style.display = 'none';
+
+                // Fetch user data from the server
+                fetch('../../../backend/api/buyers/get_profile.php', {
+                    method: 'GET',
+                    credentials: 'include' // Include cookies for authentication
+                })
+                .then(response => {
+                    // Check if response is OK
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    // Try to parse JSON response
+                    return response.text().then(text => {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            console.error('JSON Parse Error:', e);
+                            console.error('Raw response:', text);
+                            throw new Error('Invalid JSON response: ' + e.message);
+                        }
+                    });
+                })
+                .then(data => {
+                    // Hide loading spinner
+                    document.getElementById('profileLoading').style.display = 'none';
+                    
+                    if (data.status === 'success') {
+                        const user = data.user;
+                        
+                        // Populate form fields
+                        document.getElementById('name').value = user.name || '';
+                        document.getElementById('email').value = user.email || '';
+                        document.getElementById('phone_no').value = user.phone_no || '';
+                        document.getElementById('created_at').value = user.created_at || 'Not available';
+                        
+                        // Update profile photo if available
+                        const photoPreview = document.getElementById('photoPreview');
+                        const removePhotoBtn = document.getElementById('removePhoto');
+                        
+                        if (user.profile_photo_url) {
+                            // Create an image with error handling
+                            const img = new Image();
+                            img.onload = function() {
+                                photoPreview.innerHTML = '';
+                                photoPreview.appendChild(img);
+                                removePhotoBtn.style.display = 'block';
+                            };
+                            img.onerror = function() {
+                                console.error("Failed to load profile image:", user.profile_photo_url);
+                                photoPreview.innerHTML = '<i class="fas fa-user"></i>';
+                                removePhotoBtn.style.display = 'none';
+                            };
+                            img.src = user.profile_photo_url;
+                            img.alt = "Profile Photo";
+                            img.style.width = "100%";
+                            img.style.height = "100%";
+                            img.style.objectFit = "cover";
+                        } else {
+                            photoPreview.innerHTML = '<i class="fas fa-user"></i>';
+                            removePhotoBtn.style.display = 'none';
+                        }
+                        
+                        // Update location if available
+                        if (user.latitude && user.longitude) {
+                            document.getElementById('latitude').value = user.latitude;
+                            document.getElementById('longitude').value = user.longitude;
+                            document.getElementById('locationDisplay').textContent = `${user.latitude}, ${user.longitude}`;
+                        }
+                        
+                        // Show the form
+                        document.getElementById('profileForm').style.display = 'block';
+                        
+                        // Update session storage with current user name
+                        sessionStorage.setItem('buyer_name', user.name || '');
+                    } else {
+                        // Check if error is due to authentication
+                        if (data.message === 'Not authenticated' || data.message.includes('authenticated')) {
+                            // Show login prompt
+                            document.getElementById('loginPrompt').style.display = 'block';
+                            console.log('Authentication error: ' + data.message);
+                        } else {
+                            // Show error message
+                            showError(data.message || 'Failed to load profile data');
+                            
+                            // Show login prompt as fallback
+                            setTimeout(() => {
+                                document.getElementById('loginPrompt').style.display = 'block';
+                            }, 3000);
+                        }
+                    }
+                })
+                .catch(error => {
+                    // Hide loading spinner
+                    document.getElementById('profileLoading').style.display = 'none';
+                    
+                    console.error('Error:', error);
+                    showError('An error occurred while loading profile data: ' + error.message);
+                    
+                    // Show login form in case of errors
+                    setTimeout(() => {
+                        document.getElementById('loginPrompt').style.display = 'block';
+                    }, 2000);
+                });
+            }
+            
+            function showSuccess(message) {
+                const successAlert = document.getElementById('successAlert');
+                successAlert.textContent = message;
+                successAlert.style.display = 'block';
+                
+                // Scroll to the message
+                successAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Hide after 3 seconds
+                setTimeout(function() {
+                    successAlert.style.display = 'none';
+                }, 3000);
+            }
+            
+            function showError(message) {
+                const errorAlert = document.getElementById('errorAlert');
+                const updateError = document.getElementById('updateError');
+                
+                // Choose which error element to use based on context
+                const errorElement = updateError.style.display !== 'none' ? updateError : errorAlert;
+                
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                
+                // Scroll to the error
+                errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Hide after 5 seconds
+                setTimeout(function() {
+                    errorElement.style.display = 'none';
+                }, 5000);
+            }
+
+            // Add login form handler
+            const loginForm = document.getElementById('loginForm');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const loginEmail = document.getElementById('loginEmail').value;
+                const loginPassword = document.getElementById('loginPassword').value;
+                
+                if (!loginEmail || !loginPassword) {
+                    showError('Please provide both email and password');
+                    return;
+                }
+                
+                // Show loading state
+                const loginButton = loginForm.querySelector('button[type="submit"]');
+                const originalButtonText = loginButton.textContent;
+                loginButton.disabled = true;
+                loginButton.innerHTML = '<i class="fas fa-spinner"></i> Logging in...';
+                
+                // Clear previous errors
+                document.getElementById('errorAlert').style.display = 'none';
+                
+                // Attempt to log in
+                const loginData = {
+                    email: loginEmail,
+                    password: loginPassword
+                };
+                
+                fetch('../../../backend/api/users/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include', // Add credentials to include cookies
+                    body: JSON.stringify(loginData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    // Try to parse JSON response
+                    return response.text().then(text => {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            console.error('JSON Parse Error:', e);
+                            console.error('Raw response:', text);
+                            throw new Error('Invalid JSON response: ' + e.message);
+                        }
+                    });
+                })
+                .then(data => {
+                    // Reset button state
+                    loginButton.disabled = false;
+                    loginButton.textContent = originalButtonText;
+                    
+                    if (data.success || data.status === 'success') {
+                        // Login successful
+                        showSuccess('Login successful! Loading your profile...');
+                        
+                        // Wait a moment for the success message to be visible
+                        setTimeout(function() {
+                            // Check session again to fetch profile
+                            checkSession();
+                        }, 1000);
+                    } else {
+                        // Login failed
+                        showError(data.message || 'Login failed. Please check your credentials.');
+                    }
+                })
+                .catch(error => {
+                    // Reset button state
+                    loginButton.disabled = false;
+                    loginButton.textContent = originalButtonText;
+                    
+                    console.error('Error during login:', error);
+                    showError('An error occurred during login. Please try again.');
+                });
+            });
+
+            // Location handling
+            function initLocationFeatures() {
+                const getCurrentLocationBtn = document.getElementById('getCurrentLocation');
+                const toggleManualLocationBtn = document.getElementById('toggleManualLocation');
+                const setManualLocationBtn = document.getElementById('setManualLocation');
+                const latitudeInput = document.getElementById('latitude');
+                const longitudeInput = document.getElementById('longitude');
+                const locationDisplay = document.getElementById('locationDisplay');
+                const manualLocationEntry = document.getElementById('manualLocationEntry');
+                
+                // Load saved location if any
+                const savedLatitude = localStorage.getItem('user_latitude');
+                const savedLongitude = localStorage.getItem('user_longitude');
+                
+                if (savedLatitude && savedLongitude) {
+                    latitudeInput.value = savedLatitude;
+                    longitudeInput.value = savedLongitude;
+                    locationDisplay.textContent = `${savedLatitude}, ${savedLongitude}`;
+                }
+                
+                // Toggle manual location entry
+                toggleManualLocationBtn.addEventListener('click', function() {
+                    if (manualLocationEntry.style.display === 'none') {
+                        manualLocationEntry.style.display = 'block';
+                        this.innerHTML = '<i class="fas fa-times"></i> HIDE MANUAL ENTRY';
+                    } else {
+                        manualLocationEntry.style.display = 'none';
+                        this.innerHTML = '<i class="fas fa-edit"></i> ENTER LOCATION MANUALLY';
+                    }
+                });
+                
+                // Get current location
+                getCurrentLocationBtn.addEventListener('click', function() {
+                    if (navigator.geolocation) {
+                        getCurrentLocationBtn.disabled = true;
+                        getCurrentLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GETTING LOCATION...';
+                        
+                        navigator.geolocation.getCurrentPosition(
+                            // Success callback
+                            function(position) {
+                                const latitude = position.coords.latitude.toFixed(6);
+                                const longitude = position.coords.longitude.toFixed(6);
+                                
+                                // Update inputs and display
+                                latitudeInput.value = latitude;
+                                longitudeInput.value = longitude;
+                                locationDisplay.textContent = `${latitude}, ${longitude}`;
+                                
+                                // Save to localStorage
+                                localStorage.setItem('user_latitude', latitude);
+                                localStorage.setItem('user_longitude', longitude);
+                                
+                                // Reset button
+                                getCurrentLocationBtn.disabled = false;
+                                getCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> GET CURRENT LOCATION';
+                                
+                                // Show success message
+                                showSuccess('Location updated successfully!');
+                                
+                                // Hide manual entry if it's open
+                                if (manualLocationEntry.style.display !== 'none') {
+                                    manualLocationEntry.style.display = 'none';
+                                    toggleManualLocationBtn.innerHTML = '<i class="fas fa-edit"></i> ENTER LOCATION MANUALLY';
+                                }
+                            },
+                            // Error callback
+                            function(error) {
+                                let errorMessage = 'Error getting location.';
+                                
+                                switch(error.code) {
+                                    case error.PERMISSION_DENIED:
+                                        errorMessage = 'Location access denied. Please enable location services.';
+                                        break;
+                                    case error.POSITION_UNAVAILABLE:
+                                        errorMessage = 'Location information is unavailable.';
+                                        break;
+                                    case error.TIMEOUT:
+                                        errorMessage = 'Location request timed out.';
+                                        break;
+                                }
+                                
+                                showError(errorMessage);
+                                
+                                // Show manual location entry when geolocation fails
+                                manualLocationEntry.style.display = 'block';
+                                toggleManualLocationBtn.innerHTML = '<i class="fas fa-times"></i> HIDE MANUAL ENTRY';
+                                
+                                // Reset button
+                                getCurrentLocationBtn.disabled = false;
+                                getCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> GET CURRENT LOCATION';
+                            }
+                        );
+                    } else {
+                        showError('Geolocation is not supported by this browser.');
+                        // Show manual location entry when geolocation is not supported
+                        manualLocationEntry.style.display = 'block';
+                        toggleManualLocationBtn.innerHTML = '<i class="fas fa-times"></i> HIDE MANUAL ENTRY';
+                    }
+                });
+                
+                // Set manual location
+                setManualLocationBtn.addEventListener('click', function() {
+                    const latitude = latitudeInput.value.trim();
+                    const longitude = longitudeInput.value.trim();
+                    
+                    if (!latitude || !longitude) {
+                        showError('Please enter both latitude and longitude.');
+                        return;
+                    }
+                    
+                    if (!isValidCoordinate(latitude, 'lat') || !isValidCoordinate(longitude, 'lng')) {
+                        showError('Please enter valid coordinates.');
+                        return;
+                    }
+                    
+                    // Update display
+                    locationDisplay.textContent = `${latitude}, ${longitude}`;
+                    
+                    // Save to localStorage
+                    localStorage.setItem('user_latitude', latitude);
+                    localStorage.setItem('user_longitude', longitude);
+                    
+                    // Show success message
+                    showSuccess('Location set manually!');
+                    
+                    // Hide manual entry if it's open
+                    manualLocationEntry.style.display = 'none';
+                    toggleManualLocationBtn.innerHTML = '<i class="fas fa-edit"></i> ENTER LOCATION MANUALLY';
+                });
+                
+                // Validate coordinates
+                function isValidCoordinate(value, type) {
+                    const num = parseFloat(value);
+                    if (isNaN(num)) return false;
+                    
+                    if (type === 'lat') {
+                        return num >= -90 && num <= 90;
+                    } else if (type === 'lng') {
+                        return num >= -180 && num <= 180;
+                    }
+                    
+                    return false;
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
